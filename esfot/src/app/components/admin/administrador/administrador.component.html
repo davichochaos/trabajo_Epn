@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="">Bienvenido ...</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav nav-pills navbar-nav mr-auto" id="pills-tab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active bg-info" id="pills-usuarios-tab" data-toggle="pill" href="#usuarios" role="tab" aria-controls="pills-usuarios" aria-selected="true">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-info" id="pills-carreras-tab" data-toggle="pill" href="#carreras" role="tab" aria-controls="pills-carreras" aria-selected="false">Carreras</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-info" id="pills-materias-tab" data-toggle="pill" href="#materias" role="tab" aria-controls="pills-materias" aria-selected="false">Materias</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-info" id="pills-aulas-tab" data-toggle="pill" href="#aulas" role="tab" aria-controls="pills-aulas" aria-selected="false">Aulas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-info" id="pills-horarios-tab" data-toggle="pill" href="#horarios" role="tab" aria-controls="pills-horarios" aria-selected="false">Horarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-info" id="pills-reserva-tab" data-toggle="pill" href="#reserva" role="tab" aria-controls="pills-reserva" aria-selected="false">Reserva</a>
+        </li>
+      </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-info my-2 my-sm-0" type="submit" (click)="salirAd()">Salir</button>
+    </form>
+  </div>
+</nav>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="usuarios" role="tabpanel" aria-labelledby="pills-usuarios-tab">
+    <app-usuarios></app-usuarios>
+  </div>
+  <div class="tab-pane fade" id="carreras" role="tabpanel" aria-labelledby="pills-carreras-tab">
+    <app-carreras></app-carreras>
+  </div>
+  <div class="tab-pane fade" id="materias" role="tabpanel" aria-labelledby="pills-materias-tab">
+    <app-materias></app-materias>
+  </div>
+  <div class="tab-pane fade" id="aulas" role="tabpanel" aria-labelledby="pills-aulas-tab">
+    <app-aulas></app-aulas>
+  </div>
+  <div class="tab-pane fade" id="horarios" role="tabpanel" aria-labelledby="pills-horarios-tab">
+    <app-horarios></app-horarios>
+  </div>
+  <div class="tab-pane fade" id="reserva" role="tabpanel" aria-labelledby="pills-reserva-tab">
+    <app-reserva-admin></app-reserva-admin>
+  </div>
+</div>

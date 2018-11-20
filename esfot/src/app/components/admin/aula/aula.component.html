@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 text-left">
+      <button [routerLink]="['/admin']" type="button" class="btn btn-info">
+        <<
+      </button>
+    </div>
+    <div class="col-sm-6 text-right">
+      <button [routerLink]="['/aula','nuevo']" type="button" class="btn btn-info">
+        Limpiar
+      </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <form (ngSubmit)="guardar()" #forma="ngForm">
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Nombre:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   placeholder="nombre"
+                   name="nombre"
+                   [(ngModel)]="aula.nombreAula">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Descripcion:</label>
+          <div class="col-10">
+            <select class="custom-select form-control"
+                    name="descripcion" [(ngModel)]="aula.descripcion">
+              <option value="Aula">Aula</option>
+              <option value="Laboratorio">Laboratorio</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Capacidad:</label>
+          <div class="col-10">
+            <input class="form-control" type="number" min="8" max="40"
+                   name="capacidad"
+                   placeholder="capacidad"
+                   [(ngModel)]="aula.cupo">
+          </div>
+        </div>
+        <div class="form-group row">
+          <button type="submit" class="btn btn-info ">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

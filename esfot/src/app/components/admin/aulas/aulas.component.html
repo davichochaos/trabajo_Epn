@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <table class="table table-responsive table-hover">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>Capacidad</th>
+      <th>Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of aulas; let i = index;">
+      <td>{{item.nombreAula}}</td>
+      <td>{{item.descripcion}}</td>
+      <td>{{item.cupo}}</td>
+      <td>
+        <button type="button" class="btn btn-info" [routerLink]="['/aula', item.id]">Editar</button>
+        <button (click)="eliminar(item.id, i)" type="button" class="btn btn-danger">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <button [routerLink]="['/aula', 'nuevo']" type="button" class="btn btn-info">Nueva Aula</button>
+</div>

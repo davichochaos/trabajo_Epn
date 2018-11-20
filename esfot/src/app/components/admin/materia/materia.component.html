@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 text-left">
+      <button [routerLink]="['/admin']" type="button" class="btn btn-info">
+        <<
+      </button>
+    </div>
+    <div class="col-sm-6 text-right">
+      <button [routerLink]="['/materia','nuevo']" type="button" class="btn btn-info">
+        Limpiar
+      </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <form (ngSubmit)="guardar()" #forma="ngForm">
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Nombre:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   placeholder="nombre"
+                   name="nombre"
+                   [(ngModel)]="materia.nombreMat">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Codigo:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   name="codigo"
+                   placeholder="codigo"
+                   [(ngModel)]="materia.codigo">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Semestre:</label>
+          <div class="col-10">
+            <select class="custom-select form-control"
+                    name="semestres" [(ngModel)]="materia.semestre">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Creditos:</label>
+          <div class="col-10">
+            <input class="form-control" type="number" min="2" max="8"
+                   name="creditos"
+                   placeholder="creditos"
+                   [(ngModel)]="materia.creditos">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Carreras:</label>
+          <div class="col-10">
+            <p-checkbox name="carrerass" *ngFor="let item of carrerass"
+                        value="{{item.siglas}}" label="{{item.siglas}}"
+                        [(ngModel)]="materia.carreras"></p-checkbox>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <button type="submit" class="btn btn-info ">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

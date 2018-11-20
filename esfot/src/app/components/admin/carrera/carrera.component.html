@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 text-left">
+      <button [routerLink]="['/admin']" type="button" class="btn btn-info">
+        <<
+      </button>
+    </div>
+    <div class="col-sm-6 text-right">
+      <button [routerLink]="['/carrera','nuevo']" type="button" class="btn btn-info">
+        Limpiar
+      </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <form (ngSubmit)="guardar()" #forma="ngForm">
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Nombre:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   placeholder="nombre"
+                   name="nombre"
+                   [(ngModel)]="carrera.nombreCarr">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Siglas:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   name="siglas"
+                   placeholder="siglas"
+                   [(ngModel)]="carrera.siglas">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <button type="submit" class="btn btn-info ">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

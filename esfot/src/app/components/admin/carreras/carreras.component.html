@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <table class="table table-responsive table-hover">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Siglas</th>
+      <th>Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of carreras; let i = index;">
+      <td>{{item.nombreCarr}}</td>
+      <td>{{item.siglas}}</td>
+      <td>
+        <button type="button" class="btn btn-info" [routerLink]="['/carrera', item.id]">Editar</button>
+        <button (click)="eliminar(item.id, i)" type="button" class="btn btn-danger">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <button [routerLink]="['/carrera', 'nuevo']" type="button" class="btn btn-info">Nueva Carrera</button>
+</div>

@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="row">
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <form #forma="ngForm">
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Nombre:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   placeholder="nombre"
+                   name="nombre">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Correo:</label>
+          <div class="col-10">
+            <input class="form-control" type="email"
+                   name="correo"
+                   placeholder="correo">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Contraseña:</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   name="contra"
+                   placeholder="163">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Cargo</label>
+          <div class="col-10">
+            <input class="form-control" type="text"
+                   name="cargo"
+                   placeholder="cargo" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Carrera:</label>
+          <div class="col-10">
+            <p-checkbox name="carrerasx"
+                        value="" label="" [disabled]="true"></p-checkbox>
+          </div>
+        </div>
+        <div class="form-group row">
+          <button type="submit" class="btn btn-info col-2 col-form-label">
+            Editar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
