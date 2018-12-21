@@ -49,6 +49,27 @@
           </div>
         </div>
 
+        <div *ngIf="carreraNueva; else carreraAntigua">materia nueva</div>
+        <ng-template #carreraAntigua>
+          uygyjh
+        </ng-template>
+
+        <div class="form-group row">
+          <label class="col-2 col-form-label">Semestre:</label>
+          <div class="col-10">
+            <select class="custom-select form-control"
+                    name="semestres" [(ngModel)]="materia.semestre">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+        </div>
+
+
         <div class="form-group row">
           <label class="col-2 col-form-label">Creditos:</label>
           <div class="col-10">
@@ -64,7 +85,7 @@
           <div class="col-10">
             <p-checkbox name="carrerass" *ngFor="let item of carrerass"
                         value="{{item.siglas}}" label="{{item.siglas}}"
-                        [(ngModel)]="materia.carreras"></p-checkbox>
+                        [(ngModel)]="materia.carreras" (onChange)="subjects()"></p-checkbox>
           </div>
         </div>
 

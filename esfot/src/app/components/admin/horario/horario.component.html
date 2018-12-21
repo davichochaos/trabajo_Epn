@@ -48,15 +48,15 @@
           <div class="col-10">
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia"  binary="false" label="Lunes" (onChange)="val()"  [(ngModel)]="cod"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dia0"  binary="false" label="Lunes" (onChange)="val()"  [(ngModel)]="cod"></p-checkbox>
               </div>
               Desde:<div class="col-3">
                 <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                          name="hora1" [(ngModel)]="horario.horaInicio" [disabled]="cod" (click)="hora2()">
+                          name="hora1" [(ngModel)]="horario.horaInicio0" [disabled]="cod" (click)="hora2()">
               </div>
               Hasta:<div class="col-3">
                 <input class="form-control" id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                       name="hora2" [(ngModel)]="horario.horaFin" [disabled]="cod" (click)="hora2()">
+                       name="hora2" [(ngModel)]="horario.horaFin0" [disabled]="cod" (click)="hora2()">
               </div>
             </div>
 

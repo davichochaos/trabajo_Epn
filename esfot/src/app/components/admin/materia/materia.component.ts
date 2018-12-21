@@ -3,6 +3,7 @@ import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-materia',
@@ -21,6 +22,9 @@ export class MateriaComponent implements OnInit {
     semestre: 0,
     carreras: [],
   }
+
+  carreraAntigua:boolean = false;
+  carreraNueva:boolean = false;
 
   constructor(private _adminServices: AdminService,
               private _router: Router,
@@ -76,4 +80,43 @@ export class MateriaComponent implements OnInit {
     }
   }
 
+  subjects(){
+    if (this.materia.carreras.length != 0){
+      for (let i = 0; i < this.materia.carreras.length; i++){
+        /*if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
+          || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET'){
+          if (this.carreraAntigua === false){
+            this.carreraAntigua = true;
+          }
+        }else if (this.materia.carreras[i] === 'TSD' ){
+          if (this.carreraNueva === false){
+            this.carreraNueva = true;
+          }
+        }*/
+
+        if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
+          || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET'){
+          console.log(this.materia.carreras[i])
+          this.carreraNueva= true;
+        }
+        else {
+          this.carreraNueva= false;
+
+        }
+      }
+
+      /*if (this.carreraAntigua && this.carreraNueva){
+        console.log('se han 2')
+      }else if (this.carreraAntigua){
+        console.log('Carrera antigua')
+      }else if (this.carreraNueva){
+        console.log('Carrera nueva')
+      }
+    } else{
+      this.carreraNueva=false;
+      this.carreraAntigua=false;
+    }*/
+
+  }
+  }
 }
