@@ -18,13 +18,16 @@ export class MateriaComponent implements OnInit {
   materia: Materias = {
     nombreMat: '',
     codigo: '',
-    creditos: 0,
+    creditos: null,
+    cd: null,
+    cp: null,
+    totalHoras: null,
     semestre: 0,
     carreras: [],
   }
 
-  carreraAntigua:boolean = false;
-  carreraNueva:boolean = false;
+  carreraAntigua: boolean = false;
+  carreraNueva: boolean = false;
 
   constructor(private _adminServices: AdminService,
               private _router: Router,
@@ -55,9 +58,24 @@ export class MateriaComponent implements OnInit {
           return this.carrerass;
         }
       );
+
+
   }
 
   ngOnInit() {
+  }
+
+  suma() {
+    if (this.carreraNueva = true) {
+      let cd = +(document.getElementById("cd")as HTMLInputElement).value;
+      let cp = +(document.getElementById("cp")as HTMLInputElement).value;
+      let total = cd + cp;
+      this.materia.totalHoras = total;
+      return total;
+      console.log(this.materia.totalHoras);
+    } else {
+      console.log("materia antigua");
+    }
   }
 
   guardar() {
@@ -66,6 +84,7 @@ export class MateriaComponent implements OnInit {
       this._adminServices.nuevaMateria(this.materia)
         .subscribe(
           resultado => {
+            this.suma();
             console.log(resultado.name);
             this._router.navigate(['/materia', resultado.name]);
           }
@@ -74,6 +93,7 @@ export class MateriaComponent implements OnInit {
       this._adminServices.editarMateria(this.materia, this.id)
         .subscribe(
           resultado => {
+            this.suma();
             this._router.navigate(['/admin' ]);
           }
         );
@@ -81,7 +101,7 @@ export class MateriaComponent implements OnInit {
   }
 
   subjects(){
-    if (this.materia.carreras.length != 0){
+    if (this.materia.carreras.length != 0) {
       for (let i = 0; i < this.materia.carreras.length; i++){
         /*if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
           || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET'){
@@ -95,12 +115,12 @@ export class MateriaComponent implements OnInit {
         }*/
 
         if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
-          || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET'){
+          || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET') {
           console.log(this.materia.carreras[i])
-          this.carreraNueva= true;
+          this.carreraNueva = false;
         }
         else {
-          this.carreraNueva= false;
+          this.carreraNueva = true;
 
         }
       }
