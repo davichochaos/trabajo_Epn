@@ -1,5 +1,5 @@
 export interface Horarios {
-  dia?: string;
+  dia0?: string;
   dia1?: string;
   dia2?: string;
   dia3?: string;
@@ -8,8 +8,8 @@ export interface Horarios {
   nombreMat: string;
   docenteNom: string;
   nombreAula: string;
-  horaInicio?: string;
-  horaFin?: string;
+  horaInicio0?: string;
+  horaFin0?: string;
   horaInicio1?: string;
   horaFin1?: string;
   horaInicio2?: string;

@@ -6,7 +6,7 @@ import {Horarios} from '../../../interfaces/horarios.interface'
 import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
-import {tokenReference} from '@angular/compiler';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-horario',
@@ -20,8 +20,9 @@ export class HorarioComponent implements OnInit {
   aulas: Aulas[] = [];
   materias: Materias[] = [];
   docentes: Docentes[] = [];
+  horarios: Horarios[] = [];
   horario: Horarios = {
-    dia: null,
+    dia0: null,
     dia1: null,
     dia2: null,
     dia3: null,
@@ -30,8 +31,8 @@ export class HorarioComponent implements OnInit {
     nombreMat: '',
     docenteNom: '',
     nombreAula: '',
-    horaInicio: null,
-    horaFin: null,
+    horaInicio0: null,
+    horaFin0: null,
     horaInicio1: null,
     horaFin1: null,
     horaInicio2: null,
@@ -98,6 +99,19 @@ export class HorarioComponent implements OnInit {
           return this.materias;
         }
       );
+
+    this._adminService.consultarHorarios()
+      .subscribe(
+        res => {
+          for (const key$ in res) {
+            const horarioNew = res[key$];
+            horarioNew.id = key$;
+            this.horarios.push(horarioNew);
+          }
+          console.log(this.horarios);
+          return this.horarios;
+        }
+      );
   }
 
   ngOnInit() {
@@ -122,18 +136,22 @@ export class HorarioComponent implements OnInit {
     let horaDesde5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
     let horaHasta5 = (document.getElementById("fin5")as HTMLInputElement).value.replace(':','0')
 
-    if (Date.parse(horaDesde) > Date.parse(horaHasta) || Date.parse(horaDesde1) > Date.parse(horaHasta1) ||
-        Date.parse(horaDesde2) > Date.parse(horaHasta2) || Date.parse(horaDesde3) > Date.parse(horaHasta3) ||
-        Date.parse(horaDesde4) > Date.parse(horaHasta4) || Date.parse(horaDesde5) > Date.parse(horaHasta5)) {
+    if (Date.parse(horaDesde) >= Date.parse(horaHasta) || Date.parse(horaDesde1) >= Date.parse(horaHasta1) ||
+        Date.parse(horaDesde2) >= Date.parse(horaHasta2) || Date.parse(horaDesde3) >= Date.parse(horaHasta3) ||
+        Date.parse(horaDesde4) >= Date.parse(horaHasta4) || Date.parse(horaDesde5) >= Date.parse(horaHasta5)) {
       this.msgs = [];
       this.msgs.push({severity:'error', summary:'Error', detail:'Hora final es inferior a hora de inicio'});
 
     }
-
-    /*if (Date.parse(horaDesde1) != Date.parse(horaHasta) || Date.parse(horaDesde2) != Date.parse(horaHasta1)) {
-      this.msgs = [];
-      this.msgs.push({severity:'error', summary:'Error', detail:'Hora de inicio incorrecta'});
+    /*if (this.cod1 == false || this.cod2 == false || this.cod3 == false || this.cod4 == false) {
+      if (Date.parse(horaDesde1) != Date.parse(horaHasta) || Date.parse(horaDesde1) != Date.parse(horaHasta) || Date.parse(horaDesde1) != Date.parse(horaHasta) ) {
+        this.msgs = [];
+        this.msgs.push({severity:'error', summary:'Error', detail:'Hora de inicio incorrecta'});
+      } else {
+        //console.log('todo');
+      }
     }*/
+
   }
 
   materiasAsig() {
@@ -147,7 +165,30 @@ export class HorarioComponent implements OnInit {
   }
 
   guardar() {
-    if (this.id == 'nuevo') {
+
+    /*console.log(this.horarios.length);*/
+    for (let i = 0; i < this.horarios.length; i++) {
+      console.log(this.horarios[i].nombreAula);
+      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        for (let j = 0; j < 7; j++) {
+          /*if (this.horarios[i].dia[j] == "this.horario.dia" + j) {
+            for (let k = 0; k < 7; k ++) {
+              if (this.horarios[i].horaFin[k] == "this.horario.horaInicio" + k) {}
+              console.log("hora inicio igual");
+            }
+          }*/
+          console.log("dia igual");
+      }
+        /*if (this.horarios[i].nombreAula == this.horario.dia0) {
+
+        } */
+        console.log("igual");
+      }
+    }
+
+
+
+    /*if (this.id == 'nuevo') {
       // guardar usuario nuevo
       this._adminService.nuevoHorario(this.horario)
         .subscribe(
@@ -163,7 +204,7 @@ export class HorarioComponent implements OnInit {
             this._router.navigate(['/admin' ]);
           }
         );
-    }
+    }*/
   }
 
   cod: boolean = true;
@@ -177,12 +218,12 @@ export class HorarioComponent implements OnInit {
   val() {
     switch (this.cod) {
       case true:
-        this.horario.dia = 'Lunes';
+        this.horario.dia0 = 'Lunes';
         this.cod = false;
 
         break;
       case false:
-        this.horario.dia = null;
+        this.horario.dia0 = null;
         this.cod = true;
 
         break;
@@ -275,4 +316,6 @@ export class HorarioComponent implements OnInit {
         console.log("hola");
     }
   }
+
+  /**/
 }

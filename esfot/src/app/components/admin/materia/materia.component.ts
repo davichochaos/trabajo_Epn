@@ -3,6 +3,7 @@ import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-materia',
@@ -17,10 +18,16 @@ export class MateriaComponent implements OnInit {
   materia: Materias = {
     nombreMat: '',
     codigo: '',
-    creditos: 0,
+    creditos: null,
+    cd: null,
+    cp: null,
+    totalHoras: null,
     semestre: 0,
     carreras: [],
   }
+
+  carreraAntigua: boolean = false;
+  carreraNueva: boolean = false;
 
   constructor(private _adminServices: AdminService,
               private _router: Router,
@@ -51,9 +58,24 @@ export class MateriaComponent implements OnInit {
           return this.carrerass;
         }
       );
+
+
   }
 
   ngOnInit() {
+  }
+
+  suma() {
+    if (this.carreraNueva = true) {
+      let cd = +(document.getElementById("cd")as HTMLInputElement).value;
+      let cp = +(document.getElementById("cp")as HTMLInputElement).value;
+      let total = cd + cp;
+      this.materia.totalHoras = total;
+      return total;
+      console.log(this.materia.totalHoras);
+    } else {
+      console.log("materia antigua");
+    }
   }
 
   guardar() {
@@ -62,6 +84,7 @@ export class MateriaComponent implements OnInit {
       this._adminServices.nuevaMateria(this.materia)
         .subscribe(
           resultado => {
+            this.suma();
             console.log(resultado.name);
             this._router.navigate(['/materia', resultado.name]);
           }
@@ -70,10 +93,50 @@ export class MateriaComponent implements OnInit {
       this._adminServices.editarMateria(this.materia, this.id)
         .subscribe(
           resultado => {
+            this.suma();
             this._router.navigate(['/admin' ]);
           }
         );
     }
   }
 
+  subjects(){
+    if (this.materia.carreras.length != 0) {
+      for (let i = 0; i < this.materia.carreras.length; i++){
+        /*if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
+          || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET'){
+          if (this.carreraAntigua === false){
+            this.carreraAntigua = true;
+          }
+        }else if (this.materia.carreras[i] === 'TSD' ){
+          if (this.carreraNueva === false){
+            this.carreraNueva = true;
+          }
+        }*/
+
+        if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
+          || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET') {
+          console.log(this.materia.carreras[i])
+          this.carreraNueva = false;
+        }
+        else {
+          this.carreraNueva = true;
+
+        }
+      }
+
+      /*if (this.carreraAntigua && this.carreraNueva){
+        console.log('se han 2')
+      }else if (this.carreraAntigua){
+        console.log('Carrera antigua')
+      }else if (this.carreraNueva){
+        console.log('Carrera nueva')
+      }
+    } else{
+      this.carreraNueva=false;
+      this.carreraAntigua=false;
+    }*/
+
+  }
+  }
 }
