@@ -171,17 +171,13 @@ export class HorarioComponent implements OnInit {
       console.log(this.horarios[i].nombreAula);
       if (this.horarios[i].nombreAula == this.horario.nombreAula) {
         for (let j = 0; j < 7; j++) {
-          /*if (this.horarios[i].dia[j] == "this.horario.dia" + j) {
-            for (let k = 0; k < 7; k ++) {
-              if (this.horarios[i].horaFin[k] == "this.horario.horaInicio" + k) {}
-              console.log("hora inicio igual");
+          console.log("aula igual");
+          if (this.horarios[i].dia == this.horario.dia) {
+            for (let k = 0; k < 7; k++) {
+              console.log("dia igual");
             }
-          }*/
-          console.log("dia igual");
-      }
-        /*if (this.horarios[i].nombreAula == this.horario.dia0) {
-
-        } */
+          }
+        }
         console.log("igual");
       }
     }
