@@ -48,90 +48,90 @@
           <div class="col-10">
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia0"  binary="false" label="Lunes" (onChange)="val()"  [(ngModel)]="cod"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[0]"  binary="false" label="Lunes" (onChange)="val()"  [(ngModel)]="cod"></p-checkbox>
               </div>
               Desde:<div class="col-3">
                 <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                          name="hora1" [(ngModel)]="horario.horaInicio0" [disabled]="cod" (click)="hora2()">
+                          name="hora1" [(ngModel)]="horario.horaInicios[0]" [disabled]="cod" (click)="hora2()">
               </div>
               Hasta:<div class="col-3">
                 <input class="form-control" id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                       name="hora2" [(ngModel)]="horario.horaFin0" [disabled]="cod" (click)="hora2()">
+                       name="hora2" [(ngModel)]="horario.horaFins[0]" [disabled]="cod" (click)="hora2()">
               </div>
             </div>
 
             <br>
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia1"  binary="true" label="Martes" (onChange)="val1()" [(ngModel)]="cod1"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[1]"  binary="true" label="Martes" (onChange)="val1()" [(ngModel)]="cod1"></p-checkbox>
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio1" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicio1" [disabled]="cod1" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[1]" [disabled]="cod1" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin1" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFin1" [disabled]="cod1" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[1]" [disabled]="cod1" (click)="hora2()">
               </div>
             </div>
 
             <br>
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia2" label="Miercoles" binary="true" (onChange)="val2()" [(ngModel)]="cod2"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[2]" label="Miercoles" binary="true" (onChange)="val2()" [(ngModel)]="cod2"></p-checkbox>
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio2" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicio2" [disabled]="cod2" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[2]" [disabled]="cod2" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin2" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFin2" [disabled]="cod2" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[2]" [disabled]="cod2" (click)="hora2()">
               </div>
             </div>
 
             <br>
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia3" label="Jueves" binary="true" (onChange)="val3()" [(ngModel)]="cod3"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[3]" label="Jueves" binary="true" (onChange)="val3()" [(ngModel)]="cod3"></p-checkbox>
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio3" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicio3" [disabled]="cod3" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[3]" [disabled]="cod3" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin3" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFin3" [disabled]="cod3" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[3]" [disabled]="cod3" (click)="hora2()">
               </div>
             </div>
 
             <br>
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia4" label="Viernes" binary="true" (onChange)="val4()" [(ngModel)]="cod4"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[4]" label="Viernes" binary="true" (onChange)="val4()" [(ngModel)]="cod4"></p-checkbox>
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio4" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicio4" [disabled]="cod4" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[4]" [disabled]="cod4" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin4" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFin4" [disabled]="cod4" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[4]" [disabled]="cod4" (click)="hora2()">
               </div>
             </div>
 
             <br>
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dia5" label="Sabado" binary="true" (onChange)="val5()" [(ngModel)]="cod5"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[5]" label="Sabado" binary="true" (onChange)="val5()" [(ngModel)]="cod5"></p-checkbox>
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio5" type="time" [disabled]="cod5" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicio5" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[5]" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin5" type="time" [disabled]="cod5" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFin5" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[5]" (click)="hora2()">
               </div>
             </div>
           </div>
