@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-sm-6 text-left">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
-        <<
+        Atras
       </button>
     </div>
     <div class="col-sm-6 text-right">
-      <button [routerLink]="['/materia','nuevo']" type="button" class="btn btn-info">
+      <button [routerLink]="['/materia','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
     </div>
@@ -75,9 +75,9 @@
             <div class="col-10">
               <input class="form-control" type="number" min="1" max="4"
                      id="cd"
-                     name="creditos"
-                     placeholder="creditos"
-                     [(ngModel)]="materia.cd">
+                     name="cd"
+                     placeholder="Componente de Docencia"
+                     [(ngModel)]="materia.cd" (change)="suma()">
             </div>
           </div>
           <div class="form-group row">
@@ -85,9 +85,20 @@
             <div class="col-10">
               <input class="form-control" type="number" min="1" max="4"
                      id="cp"
-                     name="creditos"
-                     placeholder="creditos"
-                     [(ngModel)]="materia.cp">
+                     name="cp"
+                     placeholder="Componente Practico"
+                     [(ngModel)]="materia.cp" (change)="suma()">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-2 col-form-label">Total de Horas</label>
+            <div class="col-10">
+              <input class="form-control" type="number" min="1" max="4"
+                     id="totalHoras"
+                     name="totalHoras"
+                     placeholder="totalHoras"
+                     [(ngModel)]="materia.totalHoras" disabled >
             </div>
           </div>
         </ng-template>

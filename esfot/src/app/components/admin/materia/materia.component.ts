@@ -57,14 +57,24 @@ export class MateriaComponent implements OnInit {
           return this.carrerass;
         }
       );
-
-
   }
 
   ngOnInit() {
   }
 
+  clean() {
+    this.materia.nombreMat = '';
+    this.materia.codigo = '';
+    this.materia.creditos = null;
+    this.materia.cd = null;
+    this.materia.cp = null;
+    this.materia.totalHoras = null;
+    this.materia.semestre = 0;
+    this.materia.carreras = [];
+  }
+
   suma() {
+<<<<<<< HEAD
     if (this.carreraNueva = true) {
       let cd = +(document.getElementById("cd")as HTMLInputElement).value;
       let cp = +(document.getElementById("cp")as HTMLInputElement).value;
@@ -75,6 +85,13 @@ export class MateriaComponent implements OnInit {
     } else {
       console.log("materia antigua");
     }
+=======
+    let cd = +(document.getElementById("cd")as HTMLInputElement).value;
+    let cp = +(document.getElementById("cp")as HTMLInputElement).value;
+    let total = cd + cp;
+    this.materia.totalHoras = total;
+    console.log(this.materia.totalHoras);
+>>>>>>> 74f8a359c414e526dde68378fcad829a565e1f6a
   }
 
   guardar() {
@@ -119,8 +136,11 @@ export class MateriaComponent implements OnInit {
         }
         else {
           this.carreraNueva = true;
+<<<<<<< HEAD
           this.suma();
 
+=======
+>>>>>>> 74f8a359c414e526dde68378fcad829a565e1f6a
         }
       }
 

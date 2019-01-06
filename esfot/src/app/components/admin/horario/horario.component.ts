@@ -22,27 +22,12 @@ export class HorarioComponent implements OnInit {
   docentes: Docentes[] = [];
   horarios: Horarios[] = [];
   horario: Horarios = {
-    dia0: null,
-    dia1: null,
-    dia2: null,
-    dia3: null,
-    dia4: null,
-    dia5: null,
+    dias: [],
     nombreMat: '',
     docenteNom: '',
     nombreAula: '',
-    horaInicio0: null,
-    horaFin0: null,
-    horaInicio1: null,
-    horaFin1: null,
-    horaInicio2: null,
-    horaFin2: null,
-    horaInicio3: null,
-    horaFin3: null,
-    horaInicio4: null,
-    horaFin4: null,
-    horaInicio5: null,
-    horaFin5: null,
+    horaInicios: [],
+    horaFins: [],
   }
 
 
@@ -168,21 +153,26 @@ export class HorarioComponent implements OnInit {
 
     /*console.log(this.horarios.length);*/
     for (let i = 0; i < this.horarios.length; i++) {
-      console.log(this.horarios[i].nombreAula);
+      //console.log(this.horarios[i].nombreAula);
       if (this.horarios[i].nombreAula == this.horario.nombreAula) {
         for (let j = 0; j < 7; j++) {
-          /*if (this.horarios[i].dia[j] == "this.horario.dia" + j) {
-            for (let k = 0; k < 7; k ++) {
-              if (this.horarios[i].horaFin[k] == "this.horario.horaInicio" + k) {}
-              console.log("hora inicio igual");
+          console.log("aula igual");
+          if (this.horarios[i].dias[j] == this.horario.dias[j]) {
+            for (let k = 0; k < 7; k++) {
+              console.log("dia igual");
+              if (this.horarios[i].horaFins[k] > this.horario.horaInicios[k]) {
+                for (let l = 0; l < 7; l++) {
+                  console.log("hora inicio incorrecta");
+                  if (this.horarios[i].docenteNom[l] == this.horario.docenteNom[l]) {
+                    for (let m = 0; m < 7; m++) {
+                      console.log("docente igual");
+                    }
+                  }
+                }
+              }
             }
-          }*/
-          console.log("dia igual");
-      }
-        /*if (this.horarios[i].nombreAula == this.horario.dia0) {
-
-        } */
-        console.log("igual");
+          }
+        }
       }
     }
 
@@ -205,6 +195,7 @@ export class HorarioComponent implements OnInit {
           }
         );
     }*/
+
   }
 
   cod: boolean = true;
@@ -218,12 +209,12 @@ export class HorarioComponent implements OnInit {
   val() {
     switch (this.cod) {
       case true:
-        this.horario.dia0 = 'Lunes';
+        this.horario.dias[0] = 'Lunes';
         this.cod = false;
 
         break;
       case false:
-        this.horario.dia0 = null;
+        this.horario.dias[0] = null;
         this.cod = true;
 
         break;
@@ -235,12 +226,12 @@ export class HorarioComponent implements OnInit {
   val1() {
     switch (this.cod1) {
       case true:
-        this.horario.dia1 = 'Martes';
+        this.horario.dias[1] = 'Martes';
         this.cod1 = false;
 
         break;
       case false:
-        this.horario.dia1 = null;
+        this.horario.dias[1] = null;
         this.cod1 = true;
 
         break;
@@ -252,12 +243,12 @@ export class HorarioComponent implements OnInit {
   val2() {
     switch (this.cod2) {
       case true:
-        this.horario.dia2 = 'Miercoles';
+        this.horario.dias[2] = 'Miercoles';
         this.cod2 = false;
 
         break;
       case false:
-        this.horario.dia2 = null;
+        this.horario.dias[2] = null;
         this.cod2 = true;
 
         break;
@@ -269,12 +260,12 @@ export class HorarioComponent implements OnInit {
   val3() {
     switch (this.cod3) {
       case true:
-        this.horario.dia3 = 'Jueves';
+        this.horario.dias[3] = 'Jueves';
         this.cod3 = false;
 
         break;
       case false:
-        this.horario.dia3 = null;
+        this.horario.dias[3] = null;
         this.cod3 = true;
 
         break;
@@ -286,12 +277,12 @@ export class HorarioComponent implements OnInit {
   val4() {
     switch (this.cod4) {
       case true:
-        this.horario.dia4 = 'Viernes';
+        this.horario.dias[4] = 'Viernes';
         this.cod4 = false;
 
         break;
       case false:
-        this.horario.dia4 = null;
+        this.horario.dias[4] = null;
         this.cod4 = true;
 
         break;
@@ -303,12 +294,12 @@ export class HorarioComponent implements OnInit {
   val5() {
     switch (this.cod5) {
       case true:
-        this.horario.dia5 = 'Sabado';
+        this.horario.dias[5] = 'Sabado';
         this.cod5 = false;
 
         break;
       case false:
-        this.horario.dia5 = null;
+        this.horario.dias[5] = null;
         this.cod5 = true;
 
         break;
