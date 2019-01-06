@@ -58,24 +58,28 @@ export class MateriaComponent implements OnInit {
           return this.carrerass;
         }
       );
-
-
   }
 
   ngOnInit() {
   }
 
+  clean() {
+    this.materia.nombreMat = '';
+    this.materia.codigo = '';
+    this.materia.creditos = null;
+    this.materia.cd = null;
+    this.materia.cp = null;
+    this.materia.totalHoras = null;
+    this.materia.semestre = 0;
+    this.materia.carreras = [];
+  }
+
   suma() {
-    if (this.carreraNueva = true) {
-      let cd = +(document.getElementById("cd")as HTMLInputElement).value;
-      let cp = +(document.getElementById("cp")as HTMLInputElement).value;
-      let total = cd + cp;
-      this.materia.totalHoras = total;
-      return total;
-      console.log(this.materia.totalHoras);
-    } else {
-      console.log("materia antigua");
-    }
+    let cd = +(document.getElementById("cd")as HTMLInputElement).value;
+    let cp = +(document.getElementById("cp")as HTMLInputElement).value;
+    let total = cd + cp;
+    this.materia.totalHoras = total;
+    console.log(this.materia.totalHoras);
   }
 
   guardar() {
@@ -84,7 +88,6 @@ export class MateriaComponent implements OnInit {
       this._adminServices.nuevaMateria(this.materia)
         .subscribe(
           resultado => {
-            this.suma();
             console.log(resultado.name);
             this._router.navigate(['/materia', resultado.name]);
           }
@@ -93,7 +96,6 @@ export class MateriaComponent implements OnInit {
       this._adminServices.editarMateria(this.materia, this.id)
         .subscribe(
           resultado => {
-            this.suma();
             this._router.navigate(['/admin' ]);
           }
         );
@@ -121,7 +123,6 @@ export class MateriaComponent implements OnInit {
         }
         else {
           this.carreraNueva = true;
-
         }
       }
 

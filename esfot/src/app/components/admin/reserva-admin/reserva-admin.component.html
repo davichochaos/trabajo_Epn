@@ -4,7 +4,6 @@
   <br>
   <div class="row">
     <div class="col-md-12">
-      <form #forma="ngForm">
         <div class="form-group row">
           <label class="col-2 col-form-label">Aula:</label>
           <div class="col-10">
@@ -33,8 +32,7 @@
         <div class="form-group row">
           <label class="col-2 col-form-label">Fecha:</label>
           <div class="col-10">
-            <p-calendar dateFormat="dd.mm.yy" [showIcon]="true" [disabledDays]="[0]"></p-calendar>
-
+            <p-calendar [(ngModel)]="date2" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true" [disabledDays]="[0]"  (onSelect)="val($event)"></p-calendar>
           </div>
         </div>
 
@@ -54,11 +52,11 @@
           </div>
         </div>
         <div class="form-group row">
-          <button type="submit" class="btn btn-info col-2 col-form-label">
+          <button type="submit" class="btn btn-info col-2 col-form-label" (click)="ver()">
             Editar
           </button>
         </div>
-      </form>
+
     </div>
   </div>
 </div>
