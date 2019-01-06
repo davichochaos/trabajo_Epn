@@ -3,7 +3,6 @@ import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-materia',
@@ -71,7 +70,7 @@ export class MateriaComponent implements OnInit {
       let cp = +(document.getElementById("cp")as HTMLInputElement).value;
       let total = cd + cp;
       this.materia.totalHoras = total;
-      return total;
+      return this.materia.totalHoras ;
       console.log(this.materia.totalHoras);
     } else {
       console.log("materia antigua");
@@ -84,7 +83,6 @@ export class MateriaComponent implements OnInit {
       this._adminServices.nuevaMateria(this.materia)
         .subscribe(
           resultado => {
-            this.suma();
             console.log(resultado.name);
             this._router.navigate(['/materia', resultado.name]);
           }
@@ -93,7 +91,6 @@ export class MateriaComponent implements OnInit {
       this._adminServices.editarMateria(this.materia, this.id)
         .subscribe(
           resultado => {
-            this.suma();
             this._router.navigate(['/admin' ]);
           }
         );
@@ -105,6 +102,7 @@ export class MateriaComponent implements OnInit {
       for (let i = 0; i < this.materia.carreras.length; i++){
         /*if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
           || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET'){
+
           if (this.carreraAntigua === false){
             this.carreraAntigua = true;
           }
@@ -121,6 +119,7 @@ export class MateriaComponent implements OnInit {
         }
         else {
           this.carreraNueva = true;
+          this.suma();
 
         }
       }
