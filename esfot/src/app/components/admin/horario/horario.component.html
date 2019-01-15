@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-sm-6 text-left">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
-        <<
+        Atras
       </button>
     </div>
     <div class="col-sm-6 text-right">
-      <button [routerLink]="['/horarioadmin','nuevo']" type="button" class="btn btn-info">
+      <button [routerLink]="['/horarioadmin','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
     </div>
@@ -14,12 +14,34 @@
   <br>
   <div class="row">
     <div class="col-md-12">
-
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Carrera:</label>
+        <div class="col-10">
+          <select class="form-control"
+                  name="carrer" id="filcarrera" [(ngModel)]="horario.carrer" (change)="flltro()">
+            <option *ngFor="let i of carrer" value="{{i.siglas}}">{{i.siglas}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Nivel:</label>
+        <div class="col-10">
+          <select class="form-control"
+                  name="filnivel" id="filnivel" [(ngModel)]="horario.semest" (change)="flltro()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </div>
+      </div>
         <div class="form-group row">
           <label class="col-2 col-form-label">Materia:</label>
           <div class="col-10">
             <select class="form-control"
-                    [(ngModel)]="horario.nombreMat" name="mat" id="mat">
+                    [(ngModel)]="horario.nombreMat" name="mat" id="mat" (change)="cruze()">
               <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
             </select>
           </div>
@@ -28,7 +50,7 @@
           <label class="col-2 col-form-label">Docente:</label>
           <div class="col-10">
             <select class="form-control"
-                    [(ngModel)]="horario.docenteNom" name="mat" id="docent">
+                    [(ngModel)]="horario.docenteNom" name="mat" id="docent" (change)="cruze()">
               <option *ngFor="let i of docentes" value="{{i.nombreDocent}}">{{i.nombreDocent}}</option>
             </select>
           </div>
@@ -48,15 +70,15 @@
           <div class="col-10">
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dias[0]"  binary="false" label="Lunes" (onChange)="val()"  [(ngModel)]="cod"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[0]"  binary="false" label="Lunes" (onChange)="val()" [(ngModel)]="cod"></p-checkbox>
               </div>
               Desde:<div class="col-3">
                 <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                          name="hora1" [(ngModel)]="horario.horaInicios[0]" [disabled]="cod" (click)="hora2()">
+                          name="hora1" [(ngModel)]="horario.horaInicios[0]" [disabled]="cod" (change)="cruze()" (click)="hora2()">
               </div>
               Hasta:<div class="col-3">
                 <input class="form-control" id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                       name="hora2" [(ngModel)]="horario.horaFins[0]" [disabled]="cod" (click)="hora2()">
+                       name="hora2" [(ngModel)]="horario.horaFins[0]" [disabled]="cod" (change)="cruze()" (click)="hora2()">
               </div>
             </div>
 
@@ -67,11 +89,11 @@
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio1" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[1]" [disabled]="cod1" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[1]" [disabled]="cod1" (change)="cruze()" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin1" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[1]" [disabled]="cod1" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[1]" [disabled]="cod1" (change)="cruze()" (click)="hora2()">
               </div>
             </div>
 
@@ -82,11 +104,11 @@
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio2" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[2]" [disabled]="cod2" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[2]" [disabled]="cod2" (change)="cruze()" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin2" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[2]" [disabled]="cod2" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[2]" [disabled]="cod2" (change)="cruze()" (click)="hora2()">
               </div>
             </div>
 
@@ -97,26 +119,26 @@
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio3" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[3]" [disabled]="cod3" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[3]" [disabled]="cod3" (change)="cruze()" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin3" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[3]" [disabled]="cod3" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[3]" [disabled]="cod3" (change)="cruze()" (click)="hora2()">
               </div>
             </div>
 
             <br>
             <div class="row">
               <div class="col-3">
-                <p-checkbox name="dia" [(ngModel)]="horario.dias[4]" label="Viernes" binary="true" (onChange)="val4()" [(ngModel)]="cod4"></p-checkbox>
+                <p-checkbox name="dia" [(ngModel)]="horario.dias[4]" label="Viernes" binary="true" (onChange)="val4()"  [(ngModel)]="cod4"></p-checkbox>
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio4" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[4]" [disabled]="cod4" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[4]" [disabled]="cod4" (change)="cruze()" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin4" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[4]" [disabled]="cod4" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[4]" [disabled]="cod4" (change)="cruze()" (click)="hora2()">
               </div>
             </div>
 
@@ -127,17 +149,17 @@
               </div>
               Desde:<div class="col-3">
               <input class="form-control" id="inicio5" type="time" [disabled]="cod5" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[5]" (click)="hora2()">
+                     name="hora1" [(ngModel)]="horario.horaInicios[5]" [disabled]="cod5" (change)="cruze()" (click)="hora2()">
             </div>
               Hasta:<div class="col-3">
               <input class="form-control" id="fin5" type="time" [disabled]="cod5" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[5]" (click)="hora2()">
+                     name="hora2" [(ngModel)]="horario.horaFins[5]" [disabled]="cod5" (change)="cruze()" (click)="hora2()">
               </div>
             </div>
           </div>
         </div>
         <div class="form-group row">
-          <button type="submit" (click)="guardar()" class="btn btn-info ">
+          <button type="submit" (click)="guardar()" [disabled]="guardarD" class="btn btn-info ">
             Guardar
           </button>
         </div>

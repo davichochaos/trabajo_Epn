@@ -5,4 +5,6 @@ export interface Horarios {
   nombreAula: string;
   horaInicios: string[];
   horaFins: string[];
+  semest: number;
+  carrer: string;
 }

@@ -6,7 +6,8 @@ import {Horarios} from '../../../interfaces/horarios.interface'
 import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
+import {Carreras} from '../../../interfaces/carreras.interface';
+
 
 @Component({
   selector: 'app-horario',
@@ -16,6 +17,7 @@ import {el} from '@angular/platform-browser/testing/src/browser_util';
 export class HorarioComponent implements OnInit {
 
   id: string;
+  carrer: Carreras[] = [];
   msgs: Message[] = [];
   aulas: Aulas[] = [];
   materias: Materias[] = [];
@@ -28,6 +30,8 @@ export class HorarioComponent implements OnInit {
     nombreAula: '',
     horaInicios: [],
     horaFins: [],
+    semest: null,
+    carrer: ''
   }
 
 
@@ -73,17 +77,7 @@ export class HorarioComponent implements OnInit {
         }
       );
 
-    this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const aulaNew = resultados[key$];
-            aulaNew.id = key$;
-            this.materias.push(aulaNew);
-          }
-          return this.materias;
-        }
-      );
+
 
     this._adminService.consultarHorarios()
       .subscribe(
@@ -93,10 +87,54 @@ export class HorarioComponent implements OnInit {
             horarioNew.id = key$;
             this.horarios.push(horarioNew);
           }
-          console.log(this.horarios);
           return this.horarios;
         }
       );
+
+    this._adminService.consultarCarreras()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.carrer.push(usuarioNew);
+          }
+          return this.carrer;
+        }
+      );
+  }
+
+  flltro() {
+    this._adminService.consultarMaterias()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const materiaNew = resultados[key$];
+            materiaNew.id = key$;
+            if (materiaNew.carreras.length >= [1]) {
+              for (let i = 0; i < materiaNew.carreras.length; i++) {
+                if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest) {
+                  this.materias.push(materiaNew);
+                }
+              }
+            }
+            console.log(this.materias.length);
+          }
+          return this.materias;
+        }
+      );
+
+  }
+
+  clean() {
+    this.horario.dias = [];
+    this.horario.nombreMat = '';
+    this.horario.docenteNom = '';
+    this.horario.nombreAula = '';
+    this.horario.horaInicios = [];
+    this.horario.horaFins = [];
+    this.horario.semest =  null;
+    this.horario.carrer = '';
   }
 
   ngOnInit() {
@@ -128,29 +166,10 @@ export class HorarioComponent implements OnInit {
       this.msgs.push({severity:'error', summary:'Error', detail:'Hora final es inferior a hora de inicio'});
 
     }
-    /*if (this.cod1 == false || this.cod2 == false || this.cod3 == false || this.cod4 == false) {
-      if (Date.parse(horaDesde1) != Date.parse(horaHasta) || Date.parse(horaDesde1) != Date.parse(horaHasta) || Date.parse(horaDesde1) != Date.parse(horaHasta) ) {
-        this.msgs = [];
-        this.msgs.push({severity:'error', summary:'Error', detail:'Hora de inicio incorrecta'});
-      } else {
-        //console.log('todo');
-      }
-    }*/
 
   }
 
-  materiasAsig() {
-    let mat = (document.getElementById("mat")as HTMLInputElement).value;
-    let mat1 = (document.getElementById("mat1") as HTMLInputElement).value;
-    let mat2 = (document.getElementById("mat2")as HTMLInputElement).value;
-    if ( mat === mat1 || mat === mat2 || mat1 === mat2) {
-      this.msgs = [];
-      this.msgs.push({severity:'error', summary:'Error', detail:'Materia ya asignada, esooja otra por favor'});
-    }
-  }
-
-  guardar() {
-
+  cruze() {
     /*console.log(this.horarios.length);*/
     for (let i = 0; i < this.horarios.length; i++) {
       //console.log(this.horarios[i].nombreAula);
@@ -160,12 +179,14 @@ export class HorarioComponent implements OnInit {
           if (this.horarios[i].dias[j] == this.horario.dias[j]) {
             for (let k = 0; k < 7; k++) {
               console.log("dia igual");
-              if (this.horarios[i].horaFins[k] > this.horario.horaInicios[k]) {
+              if (this.horarios[i].docenteNom[k] == this.horario.docenteNom[k]) {
                 for (let l = 0; l < 7; l++) {
-                  console.log("hora inicio incorrecta");
-                  if (this.horarios[i].docenteNom[l] == this.horario.docenteNom[l]) {
+                  console.log("docente igual");
+                  if (this.horarios[i].horaFins[l] > this.horario.horaInicios[l]) {
                     for (let m = 0; m < 7; m++) {
-                      console.log("docente igual");
+                      console.log("hora inicio incorrecta");
+                      this.msgs = [];
+                      this.msgs.push({severity:'error', summary:'Error', detail:'Cruze de horarios'});
                     }
                   }
                 }
@@ -175,10 +196,10 @@ export class HorarioComponent implements OnInit {
         }
       }
     }
+  }
 
-
-
-    /*if (this.id == 'nuevo') {
+  guardar() {
+    if (this.id == 'nuevo') {
       // guardar usuario nuevo
       this._adminService.nuevoHorario(this.horario)
         .subscribe(
@@ -194,7 +215,7 @@ export class HorarioComponent implements OnInit {
             this._router.navigate(['/admin' ]);
           }
         );
-    }*/
+    }
 
   }
 
