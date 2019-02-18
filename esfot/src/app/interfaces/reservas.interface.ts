@@ -1,8 +1,9 @@
 export interface Reservas {
   aula: string;
-  nombreDocen: string;
+  nombreDocent: string;
   nombreMat: string;
   fecha: string;
+  dia: string;
   horaInicio: string;
   horaFin: string;
 }

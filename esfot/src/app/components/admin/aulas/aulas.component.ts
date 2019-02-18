@@ -21,7 +21,8 @@ export class AulasComponent implements OnInit {
           }
           return this.aulas;
         }
-      ); }
+      );
+  }
 
   ngOnInit() {
   }

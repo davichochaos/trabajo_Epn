@@ -77,8 +77,6 @@ export class HorarioComponent implements OnInit {
         }
       );
 
-
-
     this._adminService.consultarHorarios()
       .subscribe(
         res => {
@@ -115,6 +113,8 @@ export class HorarioComponent implements OnInit {
               for (let i = 0; i < materiaNew.carreras.length; i++) {
                 if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest) {
                   this.materias.push(materiaNew);
+                  materiaNew.materias = [];
+
                 }
               }
             }
@@ -142,54 +142,180 @@ export class HorarioComponent implements OnInit {
 
   //rstrincciones
   //1. Hora finalizada menor a la hora de inicio y
-  // sugunda horario empezar desde la hora finalizada de la anterior
+  // segunda horario empezar desde la hora finalizada de la anterior
 
   hora2() {
     //let text= (<HTMLInputElement> document.getElementById("inicio")).value.replace(':','0');
-    let horaDesde = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
-    let horaHasta = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0');
-    let horaDesde1 = (document.getElementById("inicio1") as HTMLInputElement).value.replace(':','0');
-    let horaHasta1 = (document.getElementById("fin1")as HTMLInputElement).value.replace(':','0');
-    let horaDesde2 = (document.getElementById("inicio2") as HTMLInputElement).value.replace(':','0');
-    let horaHasta2 = (document.getElementById("fin2")as HTMLInputElement).value.replace(':','0');
-    let horaDesde3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
-    let horaHasta3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0')
-    let horaDesde4 = (document.getElementById("inicio4") as HTMLInputElement).value.replace(':','0');
-    let horaHasta4 = (document.getElementById("fin4")as HTMLInputElement).value.replace(':','0');
-    let horaDesde5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
-    let horaHasta5 = (document.getElementById("fin5")as HTMLInputElement).value.replace(':','0')
+    let ini = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
+    let fin = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0');
+    let ini1 = (document.getElementById("inicio1") as HTMLInputElement).value.replace(':','0');
+    let fin1 = (document.getElementById("fin1")as HTMLInputElement).value.replace(':','0');
+    let ini2 = (document.getElementById("inicio2") as HTMLInputElement).value.replace(':','0');
+    let fin2 = (document.getElementById("fin2")as HTMLInputElement).value.replace(':','0');
+    let ini3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
+    let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0')
+    let ini4 = (document.getElementById("inicio4") as HTMLInputElement).value.replace(':','0');
+    let fin4 = (document.getElementById("fin4")as HTMLInputElement).value.replace(':','0');
+    let ini5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
+    let fin5 = (document.getElementById("fin5")as HTMLInputElement).value.replace(':','0');
 
-    if (Date.parse(horaDesde) >= Date.parse(horaHasta) || Date.parse(horaDesde1) >= Date.parse(horaHasta1) ||
-        Date.parse(horaDesde2) >= Date.parse(horaHasta2) || Date.parse(horaDesde3) >= Date.parse(horaHasta3) ||
-        Date.parse(horaDesde4) >= Date.parse(horaHasta4) || Date.parse(horaDesde5) >= Date.parse(horaHasta5)) {
+    if (Date.parse(ini) >= Date.parse(fin) || Date.parse(ini1) >= Date.parse(fin1) ||
+        Date.parse(ini2) >= Date.parse(fin2) || Date.parse(ini3) >= Date.parse(fin3) ||
+        Date.parse(ini4) >= Date.parse(fin4) || Date.parse(ini5) >= Date.parse(fin5)) {
       this.msgs = [];
       this.msgs.push({severity:'error', summary:'Error', detail:'Hora final es inferior a hora de inicio'});
-
     }
 
+    let total1 = 0;
+    let total2 = 0;
+    let total3 = 0;
+    let total4 = 0;
+    let total5 = 0;
+    let total6 = 0;
+    let total;
+
+    if (this.cod == false || this.cod1 == false || this.cod2 == false || this.cod3 == false || this.cod4 == false || this.cod5 == false) {
+      total1 = +fin - +ini;
+      total2 = +fin1 - +ini1;
+      total3 = +fin2 - +ini2;
+      total4 = +fin3 - +ini3;
+      total5 = +fin4 - +ini4;
+      total6 = +fin5 - +ini5;
+      total = (+total1 + +total2 + +total3 + +total4 + +total5 + +total6).toString().split("")[0];
+      console.log('total: ', total);
+      for (let i = 0; i < this.materias.length; i++) {
+        if (this.materias[i].nombreMat == this.horario.nombreMat) {
+            if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horas correctas'});
+            } else {
+              this.msgs = [];
+              this.msgs.push({severity: 'error', summary: 'Error', detail: 'Horas incorrectas'});
+            }
+
+        }
+      }
+
+    }
   }
 
   cruze() {
-    /*console.log(this.horarios.length);*/
     for (let i = 0; i < this.horarios.length; i++) {
-      //console.log(this.horarios[i].nombreAula);
       if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        console.log('aula igual');
         for (let j = 0; j < 7; j++) {
-          console.log("aula igual");
-          if (this.horarios[i].dias[j] == this.horario.dias[j]) {
+          if (this.horarios[i].dias[j] == this.horario.dias[0]) {
+            console.log('dia igual');
             for (let k = 0; k < 7; k++) {
-              console.log("dia igual");
-              if (this.horarios[i].docenteNom[k] == this.horario.docenteNom[k]) {
-                for (let l = 0; l < 7; l++) {
-                  console.log("docente igual");
-                  if (this.horarios[i].horaFins[l] > this.horario.horaInicios[l]) {
-                    for (let m = 0; m < 7; m++) {
-                      console.log("hora inicio incorrecta");
-                      this.msgs = [];
-                      this.msgs.push({severity:'error', summary:'Error', detail:'Cruze de horarios'});
-                    }
-                  }
-                }
+              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[0] ||
+                this.horario.horaInicios[0] < this.horarios[i].horaFins[k]) {
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  cruze1() {
+    for (let i = 0; i < this.horarios.length; i++) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        console.log('aula igual');
+        for (let j = 0; j < 7; j++) {
+          if (this.horarios[i].dias[j] == this.horario.dias[1]) {
+            console.log('dia igual');
+            for (let k = 0; k < 7; k++) {
+              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[1] ||
+                this.horario.horaInicios[1] < this.horarios[i].horaFins[k]) {
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  cruze2() {
+    for (let i = 0; i < this.horarios.length; i++) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        console.log('aula igual');
+        for (let j = 0; j < 7; j++) {
+          if (this.horarios[i].dias[j] == this.horario.dias[2]) {
+            console.log('dia igual');
+            for (let k = 0; k < 7; k++) {
+              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[2] ||
+                this.horario.horaInicios[2] < this.horarios[i].horaFins[k]) {
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  cruze3() {
+    for (let i = 0; i < this.horarios.length; i++) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        console.log('aula igual');
+        for (let j = 0; j < 7; j++) {
+          if (this.horarios[i].dias[j] == this.horario.dias[3]) {
+            console.log('dia igual');
+            for (let k = 0; k < 7; k++) {
+              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[3] ||
+                this.horario.horaInicios[3] < this.horarios[i].horaFins[k]) {
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  cruze4() {
+    for (let i = 0; i < this.horarios.length; i++) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        console.log('aula igual');
+        for (let j = 0; j < 7; j++) {
+          if (this.horarios[i].dias[j] == this.horario.dias[4]) {
+            console.log('dia igual');
+            for (let k = 0; k < 7; k++) {
+              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[4] ||
+                this.horario.horaInicios[4] < this.horarios[i].horaFins[k]) {
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  cruze5() {
+    for (let i = 0; i < this.horarios.length; i++) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+        console.log('aula igual');
+        for (let j = 0; j < 7; j++) {
+          if (this.horarios[i].dias[j] == this.horario.dias[5]) {
+            console.log('dia igual');
+            for (let k = 0; k < 7; k++) {
+              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[5] ||
+                this.horario.horaInicios[5] < this.horarios[i].horaFins[k]) {
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
               }
             }
           }
@@ -236,6 +362,8 @@ export class HorarioComponent implements OnInit {
         break;
       case false:
         this.horario.dias[0] = null;
+        this.horario.horaInicios[0] = null;
+        this.horario.horaFins[0] = null;
         this.cod = true;
 
         break;
@@ -253,6 +381,8 @@ export class HorarioComponent implements OnInit {
         break;
       case false:
         this.horario.dias[1] = null;
+        this.horario.horaInicios[1] = null;
+        this.horario.horaFins[1] = null;
         this.cod1 = true;
 
         break;
@@ -270,6 +400,8 @@ export class HorarioComponent implements OnInit {
         break;
       case false:
         this.horario.dias[2] = null;
+        this.horario.horaInicios[2] = null;
+        this.horario.horaFins[2] = null;
         this.cod2 = true;
 
         break;
@@ -287,6 +419,8 @@ export class HorarioComponent implements OnInit {
         break;
       case false:
         this.horario.dias[3] = null;
+        this.horario.horaInicios[3] = null;
+        this.horario.horaFins[3] = null;
         this.cod3 = true;
 
         break;
@@ -304,6 +438,8 @@ export class HorarioComponent implements OnInit {
         break;
       case false:
         this.horario.dias[4] = null;
+        this.horario.horaInicios[4] = null;
+        this.horario.horaFins[4] = null;
         this.cod4 = true;
 
         break;
@@ -321,6 +457,8 @@ export class HorarioComponent implements OnInit {
         break;
       case false:
         this.horario.dias[5] = null;
+        this.horario.horaInicios[5] = null;
+        this.horario.horaFins[5] = null;
         this.cod5 = true;
 
         break;

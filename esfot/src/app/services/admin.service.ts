@@ -6,6 +6,8 @@ import { Materias } from '../interfaces/materias.interface';
 import { Aulas } from '../interfaces/aulas.interface';
 import { Carreras } from '../interfaces/carreras.interface';
 import { Horarios } from '../interfaces/horarios.interface';
+import {Reservas} from '../interfaces/reservas.interface';
+
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -32,6 +34,10 @@ export class AdminService {
   //materias
   materiasURL: string = 'https://esfot-975af.firebaseio.com/materias.json';
   materiaURL: string = 'https://esfot-975af.firebaseio.com/materias';
+
+  //reservas
+  reservasURL: string = 'https://esfot-975af.firebaseio.com/reservas.json';
+  reservaURL: string = 'https://esfot-975af.firebaseio.com/reservas';
 
   constructor(private _http: Http, private http: HttpClient) {}
 
@@ -336,6 +342,67 @@ export class AdminService {
 
   eliminarMateria(key$: string) {
     const url = `${this.materiaURL}/${key$}.json`;
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+
+  //reservas
+  consultarReserva() {
+    return this._http.get(this.reservasURL)
+      .pipe(
+        map(
+          respuesta => {
+            return  respuesta.json();
+          }
+        )
+      );
+  }
+
+  nuevaReserva(reserva: Reservas) {
+    let body = JSON.stringify(reserva);
+    let headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    return this._http.post(this.reservasURL, body, {headers: headers})
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  getReserva(indice: string) {
+    let url = `${this.reservaURL}/${ indice }.json`;
+    return this._http.get(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  editaraReserva(reserva: Reservas, id: string) {
+    const body = JSON.stringify(reserva);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    const url = `${this.reservaURL}/${id}.json`;
+    return this._http.put(url, body, {headers: headers})
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  eliminarReserva(key$: string) {
+    const url = `${this.reservaURL}/${key$}.json`;
     return this._http.delete(url)
       .pipe(map(
         resultado => {

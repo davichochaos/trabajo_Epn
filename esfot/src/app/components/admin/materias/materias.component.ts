@@ -15,9 +15,9 @@ export class MateriasComponent implements OnInit {
       .subscribe(
         resultados => {
           for (const key$ in resultados) {
-            const usuarioNew = resultados[key$];
-            usuarioNew.id = key$;
-            this.materias.push(usuarioNew);
+            const materiaNew = resultados[key$];
+            materiaNew.id = key$;
+            this.materias.push(materiaNew);
           }
           return this.materias;
         }

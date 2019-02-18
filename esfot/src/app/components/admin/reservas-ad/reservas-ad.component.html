@@ -1,0 +1,19 @@
+<div class="card-group">
+  <div class="card" *ngFor="let item of reservas; let i = index;">
+    <div class="card-header"><h3 style="text-align: center">Reserva #{{i+1}}</h3></div>
+    <div class="card-body">
+      <label><b>Doocente:</b></label>&nbsp;<label>{{item.nombreDocent}}</label><br>
+      <label><b>Aula/Laboratorio:</b></label>&nbsp;<label>{{item.aula}}</label><br>
+      <label><b>Materia:</b></label>&nbsp;<label>{{item.nombreMat}}</label><br>
+      <label><b>Fecha:</b></label>&nbsp;<label>{{item.fecha}}</label><br>
+      <label><b>Hora de inicio:</b></label>&nbsp;<label>{{item.horaInicio}}</label><br>
+      <label><b>Hora de finalizacion:</b></label>&nbsp;<label>{{item.horaFin}}</label>
+    </div>
+    <div class="card-footer"><button (click)="eliminar(item.id, i)" type="button" class="btn btn-danger">Eliminar</button>
+    </div>
+  </div>
+</div>
+<br>
+<div>
+  <button [routerLink]="['/reserva', 'nuevo']" type="button" class="btn btn-info">Nueva Reserva</button>
+</div>

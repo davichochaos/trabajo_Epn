@@ -37,6 +37,8 @@ import { ReservaAdminComponent } from './components/admin/reserva-admin/reserva-
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
 import { ReservaComponent } from './components/usuarios/reserva/reserva.component';
 import { DocentesComponent } from './components/usuarios/docentes/docentes.component';
+import { ReservasAdComponent } from './components/admin/reservas-ad/reservas-ad.component';
+import { ReservasUsuComponent } from './components/usuarios/reservas-usu/reservas-usu.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +57,9 @@ import { DocentesComponent } from './components/usuarios/docentes/docentes.compo
     MateriasComponent,
     MateriaComponent,
     DocentesComponent,
-    ReservaAdminComponent
+    ReservaAdminComponent,
+    ReservasAdComponent,
+    ReservasUsuComponent
   ],
   imports: [
     BrowserModule,

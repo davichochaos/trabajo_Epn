@@ -1,62 +1,80 @@
 <div class="container-fluid">
   <div class="row">
+    <div class="col-sm-6 text-left">
+      <button [routerLink]="['/admin']" type="button" class="btn btn-info">
+        Atras
+      </button>
+    </div>
+    <div class="col-sm-6 text-right">
+      <button [routerLink]="['/reserva','nuevo']" (click)="clean()" type="button" class="btn btn-info">
+        Limpiar
+      </button>
+    </div>
   </div>
   <br>
   <div class="row">
     <div class="col-md-12">
-        <div class="form-group row">
-          <label class="col-2 col-form-label">Aula:</label>
-          <div class="col-10">
-            <input class="form-control" type="text"
-                   placeholder="nombre"
-                   name="nombre">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-2 col-form-label">Docente:</label>
-          <div class="col-10">
-            <input class="form-control" type="email"
-                   name="correo"
-                   placeholder="correo">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-2 col-form-label">Materia:</label>
-          <div class="col-10">
-            <input class="form-control" type="text"
-                   name="contra"
-                   placeholder="163">
-          </div>
-        </div>
 
-        <div class="form-group row">
-          <label class="col-2 col-form-label">Fecha:</label>
-          <div class="col-10">
-            <p-calendar [(ngModel)]="date2" [locale]="es" dateFormat="dd/mm/yy" [showIcon]="true" [disabledDays]="[0]"  (onSelect)="val($event)"></p-calendar>
-          </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Docente:</label>
+        <div class="col-5">
+          <input class="form-control" type="text"
+                 placeholder="nombre"
+                 name="nombre"
+                 [(ngModel)]="reserva.nombreDocent">
         </div>
+      </div>
 
-        <div class="form-group row">
-          <label class="col-2 col-form-label">Hora de Inicio:</label>
-          <div class="col-sm-2">
-            <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
-                   name="hora">
-          </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Aula:</label>
+        <div class="col-5">
+          <select class="form-control" name="aula" placeholder="aula"
+                  [(ngModel)]="reserva.aula" (change)="cruz(); reserv()">
+            <option *ngFor="let item of aulas" value="{{item.nombreAula}}">{{item.nombreAula}}</option>
+          </select>
         </div>
+      </div>
 
-        <div class="form-group row">
-          <label class="col-2 col-form-label">Hora de Finalizacion:</label>
-          <div class="col-sm-2">
-            <input class="form-control" id="fin" type="time" value="07:00" min="07:00" max="21:00" step="3600"
-                   name="hora">
-          </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Materia:</label>
+        <div class="col-5">
+          <select class="form-control"
+                  name="materia"
+                  placeholder="materia" [(ngModel)]="reserva.nombreMat">
+            <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
+          </select>
         </div>
-        <div class="form-group row">
-          <button type="submit" class="btn btn-info col-2 col-form-label" (click)="ver()">
-            Editar
-          </button>
-        </div>
+      </div>
 
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Fecha:</label>
+        <div class="col-10">
+          <p-calendar [(ngModel)]="reserva.fecha" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val($event)" (onSelect)="cruz(); reserv()"></p-calendar>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Hora de Inicio:</label>
+        <div class="col-sm-2">
+          <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
+                 name="hora" (change)="hor()" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv()">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">Hora de Finalizacion:</label>
+        <div class="col-sm-2">
+          <input class="form-control" id="fin" type="time" value="07:00" min="07:00" max="21:00" step="3600"
+                 name="hora" (change)="hor(); reserv()" [(ngModel)]="reserva.horaFin">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <button type="submit" class="btn btn-info" (click)="guardarRe()">
+          Guardar
+        </button>
+      </div>
+      <p-growl [(value)]="msgs" [life]="2000"></p-growl>
     </div>
   </div>
 </div>

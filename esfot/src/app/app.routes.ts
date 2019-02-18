@@ -21,18 +21,17 @@ const APP_ROUTES: Routes = [
 
   /*admin*/
   {path: 'admin', component: AdministradorComponent},
-  {path: 'docent', component: DocentesComponent},
   {path: 'usuario/:id', component: UsuarioComponent},
   {path: 'horarioadmin/:id', component: HorarioComponent},
   {path: 'carrera/:id', component: CarreraComponent},
   {path: 'aula/:id', component: AulaComponent},
   {path: 'materia/:id', component: MateriaComponent},
-  {path: 'reserv', component: ReservaAdminComponent},
+  {path: 'reserva/:id', component: ReservaAdminComponent},
 
   /*usuarios*/
-
+  {path: 'docent', component: DocentesComponent},
   {path: 'perfil', component: PerfilComponent},
-  {path: 'reserva', component: ReservaComponent},
+  {path: 'reserva:id', component: ReservaComponent},
   /*{path: 'horarios', component: HorariosComponent},*/
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];

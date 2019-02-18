@@ -47,11 +47,13 @@ export class LoginComponent implements OnInit {
           if (usuarioNew.correo === usuario && usuarioNew.password === contra && usuarioNew.cargo === 'Administrador') {
             if (typeof(Storage) !== 'undefined') {
               sessionStorage.setItem('Admin', this.usuarios.correo);
+              console.log(respuesta[key$].id);
             }
             this._router.navigate(['/admin']);
           } else if (usuarioNew.correo === usuario && usuarioNew.password === contra && usuarioNew.cargo === 'Docente') {
             if (typeof(Storage) !== 'undefined') {
               sessionStorage.setItem('Docent', this.usuarios.correo);
+              console.log(usuarioNew.id);
             }
             this._router.navigate(['/docent']);
           } else {
@@ -63,19 +65,5 @@ export class LoginComponent implements OnInit {
         //return this.listaUsuarios;
       });
   }
-
-  //hora2() {
-    //let text= (<HTMLInputElement> document.getElementById("inicio")).value.replace(':','0');
-
-    //let horaDesde = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
-    //let horaHasta = (document.getElementById("final")as HTMLInputElement).value.replace(':','0');
-    //if (Date.parse(horaDesde) > Date.parse(horaHasta)) {
-      //alert('¡La hora de término no puede ser anterior a la hora de inicio!');
-      //return 0;
-    //} else {
-      //alert('¡La hora!');
-      //return 0;
-    //}
-  //}
 
 }
