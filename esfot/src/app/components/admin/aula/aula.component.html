@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-6 text-left">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
-        <<
+        Atras
       </button>
     </div>
     <div class="col-sm-6 text-right">
@@ -14,13 +14,14 @@
   <br>
   <div class="row">
     <div class="col-md-12">
-      <form (ngSubmit)="guardar()" #forma="ngForm">
+      <form class="was-validated" (ngSubmit)="guardar()" #forma="ngForm">
         <div class="form-group row">
           <label class="col-2 col-form-label">Nombre:</label>
           <div class="col-10">
             <input class="form-control" type="text"
                    placeholder="nombre"
                    name="nombre"
+                   required
                    [(ngModel)]="aula.nombreAula">
           </div>
         </div>
@@ -28,7 +29,8 @@
           <label class="col-2 col-form-label">Descripcion:</label>
           <div class="col-10">
             <select class="custom-select form-control"
-                    name="descripcion" [(ngModel)]="aula.descripcion">
+                    name="descripcion" [(ngModel)]="aula.descripcion"
+                    required>
               <option value="Aula">Aula</option>
               <option value="Laboratorio">Laboratorio</option>
             </select>
@@ -39,14 +41,17 @@
           <div class="col-10">
             <input class="form-control" type="number" min="8" max="40"
                    name="capacidad"
+                   required
                    placeholder="capacidad"
                    [(ngModel)]="aula.cupo">
           </div>
         </div>
         <div class="form-group row">
-          <button type="submit" class="btn btn-info ">
-            Guardar
-          </button>
+          <div class="col-auto">
+            <button type="submit" [disabled]="!forma.valid" class="btn btn-info ">
+              Guardar
+            </button>
+          </div>
         </div>
       </form>
     </div>

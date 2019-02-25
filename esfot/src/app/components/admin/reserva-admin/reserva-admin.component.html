@@ -12,6 +12,7 @@
     </div>
   </div>
   <br>
+  <form class="was-validated" #forma="ngForm">
   <div class="row">
     <div class="col-md-12">
 
@@ -21,6 +22,7 @@
           <input class="form-control" type="text"
                  placeholder="nombre"
                  name="nombre"
+                 required
                  [(ngModel)]="reserva.nombreDocent">
         </div>
       </div>
@@ -28,7 +30,9 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Aula:</label>
         <div class="col-5">
-          <select class="form-control" name="aula" placeholder="aula"
+          <select class="form-control" name="aula"
+                  placeholder="aula"
+                  required
                   [(ngModel)]="reserva.aula" (change)="cruz(); reserv()">
             <option *ngFor="let item of aulas" value="{{item.nombreAula}}">{{item.nombreAula}}</option>
           </select>
@@ -40,6 +44,7 @@
         <div class="col-5">
           <select class="form-control"
                   name="materia"
+                  required
                   placeholder="materia" [(ngModel)]="reserva.nombreMat">
             <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
           </select>
@@ -56,7 +61,7 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Hora de Inicio:</label>
         <div class="col-sm-2">
-          <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
+          <input class="form-control" required id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
                  name="hora" (change)="hor()" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv()">
         </div>
       </div>
@@ -64,17 +69,19 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Hora de Finalizacion:</label>
         <div class="col-sm-2">
-          <input class="form-control" id="fin" type="time" value="07:00" min="07:00" max="21:00" step="3600"
+          <input class="form-control" required id="fin" type="time" value="07:00" min="07:00" max="21:00" step="3600"
                  name="hora" (change)="hor(); reserv()" [(ngModel)]="reserva.horaFin">
         </div>
       </div>
 
       <div class="form-group row">
-        <button type="submit" class="btn btn-info" (click)="guardarRe()">
+        <button type="submit" class="btn btn-info"
+                [disabled]="!forma.valid" (click)="guardarRe()">
           Guardar
         </button>
       </div>
       <p-growl [(value)]="msgs" [life]="2000"></p-growl>
     </div>
   </div>
+  </form>
 </div>

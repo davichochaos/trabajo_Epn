@@ -75,6 +75,18 @@ export class ReservaAdminComponent implements OnInit {
         }
       );
 
+    this._adminServices.consultarAulas()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.aulas.push(usuarioNew);
+          }
+          return this.aulas;
+        }
+      );
+
     this._adminServices.consultarReserva()
       .subscribe(
         res => {

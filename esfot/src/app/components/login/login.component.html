@@ -1,34 +1,60 @@
+<header>
+  <img id="cabezera" class="img-fluid" src="./../../../assets/cabezera/cabecera.png">
+</header>
+<br>
 <div class="container-fluid">
-  <div id="silverfox" class="col-lg-12 col-md-6 col-sm-6 col-xs-12"></div>
-  <h1 style="text-align: center">Login</h1>
   <br>
-  <div class="row justify-content-center">
-    <div class="col-6 offset-3">
-      <form (ngSubmit)="login(usuario.value, contra.value)" #forma="ngForm">
-        <div class="form-group row">
+  <div class="row">
+    <div class="col-3">
+      <h4>Informacion</h4>
+      <p style="text-align: justify">Bienvenido al aplicactivo web de disbribucion de recursos de la ESFOT, en el cual podra reservar aulas o labaratorios
+      en caso de necesitarlo. Si dispone de un usuario y contraseña ingreselas por favor.</p>
+    </div>
+    <div class="col-6">
+      <h1 style="text-align: center">Login</h1><br>
+      <form class="was-validated" (ngSubmit)="login(usuario.value, contra.value)" #forma="ngForm">
+        <div class="form-group row justify-content-center">
           <label class="col-2 col-form-label">Usuario</label>
           <div class="col-6">
             <input
               class="form-control"
               placeholder="Usuario"
-              #usuario
-              name="usuario" type="text" [(ngModel)]="usuarios.correo">
+              #usuario = "ngModel"
+              name="usuario" type="text" [(ngModel)]="usuarios.correo"
+              required
+              pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$">
+            <div class="valid-feedback">
+              <b>Correo con formato correcto</b>
+            </div>
+            <div class="invalid-feedback">
+              <b>Correo con formato incorrecto</b>
+            </div>
           </div>
         </div>
-
-        <div class="form-group row">
+        <div class="form-group row justify-content-center">
           <label class="col-2 col-form-label">Password</label>
           <div class="col-6">
             <input type="password"
                    class="form-control"
-                   placeholder="Contraseña" #contra
+                   placeholder="Contraseña"
+                   #contra = "ngModel"
                    name="oontra"
-                   [(ngModel)]="usuarios.password" >
+                   [(ngModel)]="usuarios.password"
+                   required
+                   minlength="6">
+            <div class="valid-feedback">
+              <b>Contraseña correcta</b>
+            </div>
+            <div class="invalid-feedback">
+              <b>Minimo de caracteres 6</b>
+            </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-4 offset-2">
-            <button class="btn btn-primary" type="submit">Ingresar</button>
+            <button class="btn btn-primary"
+                    type="submit"
+                    [disabled]="!forma.valid">Ingresar</button>
           </div>
         </div>
       </form>
@@ -36,10 +62,6 @@
     </div>
   </div>
 </div>
-<!--
-<html>
-<input type="time" id="inicio">
-<input type="time" id="final">
-<button (click)="hora2()">Click me</button>
-
-</html>-->
+<footer id="pie">
+  <img id="pie1" class="img-fluid" src="./../../../assets/cabezera/pie.png">
+</footer>
