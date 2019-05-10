@@ -116,6 +116,8 @@ export class ReservaComponent implements OnInit {
           resultado => {
             console.log(resultado.name);
             this._router.navigate(['/reserva', resultado.name]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva guardada con exito'});
           }
         );
     } else {
@@ -123,6 +125,8 @@ export class ReservaComponent implements OnInit {
         .subscribe(
           resultado => {
             this._router.navigate(['/admin' ]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva editada con exito'});
           }
         );
     }
@@ -152,6 +156,21 @@ export class ReservaComponent implements OnInit {
     } else {
       this.msgs = [];
       this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Hora correcta'});
+    }
+
+    let total;
+    total = (+fin - +ini).toString().split("")[0];
+    console.log('total',total);
+    for (let i = 0; i < this.materias.length; i++) {
+      if (this.materias[i].nombreMat == this.reserva.nombreMat) {
+        if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+          this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Rango de horas correctas'});
+        } else {
+          this.msgs = [];
+          this.msgs.push({severity: 'error', summary: 'Error', detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'});
+        }
+
+      }
     }
   }
 
@@ -185,6 +204,60 @@ export class ReservaComponent implements OnInit {
     }
 
     //console.log('3', this.reserva.dia );
+  }
+
+  val1(event) {
+    let da = event.toString().split(" ");
+    switch (da[1]) {
+      case "Jan" :
+        this.reserva.fecha  = "Enero " + da[2] + " " + da[3];
+        break;
+
+      case "Feb" :
+        this.reserva.fecha = "Febrero " + da[2] + " " + da[3];
+        break;
+
+      case "Mar" :
+        this.reserva.fecha = "Marzo " + da[2] + " " + da[3];
+        break;
+
+      case "Apr" :
+        this.reserva.fecha  = "Abril " + da[2] + " " + da[3];
+        break;
+
+      case "May" :
+        this.reserva.fecha  = "Mayo " + da[2] + " " + da[3];
+        break;
+
+      case "Jun" :
+        this.reserva.fecha  = "Junio " + da[2] + " " + da[3];
+        break;
+
+      case "Jul" :
+        this.reserva.dia  = "Julio " + da[2] + " " + da[3];
+        break;
+
+      case "Aug" :
+        this.reserva.fecha  = "Agosto " + da[2] + " " + da[3];
+        break;
+
+      case "Sep" :
+        this.reserva.fecha  = "Septiembre " + da[2] + " " + da[3];
+        break;
+
+      case "Oct" :
+        this.reserva.fecha  = "Octubre " + da[2] + " " + da[3];
+        break;
+
+      case "Nov" :
+        this.reserva.fecha  = "Noviembre " + da[2] + " " + da[3];
+        break;
+
+      case "Dec" :
+        this.reserva.fecha  = "Diciembre " + da[2] + " " + da[3];
+        break;
+    }
+    console.log('mes',this.reserva.fecha);
   }
 
   cruz() {

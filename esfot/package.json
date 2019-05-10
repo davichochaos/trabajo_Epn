@@ -25,8 +25,8 @@
     "generate-password": "^1.4.0",
     "jquery": "^3.3.1",
     "npm": "^6.4.1",
-    "primeicons": "^1.0.0-beta.10",
-    "primeng": "^6.1.4",
+    "primeicons": "^1.0.0",
+    "primeng": "^6.1.7",
     "rxjs": "~6.2.0",
     "tether": "^1.4.5",
     "zone.js": "~0.8.26"

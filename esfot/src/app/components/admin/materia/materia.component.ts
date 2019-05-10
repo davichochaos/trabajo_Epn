@@ -3,6 +3,7 @@ import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {Message} from 'primeng/api';
 
 @Component({
   selector: 'app-materia',
@@ -12,6 +13,7 @@ import {Carreras} from '../../../interfaces/carreras.interface';
 export class MateriaComponent implements OnInit {
 
   carrerass: Carreras[] = [];
+  msgs: Message[] = [];
 
   id: string;
   materia: Materias = {
@@ -99,6 +101,8 @@ export class MateriaComponent implements OnInit {
           resultado => {
             console.log(resultado.name);
             this._router.navigate(['/materia', resultado.name]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Materia guardada con exito'});
           }
         );
     } else {
@@ -106,6 +110,8 @@ export class MateriaComponent implements OnInit {
         .subscribe(
           resultado => {
             this._router.navigate(['/admin' ]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Materia editada con exito'});
           }
         );
     }

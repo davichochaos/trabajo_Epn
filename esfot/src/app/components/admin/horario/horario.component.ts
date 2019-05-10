@@ -7,7 +7,6 @@ import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 
 @Component({
@@ -331,6 +330,8 @@ export class HorarioComponent implements OnInit {
           resultado => {
             console.log(resultado.name);
             this._router.navigate(['/horarioadmin', resultado.name]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario guardado con exito'});
           }
         );
     } else {
@@ -338,6 +339,8 @@ export class HorarioComponent implements OnInit {
         .subscribe(
           resultado => {
             this._router.navigate(['/admin' ]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario editado con exito'});
           }
         );
     }

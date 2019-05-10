@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {Message} from 'primeng/api';
 
 @Component({
   selector: 'app-carrera',
@@ -10,6 +11,8 @@ import {Carreras} from '../../../interfaces/carreras.interface';
 })
 export class CarreraComponent implements OnInit {
   id: string;
+  msgs: Message[] = [];
+
   carrera: Carreras = {
     nombreCarr: "",
     siglas: "",
@@ -45,6 +48,8 @@ export class CarreraComponent implements OnInit {
           resultado => {
             console.log(resultado.name);
             this._router.navigate(['/carrera', resultado.name]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Carrera guardada con exito'});
           }
         );
     } else {
@@ -52,6 +57,8 @@ export class CarreraComponent implements OnInit {
         .subscribe(
           resultado => {
             this._router.navigate(['/admin' ]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Carrera editada con exito'});
           }
         );
     }

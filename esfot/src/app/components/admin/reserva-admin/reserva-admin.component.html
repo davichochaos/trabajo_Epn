@@ -56,7 +56,7 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">Fecha:</label>
         <div class="col-xl-10">
-          <p-calendar name="fecha" [(ngModel)]="reserva.fecha" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val($event)" (onSelect)="cruz(); reserv()"></p-calendar>
+          <p-calendar name="fecha" [(ngModel)]="date2" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val($event); val1($event)" (onSelect)="cruz(); reserv()"></p-calendar>
         </div>
       </div>
 

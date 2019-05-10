@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Aulas} from '../../../interfaces/aulas.interface';
+import {Message} from 'primeng/api';
+
 
 @Component({
   selector: 'app-aula',
@@ -11,6 +13,7 @@ import {Aulas} from '../../../interfaces/aulas.interface';
 export class AulaComponent implements OnInit {
 
   id: string;
+  msgs: Message[] = [];
   aula: Aulas = {
     nombreAula: "",
     descripcion: "",
@@ -46,6 +49,8 @@ export class AulaComponent implements OnInit {
           resultado => {
             console.log(resultado.name);
             this._router.navigate(['/aula', resultado.name]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Aula o laboratorio guardado con exito'});
           }
         );
     } else {
@@ -53,6 +58,8 @@ export class AulaComponent implements OnInit {
         .subscribe(
           resultado => {
             this._router.navigate(['/admin' ]);
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Aula o laboratorio editado con exito'});
           }
         );
     }
