@@ -18,7 +18,7 @@ export class DocentesComponent implements OnInit {
   });
   }
   salirAd() {
-    sessionStorage.removeItem('Docent');
+    localStorage.removeItem('Docent');
     this._router.navigate(['/inicio']);
   }
 }

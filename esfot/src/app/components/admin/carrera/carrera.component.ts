@@ -57,4 +57,9 @@ export class CarreraComponent implements OnInit {
     }
   }
 
+  clean() {
+    this.carrera.nombreCarr = '';
+    this.carrera.siglas = '';
+  }
+
 }

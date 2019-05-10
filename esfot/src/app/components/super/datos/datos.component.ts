@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../../../services/admin.service';
-import { Docentes } from '../../../interfaces/docentes.interface';
-import { Carreras } from '../../../interfaces/carreras.interface';
+import {Docentes} from '../../../interfaces/docentes.interface';
+import {SuperService} from '../../../services/super.service';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  selector: 'app-datos',
+  templateUrl: './datos.component.html',
+  styleUrls: ['./datos.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class DatosComponent implements OnInit {
 
   usuarios: Docentes[] = [];
 
-  constructor(private _usuarioService: AdminService) {
-    this._usuarioService.consultarUsuarios()
+  constructor(private _datosService: SuperService) {
+    this._datosService.consultarUsuarios()
       .subscribe(
         resultados => {
           for (const key$ in resultados) {
@@ -30,7 +29,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   eliminar(id: string, posicion: number) {
-    this._usuarioService.eliminarUsuario(id)
+    this._datosService.eliminarUsuario(id)
       .subscribe(
         resultados => {
           this.usuarios.splice(posicion, 1);

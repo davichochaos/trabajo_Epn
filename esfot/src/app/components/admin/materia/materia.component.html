@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-6 text-left">
+    <div class="col-6 text-left">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-6 text-right">
       <button [routerLink]="['/materia','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -13,11 +13,11 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-xl-12">
       <form class="was-validated" #forma="ngForm">
         <div class="form-group row was-validated">
           <label class="col-2 col-form-label">Nombre:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <input class="form-control" type="text"
                    placeholder="nombre"
                    name="nombre"
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group row was-validated">
           <label class="col-2 col-form-label">Codigo:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <input class="form-control"
                    type="text"
                    required
@@ -39,7 +39,7 @@
 
         <div class="form-group row was-validated">
           <label class="col-2 col-form-label">Semestre:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <select class="custom-select form-control"
                     name="semestres"
                     required
@@ -56,7 +56,7 @@
 
         <div class="form-group row">
           <label class="col-2 col-form-label">Carreras:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <p-checkbox name="carrerass" *ngFor="let item of carrerass"
                         value="{{item.siglas}}" label="{{item.siglas}}"
                         [(ngModel)]="materia.carreras" (onChange)="subjects()"></p-checkbox>
@@ -66,9 +66,9 @@
         <div *ngIf="!carreraNueva; else carreraAntigua">
           <div class="form-group row">
             <label class="col-2 col-form-label">Creditos:</label>
-            <div class="col-10">
+            <div class="col-xl-10">
               <input class="form-control"
-                     type="number" min="2" max="8"
+                     type="number" min="2" max="12"
                      name="creditos"
                      required
                      placeholder="creditos"
@@ -79,7 +79,7 @@
         <ng-template #carreraAntigua>
           <div class="form-group row">
             <label class="col-2 col-form-label">Componente de Docencia:</label>
-            <div class="col-10">
+            <div class="col-xl-10">
               <input class="form-control" type="number" min="1" max="4"
                      id="cd"
                      name="cd"
@@ -90,7 +90,7 @@
           </div>
           <div class="form-group row">
             <label class="col-2 col-form-label">Componente Practico:</label>
-            <div class="col-10">
+            <div class="col-xl-10">
               <input class="form-control" type="number" min="1" max="4"
                      id="cp"
                      name="cp"
@@ -102,7 +102,7 @@
 
           <div class="form-group row">
             <label class="col-2 col-form-label">Total de Horas</label>
-            <div class="col-10">
+            <div class="col-xl-10">
               <input class="form-control" type="number" min="1" max="4"
                      id="totalHoras"
                      name="totalHoras"

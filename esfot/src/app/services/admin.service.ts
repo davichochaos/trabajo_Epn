@@ -43,7 +43,10 @@ export class AdminService {
 
   isLogged(): Promise<boolean> {
     if (typeof(Storage) !== 'undefined') {
-      if (sessionStorage.getItem('Admin')) {
+      let usuarioGuar;
+      if (usuarioGuar =  localStorage.getItem('Admin')) {
+        usuarioGuar = JSON.parse(usuarioGuar);
+        document.getElementById('nombreDocent').innerHTML = usuarioGuar.nombreDocent;
         return Promise.resolve(true);
       }
     }

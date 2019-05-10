@@ -2,19 +2,45 @@
   <table class="table table-responsive table-hover">
     <thead>
     <tr>
-      <th>Hora</th>
       <th>Dia</th>
+      <th>Hora inicio</th>
+      <th>Hora fin</th>
+      <th>Materia</th>
+      <th>Aula</th>
+      <th>Docente</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+    <tr *ngFor="let item of horarios; let i = index;">
+      <td>{{item.dias[0]}}<br>{{item.dias[1]}}<br>{{item.dias[2]}}<br>{{item.dias[3]}}<br>{{item.dias[4]}}<br>{{item.dias[5]}}</td>
+      <td>{{item.horaInicios[0]}}<br>{{item.horaInicios[1]}}<br>{{item.horaInicios[2]}}<br>{{item.horaInicios[3]}}<br>{{item.horaInicios[4]}}<br>{{item.horaInicios[5]}}</td>
+      <td>{{item.horaFins[0]}}<br>{{item.horaFins[1]}}<br>{{item.horaFins[2]}}<br>{{item.horaFins[3]}}<br>{{item.horaFins[4]}}<br>{{item.horaFins[5]}}</td>
+      <td>{{item.nombreMat}}</td>
+      <td>{{item.nombreAula}}</td>
+      <td>{{item.docenteNom}}</td>
       <td>
-        <button type="button" class="btn btn-info">Editar</button>
-        <button  type="button" class="btn btn-danger">Eliminar</button>
+        <button type="button" class="btn btn-info" [routerLink]="['/horarioadmin', item.id]">Editar</button>
+        <button type="button" class="btn btn-danger"
+                data-toggle="modal" [attr.data-target]="'#confirmacion8'+i">Eliminar</button>
+        <div class="modal fade" [id]="'confirmacion8'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Seguro que desea eleminar este registro ??
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
     </tbody>

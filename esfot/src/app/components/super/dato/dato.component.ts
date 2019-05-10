@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Docentes} from '../../../interfaces/docentes.interface';
-import {AdminService} from '../../../services/admin.service';
-import {Router, ActivatedRoute} from '@angular/router';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {Docentes} from '../../../interfaces/docentes.interface';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SuperService} from '../../../services/super.service';
 declare function require(path: string): any;
 
+
 @Component({
-  selector: 'app-usuario',
-  templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css']
+  selector: 'app-dato',
+  templateUrl: './dato.component.html',
+  styleUrls: ['./dato.component.css']
 })
-export class UsuarioComponent implements OnInit {
+export class DatoComponent implements OnInit {
+
   carrerasx: Carreras[] = [];
   id: string;
   usuario: Docentes = {
@@ -21,7 +23,7 @@ export class UsuarioComponent implements OnInit {
     carreras: [],
   }
 
-  constructor(private _usuarioServices: AdminService,
+  constructor(private _superServices: SuperService,
               private _router: Router,
               private _activatedRoute: ActivatedRoute ) {
     this._activatedRoute.params
@@ -29,7 +31,7 @@ export class UsuarioComponent implements OnInit {
         parametros => {
           this.id = parametros['id'];
           if (this.id !== 'nuevo') {
-            this._usuarioServices.getUsuario(this.id)
+            this._superServices.getUsuario(this.id)
               .subscribe(
                 resultado => {
                   this.usuario = resultado;
@@ -39,7 +41,7 @@ export class UsuarioComponent implements OnInit {
         }
       );
 
-    this._usuarioServices.consultarCarreras()
+    this._superServices.consultarCarreras()
       .subscribe(
         resultados => {
           for (const key$ in resultados) {
@@ -68,28 +70,21 @@ export class UsuarioComponent implements OnInit {
   guardar() {
     if (this.id == 'nuevo') {
       // guardar usuario nuevo
-      this._usuarioServices.nuevoUsuario(this.usuario)
+      this._superServices.nuevoUsuario(this.usuario)
         .subscribe(
-        resultado => {
-          console.log(resultado.name);
-          this._router.navigate(['/usuario', resultado.name]);
-        }
-      );
+          resultado => {
+            console.log(resultado.name);
+            this._router.navigate(['/usuario', resultado.name]);
+          }
+        );
     } else {
-      this._usuarioServices.editarUsuario(this.usuario, this.id)
+      this._superServices.editarUsuario(this.usuario, this.id)
         .subscribe(
-        resultado => {
-          this._router.navigate(['/admin' ]);
-        }
-      );
+          resultado => {
+            this._router.navigate(['/admin' ]);
+          }
+        );
     }
   }
 
-  clean() {
-    this.usuario.cargo = '';
-    this.usuario.carreras = [];
-    this.usuario.correo = '';
-    this.usuario.nombreDocent = '';
-    this.usuario.password = '';
-  }
 }

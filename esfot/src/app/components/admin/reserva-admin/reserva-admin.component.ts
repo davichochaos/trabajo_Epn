@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Message} from 'primeng/api';
 import {Aulas} from '../../../interfaces/aulas.interface';
 import {Materias} from '../../../interfaces/materias.interface';
+import {Docentes} from '../../../interfaces/docentes.interface';
 
 @Component({
   selector: 'app-reserva-admin',
@@ -19,6 +20,7 @@ export class ReservaAdminComponent implements OnInit {
   aulas: Aulas[] = [];
   materias: Materias[] = [];
   reservas: Reservas[] = [];
+  docentes: Docentes[] = [];
   id: string;
   reserva: Reservas = {
     nombreDocent: '',
@@ -96,6 +98,18 @@ export class ReservaAdminComponent implements OnInit {
             this.reservas.push(reservaNew);
           }
           return this.reservas;
+        }
+      );
+
+    this._adminServices.consultarUsuarios()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.docentes.push(usuarioNew);
+          }
+          return this.docentes;
         }
       );
   }

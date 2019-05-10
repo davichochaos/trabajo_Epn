@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand"><strong id="nom">Bienvenido</strong> &nbsp;<strong id="nombreSuper"></strong></a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav nav-pills navbar-nav mr-auto" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active bg-info" id="pills-perfil-tab" data-toggle="pill" href="#perfil" role="tab" aria-controls="pills-perfil" aria-selected="true" >Usuarios</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-info my-2 my-sm-0" type="submit" (click)="salirAd()">Salir</button>
+    </form>
+  </div>
+</nav>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="pills-perfil-tab">
+    <app-datos></app-datos>
+  </div>
+</div>

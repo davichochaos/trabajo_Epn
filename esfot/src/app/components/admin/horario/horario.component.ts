@@ -7,6 +7,7 @@ import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 
 @Component({
@@ -112,15 +113,13 @@ export class HorarioComponent implements OnInit {
             if (materiaNew.carreras.length >= [1]) {
               for (let i = 0; i < materiaNew.carreras.length; i++) {
                 if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest) {
+                  this.materias = [];
                   this.materias.push(materiaNew);
-                  materiaNew.materias = [];
-
                 }
               }
             }
             console.log(this.materias.length);
           }
-          return this.materias;
         }
       );
 

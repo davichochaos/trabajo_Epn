@@ -58,4 +58,9 @@ export class AulaComponent implements OnInit {
     }
   }
 
+  clean() {
+    this.aula.nombreAula = '';
+    this.aula.descripcion = '';
+    this.aula.cupo = null;
+  }
 }

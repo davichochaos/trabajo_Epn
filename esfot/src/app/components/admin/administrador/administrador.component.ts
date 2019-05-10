@@ -5,7 +5,7 @@ import {AdminService} from '../../../services/admin.service';
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
-  styles: []
+  styleUrls: ['./administrador.component.css']
 })
 export class AdministradorComponent implements OnInit {
 
@@ -19,7 +19,7 @@ export class AdministradorComponent implements OnInit {
     });
   }
   salirAd() {
-    sessionStorage.removeItem('Admin');
+    localStorage.removeItem('Admin');
     this._router.navigate(['/inicio']);
   }
 

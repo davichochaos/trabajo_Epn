@@ -9,24 +9,30 @@
           <label class="col-2 col-form-label">Nombre:</label>
           <div class="col-10">
             <input class="form-control" type="text"
+                   id="namee"
                    placeholder="nombre"
-                   name="nombre">
+                   name="nombre"
+                   [disabled]="campos">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-2 col-form-label">Correo:</label>
           <div class="col-10">
             <input class="form-control" type="email"
+                   id="maill"
                    name="correo"
-                   placeholder="correo">
+                   type="text"
+                   pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"
+                   placeholder="correo" [disabled]="campos">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-2 col-form-label">Contraseña:</label>
           <div class="col-10">
             <input class="form-control" type="text"
+                   id="passwor"
                    name="contra"
-                   placeholder="163">
+                   placeholder="163" [disabled]="campos">
           </div>
         </div>
 
@@ -34,23 +40,29 @@
           <label class="col-2 col-form-label">Cargo</label>
           <div class="col-10">
             <input class="form-control" type="text"
+                   id = "carg"
                    name="cargo"
-                   placeholder="cargo" disabled>
+                   placeholder="cargo" [disabled]="campos">
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-2 col-form-label">Carrera:</label>
           <div class="col-10">
-            <p-checkbox name="carrerasx"
-                        value="" label="" [disabled]="true"></p-checkbox>
+            <input class="form-control" type="text"
+                   id = "carr"
+                   name="carrerasx"
+                   placeholder="cargo" [disabled]="campos">
+            <!--<p-checkbox  #carrera = "ngModel" name="carrerasx" *ngFor="let item of carrerasx"
+                        value="{{item.siglas}}" label="{{item.siglas}}"
+                        [(ngModel)]="usuario.carreras"></p-checkbox> -->
           </div>
         </div>
-        <div class="form-group row">
+        <!--<div class="form-group row">
           <button type="submit" class="btn btn-info col-2 col-form-label">
             Editar
           </button>
-        </div>
+        </div>-->
       </form>
     </div>
   </div>

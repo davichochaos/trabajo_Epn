@@ -29,7 +29,7 @@ export class ReservasAdComponent implements OnInit {
   }
 
   eliminar(id: string, posicion: number) {
-    this._adminService.eliminarAula(id)
+    this._adminService.eliminarReserva(id)
       .subscribe(
         resultados => {
           this.reservas.splice(posicion, 1);

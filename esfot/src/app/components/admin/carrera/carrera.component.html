@@ -1,23 +1,23 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-6 text-left">
+    <div class="col-6 text-left">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-sm-6 text-right">
-      <button [routerLink]="['/carrera','nuevo']" type="button" class="btn btn-info">
+    <div class="col-6 text-right">
+      <button [routerLink]="['/carrera','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
     </div>
   </div>
   <br>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-xl-12">
       <form (ngSubmit)="guardar()" class="was-validated" #forma="ngForm">
         <div class="form-group row">
           <label class="col-2 col-form-label">Nombre:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <input class="form-control" type="text"
                    placeholder="nombre"
                    name="nombre"
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group row">
           <label class="col-2 col-form-label">Siglas:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <input class="form-control" type="text"
                    name="siglas"
                    placeholder="siglas"

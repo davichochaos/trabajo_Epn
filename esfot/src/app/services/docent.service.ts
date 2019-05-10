@@ -15,8 +15,13 @@ export class DocentService {
   constructor(private _http: Http) { }
   isLogged(): Promise<boolean> {
     if (typeof(Storage) !== 'undefined') {
-      if (sessionStorage.getItem('Docent')) {
+      let usuarioGuar;
+      if (usuarioGuar =  localStorage.getItem('Docent')) {
+        usuarioGuar = JSON.parse(usuarioGuar);
+        document.getElementById('nombreDocen').innerHTML = usuarioGuar.nombreDocent;
+        console.log(usuarioGuar);
         return Promise.resolve(true);
+
       }
     }
     return Promise.resolve(false);
@@ -29,6 +34,27 @@ export class DocentService {
     });
     const url = `${this.docenteURL}/${id}.json`;
     return this._http.put(url, body, {headers: headers})
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  consultarUsuarios() {
+    return this._http.get(this.docentesURL)
+      .pipe(
+        map(
+          respuesta => {
+            return  respuesta.json();
+          }
+        )
+      );
+  }
+
+  getUsuario(indice: string) {
+    let url = `${this.docenteURL}/${ indice }.json`;
+    return this._http.get(url)
       .pipe(map(
         resultado => {
           return resultado.json();

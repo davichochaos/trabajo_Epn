@@ -1,11 +1,11 @@
 <div class="container-fluid" xmlns="">
   <div class="row">
-    <div class="col-sm-6 text-left">
+    <div class="col-6 text-left">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-6 text-right">
       <button [routerLink]="['/horarioadmin','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -13,10 +13,10 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-xl-12">
       <div class="form-group row">
         <label class="col-2 col-form-label">Carrera:</label>
-        <div class="col-10">
+        <div class="col-xl-10">
           <select class="form-control"
                   name="carrer" id="filcarrera" [(ngModel)]="horario.carrer" (change)="flltro()">
             <option *ngFor="let i of carrer" value="{{i.siglas}}">{{i.siglas}}</option>
@@ -25,7 +25,7 @@
       </div>
       <div class="form-group row">
         <label class="col-2 col-form-label">Nivel:</label>
-        <div class="col-10">
+        <div class="col-xl-10">
           <select class="form-control"
                   name="filnivel" id="filnivel" [(ngModel)]="horario.semest" (change)="flltro()">
             <option value="1">1</option>
@@ -39,7 +39,7 @@
       </div>
         <div class="form-group row">
           <label class="col-2 col-form-label">Materia:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <select class="form-control"
                     [(ngModel)]="horario.nombreMat" name="mat" id="mat">
               <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
@@ -48,7 +48,7 @@
         </div>
         <div class="form-group row">
           <label class="col-2 col-form-label">Docente:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <select class="form-control"
                     [(ngModel)]="horario.docenteNom" name="mat" id="docent">
               <option *ngFor="let i of docentes" value="{{i.nombreDocent}}">{{i.nombreDocent}}</option>
@@ -58,7 +58,7 @@
 
         <div class="form-group row">
           <label class="col-2 col-form-label">Aula:</label>
-          <div class="col-10">
+          <div class="col-xl-10">
             <select class="form-control"
                     [(ngModel)]="horario.nombreAula" name="aul" (change)="cruze(); cruze1(); cruze2(); cruze3(); cruze4(); cruze5()">
               <option *ngFor="let item of aulas" value="{{item.nombreAula}}">{{item.nombreAula}}</option>
@@ -67,98 +67,165 @@
         </div>
 
         <div class="form-group row">
-          <label class="col-2 col-form-label">Dia</label>
+          <label class="col-md-2 col-form-label">Dia</label>
           <div class="col-10">
             <div class="row">
-              <div class="col-3">
+              <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[0]" binary="false" label="Lunes" (onChange)="val(); cruze()" [(ngModel)]="cod"></p-checkbox>
               </div>
-              Desde:<div class="col-3">
-                <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                          name="hora1" [(ngModel)]="horario.horaInicios[0]" [disabled]="cod" (change)="cruze()" >
+              <div class="col-xl-4">
+                <div class="row">
+                  <label class="col-4">Desde</label>
+                  <div class="col-6">
+                    <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="19:00" step="3600"
+                           name="hora1" [(ngModel)]="horario.horaInicios[0]" [disabled]="cod" (change)="cruze()" >
+                  </div>
+                </div>
               </div>
-              Hasta:<div class="col-3">
-                <input class="form-control" id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                       name="hora2" [(ngModel)]="horario.horaFins[0]" [disabled]="cod" (change)="cruze(); hora2()">
+
+              <div class="col-xl-4">
+                <div class="row">
+                  <label class="col-4">Hasta</label>
+                  <div class="col-6">
+                    <input class="form-control" id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
+                           name="hora2" [(ngModel)]="horario.horaFins[0]" [disabled]="cod" (change)="cruze(); hora2()">
+                  </div>
+                </div>
               </div>
             </div>
 
             <br>
             <div class="row">
-              <div class="col-3">
+              <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[1]"  binary="true" label="Martes" (onChange)="val1(); cruze1()" [(ngModel)]="cod1"></p-checkbox>
               </div>
-              Desde:<div class="col-3">
-              <input class="form-control" id="inicio1" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[1]" [disabled]="cod1" (change)="cruze1(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Desde:</label>
+                <div class="col-6">
+                  <input class="form-control" id="inicio1" type="time" value="07:00" min="07:00" max="19:00" step="3600"
+                         name="hora1" [(ngModel)]="horario.horaInicios[1]" [disabled]="cod1" (change)="cruze1(); hora2()">
+                </div>
+              </div>
+
             </div>
-              Hasta:<div class="col-3">
-              <input class="form-control" id="fin1" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[1]" [disabled]="cod1" (change)="cruze1(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Hasta:</label>
+                <div class="col-6">
+                  <input class="form-control" id="fin1" type="time" value="07:00" min="08:00" max="21:00" step="3600"
+                         name="hora2" [(ngModel)]="horario.horaFins[1]" [disabled]="cod1" (change)="cruze1(); hora2()">
+                </div>
+              </div>
               </div>
             </div>
 
             <br>
             <div class="row">
-              <div class="col-3">
+              <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[2]" label="Miercoles" binary="true" (onChange)="val2(); cruze2()" [(ngModel)]="cod2"></p-checkbox>
               </div>
-              Desde:<div class="col-3">
-              <input class="form-control" id="inicio2" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[2]" [disabled]="cod2" (change)="cruze2(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Desde:</label>
+                <div class="col-6">
+                  <input class="form-control" id="inicio2" type="time" value="07:00" min="07:00" max="19:00" step="3600"
+                                          name="hora1" [(ngModel)]="horario.horaInicios[2]" [disabled]="cod2" (change)="cruze2(); hora2()">
+                </div>
+              </div>
+
             </div>
-              Hasta:<div class="col-3">
-              <input class="form-control" id="fin2" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[2]" [disabled]="cod2" (change)="cruze2(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Hasta:</label>
+                <div class="col-6">
+                  <input class="form-control" id="fin2" type="time" value="07:00" min="08:00" max="21:00" step="3600"
+                         name="hora2" [(ngModel)]="horario.horaFins[2]" [disabled]="cod2" (change)="cruze2(); hora2()">
+                </div>
+              </div>
               </div>
             </div>
 
             <br>
             <div class="row">
-              <div class="col-3">
+              <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[3]" label="Jueves" binary="true" (onChange)="val3(); cruze3()" [(ngModel)]="cod3"></p-checkbox>
               </div>
-              Desde:<div class="col-3">
-              <input class="form-control" id="inicio3" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[3]" [disabled]="cod3" (change)="cruze3(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Desde:</label>
+                <div class="col-6">
+                  <input class="form-control" id="inicio3" type="time" value="07:00" min="07:00" max="19:00" step="3600"
+                         name="hora1" [(ngModel)]="horario.horaInicios[3]" [disabled]="cod3" (change)="cruze3(); hora2()">
+                </div>
+              </div>
+
             </div>
-              Hasta:<div class="col-3">
-              <input class="form-control" id="fin3" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[3]" [disabled]="cod3" (change)="cruze3(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Hasta:</label>
+                <div class="col-6">
+                  <input class="form-control" id="fin3" type="time" value="07:00" min="08:00" max="21:00" step="3600"
+                         name="hora2" [(ngModel)]="horario.horaFins[3]" [disabled]="cod3" (change)="cruze3(); hora2()">
+                </div>
+              </div>
               </div>
             </div>
 
             <br>
             <div class="row">
-              <div class="col-3">
+              <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[4]" label="Viernes" binary="true" (onChange)="val4(); cruze4()"  [(ngModel)]="cod4"></p-checkbox>
               </div>
-              Desde:<div class="col-3">
-              <input class="form-control" id="inicio4" type="time" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[4]" [disabled]="cod4" (change)="cruze4(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Desde:</label>
+                <div class="col-6">
+                  <input class="form-control" id="inicio4" type="time" value="07:00" min="07:00" max="19:00" step="3600"
+                         name="hora1" [(ngModel)]="horario.horaInicios[4]" [disabled]="cod4" (change)="cruze4(); hora2()">
+                </div>
+              </div>
+
             </div>
-              Hasta:<div class="col-3">
-              <input class="form-control" id="fin4" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[4]" [disabled]="cod4" (change)="cruze4(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Hasta:</label>
+                <div class="col-6">
+                  <input class="form-control" id="fin4" type="time" value="07:00" min="08:00" max="21:00" step="3600"
+                         name="hora2" [(ngModel)]="horario.horaFins[4]" [disabled]="cod4" (change)="cruze4(); hora2()">
+                </div>
+              </div>
               </div>
             </div>
 
             <br>
             <div class="row">
-              <div class="col-3">
+              <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[5]" label="Sabado" binary="true" (onChange)="val5(); cruze5()" [(ngModel)]="cod5"></p-checkbox>
               </div>
-              Desde:<div class="col-3">
-              <input class="form-control" id="inicio5" type="time" [disabled]="cod5" value="07:00" min="07:00" max="19:00" step="3600"
-                     name="hora1" [(ngModel)]="horario.horaInicios[5]" [disabled]="cod5" (change)="cruze5(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Desde:</label>
+                <div class="col-6">
+                  <input class="form-control" id="inicio5" type="time" [disabled]="cod5" value="07:00" min="07:00" max="19:00" step="3600"
+                         name="hora1" [(ngModel)]="horario.horaInicios[5]" [disabled]="cod5" (change)="cruze5(); hora2()">
+                </div>
+              </div>
+
             </div>
-              Hasta:<div class="col-3">
-              <input class="form-control" id="fin5" type="time" [disabled]="cod5" value="07:00" min="08:00" max="21:00" step="3600"
-                     name="hora2" [(ngModel)]="horario.horaFins[5]" [disabled]="cod5" (change)="cruze5(); hora2()">
+              <div class="col-xl-4">
+              <div class="row">
+                <label class="col-4">Hasta:</label>
+                <div class="col-6">
+                  <input class="form-control" id="fin5" type="time" [disabled]="cod5" value="07:00" min="08:00" max="21:00" step="3600"
+                         name="hora2" [(ngModel)]="horario.horaFins[5]" [disabled]="cod5" (change)="cruze5(); hora2()">
+                </div>
+              </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="form-group row">
           <button type="submit" (click)="guardar()" class="btn btn-info ">
             Guardar

@@ -2,14 +2,35 @@
   <div class="card" *ngFor="let item of reservas; let i = index;">
     <div class="card-header"><h3 style="text-align: center">Reserva #{{i+1}}</h3></div>
     <div class="card-body">
-      <label><b>Doocente:</b></label>&nbsp;<label>{{item.nombreDocent}}</label><br>
+      <label><b>Docente:</b></label>&nbsp;<label>{{item.nombreDocent}}</label><br>
       <label><b>Aula/Laboratorio:</b></label>&nbsp;<label>{{item.aula}}</label><br>
       <label><b>Materia:</b></label>&nbsp;<label>{{item.nombreMat}}</label><br>
       <label><b>Fecha:</b></label>&nbsp;<label>{{item.fecha}}</label><br>
       <label><b>Hora de inicio:</b></label>&nbsp;<label>{{item.horaInicio}}</label><br>
       <label><b>Hora de finalizacion:</b></label>&nbsp;<label>{{item.horaFin}}</label>
     </div>
-    <div class="card-footer"><button (click)="eliminar(item.id, i)" type="button" class="btn btn-danger">Eliminar</button>
+    <div class="card-footer">
+      <button type="button" class="btn btn-danger"
+              data-toggle="modal" [attr.data-target]="'#confirmacion9'+i">Eliminar</button>
+      <div class="modal fade" [id]="'confirmacion9'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Seguro que desea eleminar este registro ??
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
