@@ -202,12 +202,18 @@ export class HorarioComponent implements OnInit {
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[0]) {
             console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[0] ||
                 this.horario.horaInicios[0] < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                console.log('horas iguales');
+                for (let m = 0; m < this.horarios.length; m++ ) {
+                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
+                    console.log('docente ocupado');
+                    console.log('hora incorrect');
+                    this.msgs = [];
+                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  }
+                }
               }
             }
           }
@@ -226,9 +232,15 @@ export class HorarioComponent implements OnInit {
             for (let k = 0; k < 7; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[1] ||
                 this.horario.horaInicios[1] < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                console.log('horas iguales');
+                for (let m = 0; m < this.horarios.length; m++ ) {
+                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
+                    console.log('docente ocupado');
+                    console.log('hora incorrect');
+                    this.msgs = [];
+                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  }
+                }
               }
             }
           }
@@ -247,9 +259,15 @@ export class HorarioComponent implements OnInit {
             for (let k = 0; k < 7; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[2] ||
                 this.horario.horaInicios[2] < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                console.log('horas iguales');
+                for (let m = 0; m < this.horarios.length; m++ ) {
+                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
+                    console.log('docente ocupado');
+                    console.log('hora incorrect');
+                    this.msgs = [];
+                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  }
+                }
               }
             }
           }
@@ -268,9 +286,15 @@ export class HorarioComponent implements OnInit {
             for (let k = 0; k < 7; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[3] ||
                 this.horario.horaInicios[3] < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                console.log('horas iguales');
+                for (let m = 0; m < this.horarios.length; m++ ) {
+                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
+                    console.log('docente ocupado');
+                    console.log('hora incorrect');
+                    this.msgs = [];
+                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  }
+                }
               }
             }
           }
@@ -289,9 +313,15 @@ export class HorarioComponent implements OnInit {
             for (let k = 0; k < 7; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[4] ||
                 this.horario.horaInicios[4] < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                console.log('horas iguales');
+                for (let m = 0; m < this.horarios.length; m++ ) {
+                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
+                    console.log('docente ocupado');
+                    console.log('hora incorrect');
+                    this.msgs = [];
+                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  }
+                }
               }
             }
           }
@@ -310,9 +340,15 @@ export class HorarioComponent implements OnInit {
             for (let k = 0; k < 7; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[5] ||
                 this.horario.horaInicios[5] < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                console.log('horas iguales');
+                for (let m = 0; m < this.horarios.length; m++ ) {
+                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
+                    console.log('docente ocupado');
+                    console.log('hora incorrect');
+                    this.msgs = [];
+                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  }
+                }
               }
             }
           }
