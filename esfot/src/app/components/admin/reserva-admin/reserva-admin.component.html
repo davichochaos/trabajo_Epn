@@ -23,7 +23,7 @@
                   placeholder="nombre"
                   name="nombre"
                   required
-                  [(ngModel)]="reserva.nombreDocent">
+                  [(ngModel)]="reserva.nombreDocent" (change)="mater()">
             <option *ngFor="let item of docentes" value="{{item.nombreDocent}}">{{item.nombreDocent}}</option>
           </select>
         </div>

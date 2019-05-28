@@ -64,17 +64,6 @@ export class ReservaAdminComponent implements OnInit {
         }
       );
 
-    this._adminServices.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            this.materias.push(materiaNew);
-          }
-          return this.materias;
-        }
-      );
 
     this._adminServices.consultarAulas()
       .subscribe(
@@ -113,6 +102,27 @@ export class ReservaAdminComponent implements OnInit {
       );
   }
 
+  mater() {
+    for (let i = 0; i < this.horarios.length; i++) {
+      if (this.horarios[i].docenteNom == this.reserva.nombreDocent) {
+        this._adminServices.consultarMaterias()
+          .subscribe(
+            resultados => {
+              for (const key$ in resultados) {
+                const materiaNew = resultados[key$];
+                materiaNew.id = key$;
+                if (materiaNew.nombreMat == this.horarios[i].nombreMat) {
+                  this.materias.push(materiaNew);
+                }
+              }
+              return this.materias;
+            }
+          );
+
+      }
+    }
+  }
+
   clean() {
     this.reserva.nombreDocent = '';
     this.reserva.nombreMat = '';
@@ -121,6 +131,8 @@ export class ReservaAdminComponent implements OnInit {
     this.reserva.horaInicio = '';
     this.reserva.horaFin = '';
     this.reserva.aula = '';
+    this.materias = [];
+
   }
 
   guardarRe() {
@@ -276,7 +288,7 @@ export class ReservaAdminComponent implements OnInit {
         this.reserva.fecha  = "Diciembre " + da[2] + " " + da[3];
         break;
     }
-    console.log('mes',this.reserva.fecha);
+    console.log('mes', this.reserva.fecha);
   }
 
   cruz() {

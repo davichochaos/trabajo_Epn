@@ -102,6 +102,8 @@ export class HorarioComponent implements OnInit {
       );
   }
 
+
+
   flltro() {
     this._adminService.consultarMaterias()
       .subscribe(
@@ -109,24 +111,21 @@ export class HorarioComponent implements OnInit {
           for (const key$ in resultados) {
             const materiaNew = resultados[key$];
             materiaNew.id = key$;
-            if (materiaNew.carreras.length >= [1]) {
-              for (let i = 0; i < materiaNew.carreras.length; i++) {
-                if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest) {
-                  this.materias = [];
-                  this.materias.push(materiaNew);
-                }
+            for (let i = 0; i < materiaNew.carreras.length; i++) {
+              if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest) {
+                this.materias.push(materiaNew);
               }
             }
-            console.log(this.materias.length);
           }
+          return this.materias;
         }
       );
-
   }
 
   clean() {
     this.horario.dias = [];
     this.horario.nombreMat = '';
+    this.materias = [];
     this.horario.docenteNom = '';
     this.horario.nombreAula = '';
     this.horario.horaInicios = [];
