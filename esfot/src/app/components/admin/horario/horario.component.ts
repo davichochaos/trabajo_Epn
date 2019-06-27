@@ -16,12 +16,15 @@ import {Carreras} from '../../../interfaces/carreras.interface';
 })
 export class HorarioComponent implements OnInit {
 
+  access: boolean;
+  permision: boolean;
+  correct: boolean;
   id: string;
   carrer: Carreras[] = [];
   msgs: Message[] = [];
   aulas: Aulas[] = [];
   materias: Materias[] = [];
-  docentes: Docentes[] = [];
+  profes: Docentes[] = [];
   horarios: Horarios[] = [];
   horario: Horarios = {
     dias: [],
@@ -31,12 +34,15 @@ export class HorarioComponent implements OnInit {
     horaInicios: [],
     horaFins: [],
     semest: null,
-    carrer: ''
+    carrer: '',
+    paralelo: ''
   }
 
 
   constructor(private _adminService: AdminService, private _router: Router,
               private _activatedRoute: ActivatedRoute ) {
+
+    this.permission()
 
     this._activatedRoute.params
       .subscribe(
@@ -65,18 +71,6 @@ export class HorarioComponent implements OnInit {
         }
       );
 
-    this._adminService.consultarUsuarios()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const docentNew = resultados[key$];
-            docentNew.id = key$;
-            this.docentes.push(docentNew);
-          }
-          return this.docentes;
-        }
-      );
-
     this._adminService.consultarHorarios()
       .subscribe(
         res => {
@@ -100,11 +94,40 @@ export class HorarioComponent implements OnInit {
           return this.carrer;
         }
       );
+
   }
 
+  flltro1() {
+    this.profes = []
+    this._adminService.consultarUsuarios()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const docentNew = resultados[key$];
+            docentNew.id = key$;
+            if (docentNew.cargo !== 'SuperAdmin') {
+              for (let i = 0; i < docentNew.carreras.length; i ++) {
+                console.log(docentNew.carreras.length);
+                if (docentNew.carreras[i] == this.horario.carrer) {
+                  this.profes.push(docentNew);
+                }
+              }
+            }
+            /*for (let i = 0; i < docentNew.carreras.length; i ++) {
 
+              console.log(docentNew.carreras.length);
+              /*if (docentNew.carreras[i] == this.horario.carrer) {
+                this.profes.push(docentNew);
+              }
+            }*/
+          }
+          return this.profes;
+        }
+      );
+  }
 
   flltro() {
+    this.materias = [];
     this._adminService.consultarMaterias()
       .subscribe(
         resultados => {
@@ -126,18 +149,128 @@ export class HorarioComponent implements OnInit {
     this.horario.dias = [];
     this.horario.nombreMat = '';
     this.materias = [];
+    this.profes = [];
     this.horario.docenteNom = '';
     this.horario.nombreAula = '';
     this.horario.horaInicios = [];
     this.horario.horaFins = [];
     this.horario.semest =  null;
     this.horario.carrer = '';
+    this.horario.paralelo = '';
   }
 
   ngOnInit() {
   }
 
   //rstrincciones
+  //horas incorrectas
+
+  excess() {
+    let ini = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
+    let fin = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0');
+
+    if ( +ini < 7000 || +fin > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true;
+    }
+  }
+
+  excess1() {
+    let ini1 = (document.getElementById("inicio1") as HTMLInputElement).value.replace(':','0');
+    let fin1 = (document.getElementById("fin1")as HTMLInputElement).value.replace(':','0');
+
+    if ( +ini1 < 7000 || +fin1 > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true;
+    }
+  }
+
+  excess2() {
+    let ini2 = (document.getElementById("inicio2") as HTMLInputElement).value.replace(':','0');
+    let fin2 = (document.getElementById("fin2")as HTMLInputElement).value.replace(':','0');
+
+    if ( +ini2 < 7000 || +fin2 > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true;
+    }
+  }
+
+  excess3() {
+    let ini3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
+    let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0');
+    if ( +ini3 < 7000 || +fin3 > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true;
+    }
+  }
+
+  excess4() {
+    let ini4 = (document.getElementById("inicio4") as HTMLInputElement).value.replace(':','0');
+    let fin4 = (document.getElementById("fin4")as HTMLInputElement).value.replace(':','0');
+
+    if ( +ini4 < 7000 || +fin4 > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true;
+    }
+  }
+
+  excess5() {
+    let ini5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
+    let fin5 = (document.getElementById("fin5")as HTMLInputElement).value.replace(':','0');
+
+    if ( +ini5 < 7000 || +fin5 > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true ;
+    }
+  }
+
+  //control de campos
+
+
+  permission() {
+    if (this.horario.carrer == '' || this.horario.dias == [] || this.horario.nombreMat == '' ||
+    this.horario.docenteNom == '' || this.horario.nombreAula == '' || this.horario.horaInicios == [] || this.horario.horaFins == [] ||
+    this.horario.semest ==  null || this.horario.paralelo ==  '' || this.horario.paralelo == '') {
+      console.log('campos vacios');
+      this.access = true;
+
+    } else {
+      console.log('campos llenos');
+      this.access = false;
+
+    }
+  }
+
   //1. Hora finalizada menor a la hora de inicio y
   // segunda horario empezar desde la hora finalizada de la anterior
 
@@ -150,7 +283,7 @@ export class HorarioComponent implements OnInit {
     let ini2 = (document.getElementById("inicio2") as HTMLInputElement).value.replace(':','0');
     let fin2 = (document.getElementById("fin2")as HTMLInputElement).value.replace(':','0');
     let ini3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
-    let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0')
+    let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0');
     let ini4 = (document.getElementById("inicio4") as HTMLInputElement).value.replace(':','0');
     let fin4 = (document.getElementById("fin4")as HTMLInputElement).value.replace(':','0');
     let ini5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
@@ -183,10 +316,14 @@ export class HorarioComponent implements OnInit {
       for (let i = 0; i < this.materias.length; i++) {
         if (this.materias[i].nombreMat == this.horario.nombreMat) {
             if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
-              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horas correctas'});
+              this.msgs.push({severity: 'success', summary: 'Correcto',
+                detail: 'Rango de horas coinciden con el número de créditos o número de horas'});
+              this.correct = true;
             } else {
               this.msgs = [];
-              this.msgs.push({severity: 'error', summary: 'Error', detail: 'Horas incorrectas'});
+              this.msgs.push({severity: 'error', summary: 'Error',
+                detail: 'Rango de horas no coinciden con el número de créditos o número de horas'});
+              this.correct = false;
             }
 
         }
@@ -197,23 +334,31 @@ export class HorarioComponent implements OnInit {
 
   cruze() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
+        this.horarios[i].docenteNom == this.horario.docenteNom ||
+        this.horarios[i].semest == this.horario.semest ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom &&
+          this.horarios[i].semest == this.horario.semest) ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom) ||
+        (this.horarios[i].docenteNom == this.horario.docenteNom && this.horarios[i].semest == this.horario.semest) ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].semest == this.horario.semest)) {
         console.log('aula igual');
+        console.log('docente ocupado');
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[0]) {
             console.log('dia igual');
             for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[0] ||
                 this.horario.horaInicios[0] < this.horarios[i].horaFins[k]) {
+                this.correct = false;
                 console.log('horas iguales');
-                for (let m = 0; m < this.horarios.length; m++ ) {
-                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
-                    console.log('docente ocupado');
-                    console.log('hora incorrect');
-                    this.msgs = [];
-                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                  }
-                }
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              } else if (this.horario.horaInicios[0] >= this.horarios[i].horaFins[k]) {
+                this.correct = true;
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
               }
             }
           }
@@ -224,23 +369,24 @@ export class HorarioComponent implements OnInit {
 
   cruze1() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
+        this.horarios[i].docenteNom == this.horario.docenteNom ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
         console.log('aula igual');
+        console.log('docente ocupado');
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[1]) {
             console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[1] ||
                 this.horario.horaInicios[1] < this.horarios[i].horaFins[k]) {
                 console.log('horas iguales');
-                for (let m = 0; m < this.horarios.length; m++ ) {
-                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
-                    console.log('docente ocupado');
-                    console.log('hora incorrect');
-                    this.msgs = [];
-                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                  }
-                }
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              } else if (this.horario.horaInicios[1] >= this.horarios[i].horaFins[k]) {
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
               }
             }
           }
@@ -251,23 +397,24 @@ export class HorarioComponent implements OnInit {
 
   cruze2() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
+        this.horarios[i].docenteNom == this.horario.docenteNom ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
         console.log('aula igual');
+        console.log('docente ocupado');
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[2]) {
             console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[2] ||
                 this.horario.horaInicios[2] < this.horarios[i].horaFins[k]) {
                 console.log('horas iguales');
-                for (let m = 0; m < this.horarios.length; m++ ) {
-                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
-                    console.log('docente ocupado');
-                    console.log('hora incorrect');
-                    this.msgs = [];
-                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                  }
-                }
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              } else if (this.horario.horaInicios[2] >= this.horarios[i].horaFins[k]) {
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
               }
             }
           }
@@ -278,23 +425,24 @@ export class HorarioComponent implements OnInit {
 
   cruze3() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
+        this.horarios[i].docenteNom == this.horario.docenteNom ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
         console.log('aula igual');
+        console.log('docente ocupado');
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[3]) {
             console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[3] ||
                 this.horario.horaInicios[3] < this.horarios[i].horaFins[k]) {
                 console.log('horas iguales');
-                for (let m = 0; m < this.horarios.length; m++ ) {
-                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
-                    console.log('docente ocupado');
-                    console.log('hora incorrect');
-                    this.msgs = [];
-                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                  }
-                }
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              } else if (this.horario.horaInicios[3] >= this.horarios[i].horaFins[k]) {
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
               }
             }
           }
@@ -305,23 +453,24 @@ export class HorarioComponent implements OnInit {
 
   cruze4() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
+        this.horarios[i].docenteNom == this.horario.docenteNom ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
         console.log('aula igual');
+        console.log('docente ocupado');
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[4]) {
             console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[4] ||
                 this.horario.horaInicios[4] < this.horarios[i].horaFins[k]) {
                 console.log('horas iguales');
-                for (let m = 0; m < this.horarios.length; m++ ) {
-                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
-                    console.log('docente ocupado');
-                    console.log('hora incorrect');
-                    this.msgs = [];
-                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                  }
-                }
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              } else if (this.horario.horaInicios[4] >= this.horarios[i].horaFins[k]) {
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
               }
             }
           }
@@ -332,23 +481,24 @@ export class HorarioComponent implements OnInit {
 
   cruze5() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
+        this.horarios[i].docenteNom == this.horario.docenteNom ||
+        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
         console.log('aula igual');
+        console.log('docente ocupado');
         for (let j = 0; j < 7; j++) {
           if (this.horarios[i].dias[j] == this.horario.dias[5]) {
             console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
               if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[5] ||
                 this.horario.horaInicios[5] < this.horarios[i].horaFins[k]) {
                 console.log('horas iguales');
-                for (let m = 0; m < this.horarios.length; m++ ) {
-                  if (this.horarios[i].docenteNom == this.horario.docenteNom) {
-                    console.log('docente ocupado');
-                    console.log('hora incorrect');
-                    this.msgs = [];
-                    this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                  }
-                }
+                console.log('hora incorrect');
+                this.msgs = [];
+                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+              } else if (this.horario.horaInicios[5] >= this.horarios[i].horaFins[k]) {
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
               }
             }
           }
@@ -356,6 +506,7 @@ export class HorarioComponent implements OnInit {
       }
     }
   }
+
 
   guardar() {
     if (this.id == 'nuevo') {

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {MessagesModule, GrowlModule, CheckboxModule, PasswordModule, CalendarModule} from 'primeng/primeng';
+import {MessagesModule, GrowlModule, CheckboxModule, PasswordModule, CalendarModule, RadioButtonModule} from 'primeng/primeng';
 
 
 //rutas
@@ -69,7 +69,8 @@ import { DatoComponent } from './components/super/dato/dato.component';
     ReservasUsuComponent,
     SuperComponent,
     DatosComponent,
-    DatoComponent
+    DatoComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -83,6 +84,7 @@ import { DatoComponent } from './components/super/dato/dato.component';
     CheckboxModule,
     PasswordModule,
     CalendarModule,
+    RadioButtonModule
   ],
   providers: [
     AdminService,

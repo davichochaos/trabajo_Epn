@@ -7,4 +7,5 @@ export interface Horarios {
   horaFins: string[];
   semest: number;
   carrer: string;
+  paralelo: string;
 }

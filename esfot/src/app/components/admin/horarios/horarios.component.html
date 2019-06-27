@@ -1,23 +1,94 @@
 <div class="container-fluid">
-  <table class="table table-responsive table-hover">
+  <div class="row">
+    <div class="col-md-12">
+      <h5>Busqueda por:</h5>
+      <div class="ui-g" style="width:1250px;margin-bottom:10px">
+        <div class="ui-g-3"><p-radioButton name="group2" value="Option 1" label="Horario por Nivel" [(ngModel)]="val2" inputId="preopt1"></p-radioButton></div>
+        <div class="ui-g-3"><p-radioButton name="group2" value="Option 2" label="Horario por Docentes" [(ngModel)]="val2" inputId="preopt2"></p-radioButton></div>
+        <div class="ui-g-3"><p-radioButton name="group2" value="Option 3" label="Horario por Aulas y/o Laboratorios" [(ngModel)]="val2" inputId="preopt3"></p-radioButton></div>
+        <div class="ui-g-3"><p-radioButton name="group2" value="Option 4" label="Todos" [(ngModel)]="val2" inputId="preopt4" (onClick)="todos()"></p-radioButton></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="val2 == 'Option 1'" class="row">
+  <div class="col-xl-3">
+    <label>Seleccione el semestre que busca:</label>
+  </div>
+  <div class="col-xl-2">
+    <select class="form-control"
+            name="nive" id="filnivell" [(ngModel)]="nivel" (click)="filhorario()">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="val2 == 'Option 2'" class="row">
+  <div class="col-xl-3">
+    <label>Seleccione el docente que busca:</label>
+  </div>
+  <div class="col-xl-4">
+    <select class="form-control"
+            name="docen" id="fildocen" [(ngModel)]="docentName" (click)="fildocente()">
+      <option *ngFor="let i of docentes" value="{{i.nombreDocent}}">{{i.nombreDocent}}</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="val2 == 'Option 3'" class="row">
+  <div class="col-xl-4">
+    <label>Seleccione el aula o laboratorio que busca:</label>
+  </div>
+  <div class="col-xl-4">
+    <select class="form-control"
+            name="docen" id="filaula" [(ngModel)]="labo" (click)="filaula()">
+      <option *ngFor="let i of aulas" value="{{i.nombreAula}}">{{i.nombreAula}}</option>
+    </select>
+  </div>
+</div>
+<!--<div *ngIf="val2 == 'Option 4'">
+  <div class="col-xl-3">
+    <label>Seleccione el docente que busca:</label>
+  </div>
+  <div class="col-xl-4">
+    <select class="form-control"
+            name="docen" id="filcarrera" [(ngModel)]="docentName" (click)="fildocente()">
+      <option *ngFor="let i of docentes" value="{{i.nombreDocent}}">{{i.nombreDocent}}</option>
+    </select>
+  </div>
+</div>-->
+<br>
+<div class="table-responsive-sm">
+  <table class="table table-sm table-hover" #table>
     <thead>
     <tr>
-      <th>Dia</th>
-      <th>Hora inicio</th>
-      <th>Hora fin</th>
-      <th>Materia</th>
-      <th>Aula</th>
-      <th>Docente</th>
+      <th scope="col">Docente</th>
+      <th scope="col">Materia</th>
+      <th scope="col">Aula/Laboratorio</th>
+      <th scope="col">Paralelo</th>
+      <th scope="col">Lunes</th>
+      <th scope="col">Martes</th>
+      <th scope="col">Miercoles</th>
+      <th scope="col">Jueves</th>
+      <th scope="col">Viernes</th>
+      <th scope="col">Sabado</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of horarios; let i = index;">
-      <td>{{item.dias[0]}}<br>{{item.dias[1]}}<br>{{item.dias[2]}}<br>{{item.dias[3]}}<br>{{item.dias[4]}}<br>{{item.dias[5]}}</td>
-      <td>{{item.horaInicios[0]}}<br>{{item.horaInicios[1]}}<br>{{item.horaInicios[2]}}<br>{{item.horaInicios[3]}}<br>{{item.horaInicios[4]}}<br>{{item.horaInicios[5]}}</td>
-      <td>{{item.horaFins[0]}}<br>{{item.horaFins[1]}}<br>{{item.horaFins[2]}}<br>{{item.horaFins[3]}}<br>{{item.horaFins[4]}}<br>{{item.horaFins[5]}}</td>
+      <td>{{item.docenteNom}}</td>
       <td>{{item.nombreMat}}</td>
       <td>{{item.nombreAula}}</td>
-      <td>{{item.docenteNom}}</td>
+      <td>{{item.paralelo}}</td>
+      <td>{{item.horaInicios[0]}} - {{item.horaFins[0]}}</td>
+      <td>{{item.horaInicios[1]}} - {{item.horaFins[1]}}</td>
+      <td>{{item.horaInicios[2]}} - {{item.horaFins[2]}}</td>
+      <td>{{item.horaInicios[3]}} - {{item.horaFins[3]}}</td>
+      <td>{{item.horaInicios[4]}} - {{item.horaFins[4]}}</td>
+      <td>{{item.horaInicios[5]}} - {{item.horaFins[5]}}</td>
       <td>
         <button type="button" class="btn btn-info" [routerLink]="['/horarioadmin', item.id]">Editar</button>
         <button type="button" class="btn btn-danger"
@@ -45,5 +116,7 @@
     </tr>
     </tbody>
   </table>
+  <button type="button" class="btn btn-info" (click)="fireEvent()">Exportar</button>
   <button [routerLink]="['/horarioadmin', 'nuevo']" type="button" class="btn btn-info">Nuevo Horario</button>
 </div>
+

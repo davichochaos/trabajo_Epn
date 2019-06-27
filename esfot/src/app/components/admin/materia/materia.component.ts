@@ -117,7 +117,7 @@ export class MateriaComponent implements OnInit {
     }
   }
 
-  subjects(){
+  subjects() {
     if (this.materia.carreras.length != 0) {
       for (let i = 0; i < this.materia.carreras.length; i++){
         /*if (this.materia.carreras[i] === 'ASI' || this.materia.carreras[i] === 'ASA'
@@ -136,8 +136,7 @@ export class MateriaComponent implements OnInit {
           || this.materia.carreras[i] === 'EM' || this.materia.carreras[i] === 'ET') {
           console.log(this.materia.carreras[i])
           this.carreraNueva = false;
-        }
-        else {
+        } else {
           this.carreraNueva = true;
           this.suma();
         }
@@ -154,7 +153,6 @@ export class MateriaComponent implements OnInit {
       this.carreraNueva=false;
       this.carreraAntigua=false;
     }*/
-
-  }
+    }
   }
 }

@@ -54,6 +54,7 @@ export class AdminService {
   }
 
   //docentes
+
   consultarUsuarios() {
     return this._http.get(this.docentesURL)
       .pipe(
