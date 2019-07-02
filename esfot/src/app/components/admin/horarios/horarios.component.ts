@@ -5,6 +5,7 @@ import {Docentes} from '../../../interfaces/docentes.interface';
 import {Aulas} from '../../../interfaces/aulas.interface';
 
 import * as XLSX from 'xlsx';
+import {Carreras} from '../../../interfaces/carreras.interface';
 
 
 @Component({
@@ -20,9 +21,11 @@ export class HorariosComponent implements OnInit {
   horarios: Horarios[] = [];
   docentes: Docentes[] = [];
   aulas: Aulas [] = [];
+  carreras: Carreras [] = [];
   docentName: any;
   nivel: any;
   labo: any;
+  carre: any;
 
   constructor(private _adminService: AdminService) {
     this._adminService.consultarHorarios()
@@ -60,6 +63,18 @@ export class HorariosComponent implements OnInit {
           return this.aulas;
         }
       );
+
+    this._adminService.consultarCarreras()
+      .subscribe(
+        result => {
+          for (const keys$ in result) {
+            const carreraNew =  result[keys$];
+            carreraNew.id = keys$;
+            this.carreras.push(carreraNew);
+          }
+          return this.carreras;
+        }
+      );
   }
 
   ngOnInit() {
@@ -92,7 +107,7 @@ export class HorariosComponent implements OnInit {
           for (const key$ in resultados) {
             const horarioNew = resultados[key$];
             horarioNew.id = key$;
-              if (/*horarioNew.docenteNom == this.docentName &&*/ horarioNew.semest == this.nivel) {
+              if (horarioNew.carrer == this.carre && horarioNew.semest == this.nivel) {
                 this.horarios.push(horarioNew);
               }
           }

@@ -14,11 +14,9 @@ import {APP_ROUTING} from './app.routes';
 
 import {AdminService} from './services/admin.service';
 import {DocentService} from './services/docent.service';
-import {SuperService} from './services/super.service';
 
 
 import { LoginComponent } from './components/login/login.component';
-import { SuperComponent } from './components/super/super.component';
 
 
 //administrador
@@ -43,8 +41,6 @@ import { ReservaComponent } from './components/usuarios/reserva/reserva.componen
 import { DocentesComponent } from './components/usuarios/docentes/docentes.component';
 import { ReservasAdComponent } from './components/admin/reservas-ad/reservas-ad.component';
 import { ReservasUsuComponent } from './components/usuarios/reservas-usu/reservas-usu.component';
-import { DatosComponent } from './components/super/datos/datos.component';
-import { DatoComponent } from './components/super/dato/dato.component';
 
 @NgModule({
   declarations: [
@@ -67,9 +63,6 @@ import { DatoComponent } from './components/super/dato/dato.component';
     ReservaAdminComponent,
     ReservasAdComponent,
     ReservasUsuComponent,
-    SuperComponent,
-    DatosComponent,
-    DatoComponent,
 
   ],
   imports: [
@@ -89,7 +82,6 @@ import { DatoComponent } from './components/super/dato/dato.component';
   providers: [
     AdminService,
     DocentService,
-    SuperService
   ],
   bootstrap: [AppComponent]
 })

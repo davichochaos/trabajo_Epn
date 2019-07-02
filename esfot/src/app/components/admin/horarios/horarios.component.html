@@ -15,7 +15,7 @@
   <div class="col-xl-3">
     <label>Seleccione el semestre que busca:</label>
   </div>
-  <div class="col-xl-2">
+  <div class="col-xl-1">
     <select class="form-control"
             name="nive" id="filnivell" [(ngModel)]="nivel" (click)="filhorario()">
       <option value="1">1</option>
@@ -24,6 +24,15 @@
       <option value="4">4</option>
       <option value="5">5</option>
       <option value="6">6</option>
+    </select>
+  </div>
+  <div class="col-xl-2">
+    <label>Y carrera a la que pertenece:</label>
+  </div>
+  <div class="col-xl-2">
+    <select class="form-control"
+            name="carr" id="filcarrl" [(ngModel)]="carre" (click)="filhorario()">
+      <option *ngFor="let i of carreras" value="{{i.siglas}}">{{i.siglas}}</option>
     </select>
   </div>
 </div>
@@ -42,7 +51,7 @@
   <div class="col-xl-4">
     <label>Seleccione el aula o laboratorio que busca:</label>
   </div>
-  <div class="col-xl-4">
+  <div class="col-xl-3">
     <select class="form-control"
             name="docen" id="filaula" [(ngModel)]="labo" (click)="filaula()">
       <option *ngFor="let i of aulas" value="{{i.nombreAula}}">{{i.nombreAula}}</option>

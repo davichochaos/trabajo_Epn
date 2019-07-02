@@ -7,6 +7,7 @@ import {Message} from 'primeng/api';
 import {Aulas} from '../../../interfaces/aulas.interface';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Docentes} from '../../../interfaces/docentes.interface';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-reserva-admin',
@@ -15,6 +16,9 @@ import {Docentes} from '../../../interfaces/docentes.interface';
 })
 export class ReservaAdminComponent implements OnInit {
 
+  permision: boolean;
+  permisions: boolean;
+  permisionn: boolean;
   msgs: Message[] = [];
   horarios: Horarios[] = [];
   aulas: Aulas[] = [];
@@ -135,6 +139,21 @@ export class ReservaAdminComponent implements OnInit {
 
   }
 
+  excess() {
+    let ini = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
+    let fin = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0');
+
+    if ( +ini < 7000 || +fin > 21000 ) {
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.permision = false;
+      console.log('horas no labaorables');
+    } else {
+      this.permision = true;
+    }
+  }
+
   guardarRe() {
     if (this.id == 'nuevo') {
       // guardar usuario nuevo
@@ -191,10 +210,14 @@ export class ReservaAdminComponent implements OnInit {
     for (let i = 0; i < this.materias.length; i++) {
       if (this.materias[i].nombreMat == this.reserva.nombreMat) {
         if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+          this.msgs = [];
           this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Rango de horas correctas'});
+          this.permisionn = true;
         } else {
           this.msgs = [];
-          this.msgs.push({severity: 'error', summary: 'Error', detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'});
+          this.msgs.push({severity: 'error', summary: 'Error',
+            detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'});
+          this.permisionn = false;
         }
 
       }
@@ -300,9 +323,13 @@ export class ReservaAdminComponent implements OnInit {
             console.log('dia igual');
             for (let k = 0; k < 7; k++) {
               if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio || this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-                console.log('hora incorrect');
                 this.msgs = [];
                 this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                this.permisions = false;
+              } else {
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+                this.permisions = true;
               }
             }
           }
@@ -321,6 +348,11 @@ export class ReservaAdminComponent implements OnInit {
             console.log('hora incorrecta');
             this.msgs = [];
             this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+            this.permisions = false;
+          } else {
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'libre'});
+            this.permisions = true;
           }
         }
       }

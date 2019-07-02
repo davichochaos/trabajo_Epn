@@ -10,6 +10,7 @@ import {AdminService} from '../../../services/admin.service';
 export class ReservasAdComponent implements OnInit {
 
   reservas: Reservas[] = [];
+  dat: boolean;
 
   constructor(private _adminService: AdminService) {
     this._adminService.consultarReserva()
@@ -26,6 +27,7 @@ export class ReservasAdComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   eliminar(id: string, posicion: number) {
@@ -37,4 +39,16 @@ export class ReservasAdComponent implements OnInit {
       );
   }
 
+  datt() {
+    if (this.reservas.length == 0) {
+      this.dat = true;
+    } else {
+      this.dat = false;
+    }
+    console.log('dato', this.reservas.length);
+    /*for (let i = 0; i < this.reservas.length; i ++) {
+
+
+    }*/
+  }
 }

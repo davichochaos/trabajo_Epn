@@ -9,14 +9,12 @@ import {MateriaComponent} from './components/admin/materia/materia.component';
 import {AulaComponent} from './components/admin/aula/aula.component';
 import {AdministradorComponent} from './components/admin/administrador/administrador.component';
 import {ReservaAdminComponent} from './components/admin/reserva-admin/reserva-admin.component';
-import {SuperComponent} from './components/super/super.component';
 
 
 //usuarios
 import {PerfilComponent} from './components/usuarios/perfil/perfil.component';
 import {ReservaComponent} from './components/usuarios/reserva/reserva.component';
 import {DocentesComponent} from './components/usuarios/docentes/docentes.component';
-import {DatoComponent} from './components/super/dato/dato.component';
 
 const APP_ROUTES: Routes = [
   {path: 'inicio', component: LoginComponent},
@@ -29,15 +27,13 @@ const APP_ROUTES: Routes = [
   {path: 'aula/:id', component: AulaComponent},
   {path: 'materia/:id', component: MateriaComponent},
   {path: 'reserva/:id', component: ReservaAdminComponent},
-  {path: 'super', component: SuperComponent},
 
-  {path: 'dato/:id', component: DatoComponent},
+
 
   /*usuarios*/
   {path: 'docent', component: DocentesComponent},
   {path: 'perfil', component: PerfilComponent},
   {path: 'reserva:id', component: ReservaComponent},
-  /*{path: 'horarios', component: HorariosComponent},*/
   {path: '**', pathMatch: 'full', redirectTo: 'inicio'}
 ];
 

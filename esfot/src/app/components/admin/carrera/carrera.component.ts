@@ -13,6 +13,8 @@ export class CarreraComponent implements OnInit {
   id: string;
   msgs: Message[] = [];
 
+  carreras: Carreras[] = [];
+
   carrera: Carreras = {
     nombreCarr: "",
     siglas: "",
@@ -35,9 +37,38 @@ export class CarreraComponent implements OnInit {
           }
         }
       );
+
+    this._adminServices.consultarCarreras()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.carreras.push(usuarioNew);
+          }
+          return this.carreras;
+        }
+      );
   }
 
   ngOnInit() {
+  }
+
+  mayus() {
+    this.carrera.nombreCarr = this.carrera.nombreCarr.valueOf().toUpperCase();
+    this.carrera.siglas = this.carrera.siglas.valueOf().toUpperCase();
+  }
+
+  controll() {
+    let a = this.carrera.siglas.valueOf().toUpperCase();
+    let b = this.carrera.nombreCarr.valueOf().toUpperCase();
+
+    for ( let i = 0; i < this.carreras.length; i ++) {
+      if (b === this.carreras[i].nombreCarr ||
+      a === this.carreras[i].siglas) {
+        console.log('la carrera ya existe');
+      }
+    }
   }
 
   guardar() {

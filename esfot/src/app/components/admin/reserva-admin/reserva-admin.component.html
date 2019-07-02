@@ -64,23 +64,25 @@
         <label class="col-2 col-form-label">Hora de Inicio:</label>
         <div class="col-xl-2">
           <input class="form-control" required id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
-                 name="hora" (change)="hor()" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv()">
+                 name="hora" (change)="hor()" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv(); excess();">
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-2 col-form-label">Hora de Finalizacion:</label>
         <div class="col-xl-2">
-          <input class="form-control" required id="fin" type="time" value="07:00" min="07:00" max="21:00" step="3600"
-                 name="hora" (change)="hor(); reserv()" [(ngModel)]="reserva.horaFin">
+          <input class="form-control" required id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
+                 name="hora" (change)="hor(); excess();" [(ngModel)]="reserva.horaFin">
         </div>
       </div>
 
-      <div class="form-group row">
-        <button type="submit" class="btn btn-info"
-                [disabled]="!forma.valid" (click)="guardarRe()">
-          Guardar
-        </button>
+      <div class="form-group row" *ngIf="permisionn">
+        <div *ngIf="permisions">
+          <button type="submit" class="btn btn-info"
+                  [disabled]="!forma.valid" (click)="guardarRe()" *ngIf="permision">
+            Guardar
+          </button>
+        </div>
       </div>
       <p-growl [(value)]="msgs" [life]="2000"></p-growl>
     </div>

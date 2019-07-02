@@ -13,6 +13,8 @@ import {Message} from 'primeng/api';
 export class AulaComponent implements OnInit {
 
   id: string;
+  acce: boolean;
+  aulas: Aulas[] = [];
   msgs: Message[] = [];
   aula: Aulas = {
     nombreAula: "",
@@ -36,7 +38,20 @@ export class AulaComponent implements OnInit {
               );
           }
         }
-      ); }
+      );
+
+    this._adminServices.consultarAulas()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.aulas.push(usuarioNew);
+          }
+          return this.aulas;
+        }
+      );
+  }
 
   ngOnInit() {
   }
@@ -69,5 +84,21 @@ export class AulaComponent implements OnInit {
     this.aula.nombreAula = '';
     this.aula.descripcion = '';
     this.aula.cupo = null;
+  }
+
+  mayus() {
+    this.aula.nombreAula = this.aula.nombreAula.valueOf().toUpperCase();
+  }
+
+  controll() {
+    let a = this.aula.nombreAula.valueOf().toUpperCase();
+
+    for (let i = 0; i < this.aulas.length; i ++) {
+      if (a === this.aulas[i].nombreAula) {
+        console.log('la aula ya existe');
+        this.msgs = [];
+        this.msgs.push({severity: 'error', summary: 'Error', detail: 'La aula o laboratorio ya existe'});
+      }
+    }
   }
 }
