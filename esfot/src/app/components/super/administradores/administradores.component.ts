@@ -18,7 +18,9 @@ export class AdministradoresComponent implements OnInit {
           for (const key$ in resultados) {
             const usuarioNew = resultados[key$];
             usuarioNew.id = key$;
-            this.admins.push(usuarioNew);
+            if (usuarioNew.cargo !== 'SuperAdmin') {
+              this.admins.push(usuarioNew);
+            }
           }
           return this.admins;
         }
