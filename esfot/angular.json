@@ -19,6 +19,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
+              { "glob": "**/*", "input": "node_modules/ng2-pdfjs-viewer/pdfjs", "output": "/assets/pdfjs" },
               "src/favicon.ico",
               "src/assets"
             ],
@@ -27,7 +28,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.slim.min.js",
+              "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },

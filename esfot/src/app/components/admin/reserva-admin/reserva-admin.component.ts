@@ -7,7 +7,6 @@ import {Message} from 'primeng/api';
 import {Aulas} from '../../../interfaces/aulas.interface';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Docentes} from '../../../interfaces/docentes.interface';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-reserva-admin',
@@ -122,7 +121,6 @@ export class ReservaAdminComponent implements OnInit {
               return this.materias;
             }
           );
-
       }
     }
   }

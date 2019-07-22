@@ -1,4 +1,10 @@
 <div class="container-fluid">
+  <div style="text-align: center">
+    <button [routerLink]="['/aula', 'nuevo']" type="button" class="btn btn-link">
+      <img src="../../../../assets/icons/icons8-add-48.png" height="40" width="40"/>Nueva Aula
+    </button>
+  </div>
+  <br>
   <table class="table table-responsive table-hover">
     <thead>
     <tr>
@@ -13,11 +19,16 @@
       <td>{{item.nombreAula}}</td>
       <td>{{item.descripcion}}</td>
       <td>{{item.cupo}}</td>
+      <img src="../../../../assets/icons/icons8-home-page-30.png" height="30" width="30"/>
       <td>
-        <button type="button" class="btn btn-info" [routerLink]="['/aula', item.id]">Editar</button>
-        <button type="button" class="btn btn-danger"
-                data-toggle="modal" [attr.data-target]="'#confirmacion2'+i">Eliminar</button>
-        <div class="modal fade" [id]="'confirmacion2'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+        <button type="button" class="btn btn-link" [routerLink]="['/aula', item.id]">
+          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>
+        </button>&nbsp;
+        <button type="button" class="btn btn-link"
+                data-toggle="modal" [attr.data-target]="'#confirmacion21'+i">
+          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
+        </button>
+        <div class="modal fade" [id]="'confirmacion21'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -40,5 +51,4 @@
     </tr>
     </tbody>
   </table>
-  <button [routerLink]="['/aula', 'nuevo']" type="button" class="btn btn-info">Nueva Aula</button>
 </div>

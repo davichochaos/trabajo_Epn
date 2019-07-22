@@ -1,4 +1,9 @@
 <div class="container-fluid">
+  <div style="text-align: center">
+    <button [routerLink]="['/carrera', 'nuevo']" type="button" class="btn btn-link">
+      <img src="../../../../assets/icons/icons8-add-48.png" height="48" width="48"/>Nueva Carrera</button>
+  </div>
+  <br>
   <table class="table table-responsive table-hover">
     <thead>
     <tr>
@@ -12,9 +17,13 @@
       <td>{{item.nombreCarr}}</td>
       <td>{{item.siglas}}</td>
       <td>
-        <button type="button" class="btn btn-info" [routerLink]="['/carrera', item.id]">Editar</button>
-        <button type="button" class="btn btn-danger"
-                data-toggle="modal" [attr.data-target]="'#confirmacion11'+i">Eliminar</button>
+        <button type="button" class="btn btn-link" [routerLink]="['/carrera', item.id]">
+          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>
+        </button>&nbsp;
+        <button type="button" class="btn btn-link"
+                data-toggle="modal" [attr.data-target]="'#confirmacion11'+i">
+          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
+        </button>
         <div class="modal fade" [id]="'confirmacion11'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -38,5 +47,5 @@
     </tr>
     </tbody>
   </table>
-  <button [routerLink]="['/carrera', 'nuevo']" type="button" class="btn btn-info">Nueva Carrera</button>
+
 </div>

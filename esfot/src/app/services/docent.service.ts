@@ -12,6 +12,14 @@ export class DocentService {
   docentesURL: string = 'https://esfot-975af.firebaseio.com/docentes.json';
   docenteURL: string = 'https://esfot-975af.firebaseio.com/docentes';
 
+  //horarios
+  horariosURL: string = 'https://esfot-975af.firebaseio.com/horarios.json';
+
+  //matrias
+  materiasURL: string = 'https://esfot-975af.firebaseio.com/materias.json';
+
+
+
   constructor(private _http: Http) { }
   isLogged(): Promise<boolean> {
     if (typeof(Storage) !== 'undefined') {
@@ -43,6 +51,28 @@ export class DocentService {
 
   consultarUsuarios() {
     return this._http.get(this.docentesURL)
+      .pipe(
+        map(
+          respuesta => {
+            return  respuesta.json();
+          }
+        )
+      );
+  }
+
+  consultarHorarios() {
+    return this._http.get(this.horariosURL)
+      .pipe(
+        map(
+          respuesta => {
+            return  respuesta.json();
+          }
+        )
+      );
+  }
+
+  consultarMaterias() {
+    return this._http.get(this.materiasURL)
       .pipe(
         map(
           respuesta => {

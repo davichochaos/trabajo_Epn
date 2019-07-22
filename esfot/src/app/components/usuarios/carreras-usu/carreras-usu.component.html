@@ -1,0 +1,22 @@
+<div class="container-fluid" xmlns="" xmlns="">
+  <table class="table table-responsive table-hover">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Codigo</th>
+      <th>Creditos</th>
+      <th>Semestre</th>
+      <th>Carreras</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of materias; let i = index;">
+      <td>{{item.nombreMat}}</td>
+      <td>{{item.codigo}}</td>
+      <td>{{item.creditos}}</td>
+      <td>{{item.semestre}}</td>
+      <td>{{item.carreras}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

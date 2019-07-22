@@ -4,8 +4,11 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {MessagesModule, GrowlModule, CheckboxModule, PasswordModule, CalendarModule, RadioButtonModule} from 'primeng/primeng';
+import {MessagesModule, GrowlModule, CheckboxModule, CalendarModule, RadioButtonModule} from 'primeng/primeng';
 
+import {PasswordModule} from 'primeng/password';
+
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // <-- Import PdfJsViewerModule module
 
 //rutas
 import {APP_ROUTING} from './app.routes';
@@ -14,6 +17,7 @@ import {APP_ROUTING} from './app.routes';
 
 import {AdminService} from './services/admin.service';
 import {DocentService} from './services/docent.service';
+import {SuperadService} from './services/superad.service';
 
 
 import { LoginComponent } from './components/login/login.component';
@@ -41,6 +45,12 @@ import { ReservaComponent } from './components/usuarios/reserva/reserva.componen
 import { DocentesComponent } from './components/usuarios/docentes/docentes.component';
 import { ReservasAdComponent } from './components/admin/reservas-ad/reservas-ad.component';
 import { ReservasUsuComponent } from './components/usuarios/reservas-usu/reservas-usu.component';
+import { CarrerasUsuComponent } from './components/usuarios/carreras-usu/carreras-usu.component';
+import { HorariosUsuComponent } from './components/usuarios/horarios-usu/horarios-usu.component';
+import { SuperComponent } from './components/super/home/super.component';
+import { AdministradoresComponent } from './components/super/administradores/administradores.component';
+import { Administrador1Component } from './components/super/administrador1/administrador1.component';
+
 
 @NgModule({
   declarations: [
@@ -63,6 +73,11 @@ import { ReservasUsuComponent } from './components/usuarios/reservas-usu/reserva
     ReservaAdminComponent,
     ReservasAdComponent,
     ReservasUsuComponent,
+    CarrerasUsuComponent,
+    HorariosUsuComponent,
+    SuperComponent,
+    AdministradoresComponent,
+    Administrador1Component,
 
   ],
   imports: [
@@ -77,11 +92,13 @@ import { ReservasUsuComponent } from './components/usuarios/reservas-usu/reserva
     CheckboxModule,
     PasswordModule,
     CalendarModule,
-    RadioButtonModule
+    RadioButtonModule,
+    PdfJsViewerModule
   ],
   providers: [
     AdminService,
     DocentService,
+    SuperadService
   ],
   bootstrap: [AppComponent]
 })

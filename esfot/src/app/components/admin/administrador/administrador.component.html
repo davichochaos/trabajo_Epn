@@ -1,12 +1,19 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-info">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand"><strong id="nomb">Bienvenido</strong> &nbsp;<strong id="nombreDocent"></strong></a>
+  <!--<div class="nav nav-pills navbar-nav mr-auto" id="pills-tab2" role="tablist">-->
+    <a class="navbar-brand" data-toggle="pill"  role="tab" aria-controls="pills-home"><strong id="nomb">Bienvenido</strong>&nbsp;<strong id="nombreDocent"></strong></a>
+  <!--</div>-->
+
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="nav nav-pills navbar-nav mr-auto" id="pills-tab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active bg-info" id="pills-usuarios-tab" data-toggle="pill" href="#usuarios" role="tab" aria-controls="pills-usuarios" aria-selected="true">Usuarios</a>
+          <a class="nav-link bg-info" id="pills-home-tab" data-toggle="pill" href="#homes" role="tab" aria-controls="pills-usuarios" aria-selected="true"><img src="../../../../assets/icons/icons8-home-page-30.png"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link bg-info" id="pills-usuarios-tab" data-toggle="pill" href="#usuarios" role="tab" aria-controls="pills-usuarios" aria-selected="false">Docentes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link bg-info" id="pills-carreras-tab" data-toggle="pill" href="#carreras" role="tab" aria-controls="pills-carreras" aria-selected="false">Carreras</a>
@@ -30,10 +37,53 @@
   </div>
 </nav>
 
+<!-- Button trigger modal -->
 <br>
 
+<div class="container-fluid">
+  <div class="row" style="text-align: end">
+    <div class="col offset-10">
+      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+        <img src="../../../../assets/icons/icons8-help-40.png" height="40" width="40"/>Ayuda
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Manual de Ayuda</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Para su ayuda, le presentamos el manual con el cual podra aclarar las dudas que posea acerca de la aplicación web, haga click en Aceptar para ver el
+        manual o en Cancelar para cerrar esta ventana
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="openPdf()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<ng2-pdfjs-viewer #externalPdfViewer [externalWindow]="true"></ng2-pdfjs-viewer>
+
+
+<br>
+
+<div class="container-fluid">
 <div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="usuarios" role="tabpanel" aria-labelledby="pills-usuarios-tab">
+  <div class="tab-pane fade" id="usuarios" role="tabpanel" aria-labelledby="pills-usuarios-tab">
     <app-usuarios></app-usuarios>
   </div>
   <div class="tab-pane fade" id="carreras" role="tabpanel" aria-labelledby="pills-carreras-tab">
@@ -50,5 +100,49 @@
   </div>
   <div class="tab-pane fade" id="reserva" role="tabpanel" aria-labelledby="pills-reserva-tab">
     <app-reservas-ad></app-reservas-ad>
+  </div>
+
+    <div class="tab-pane fade show active" id="homes" role="tabpanel" aria-labelledby="pills-home-tab">
+      <h1 style="text-align: center">Escoja a donde desea ir</h1>
+      <div class="nav nav-tabs navbar-nav mr-auto" id="pills-tab1" role="tablist">
+        <div class="row">
+          <div class="col">
+            <a  class="nav-link" id="pills-usuarios-tab1" data-toggle="pill" href="#usuarios" role="tab" aria-controls="pills-usuarios" aria-selected="false">
+              <img src="../../../../assets/icons/icons8-crowd-86.png" height="86" width="86"/>
+              Docentes
+            </a>
+          </div>
+          <div class="col">
+            <a  class="nav-link" id="pills-carreras-tab1" data-toggle="pill" href="#carreras" role="tab" aria-controls="pills-carreras" aria-selected="false">
+              <img src="../../../../assets/icons/icons8-mortarboard-86.png" height="86" width="86"/>
+              Carreras</a>
+          </div>
+          <div class="col">
+            <a  class="nav-link" id="pills-materias-tab1" data-toggle="pill" href="#materias" role="tab" aria-controls="pills-materias" aria-selected="false">
+              <img src="../../../../assets/icons/icons8-book-stack-86.png" height="86" width="86"/>
+              Materias
+              </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <a class="nav-link" id="pills-aulas-tab1" data-toggle="pill" href="#aulas" role="tab" aria-controls="pills-aulas" aria-selected="false">
+              <img src="../../../../assets/icons/icons8-google-classroom-86.png" height="86" width="86"/>
+              Aulas</a>
+          </div>
+          <div  class="col">
+            <a class="nav-link" id="pills-horarios-tab1" data-toggle="pill" href="#horarios" role="tab" aria-controls="pills-horarios" aria-selected="false">
+              <img src="../../../../assets/icons/icons8-schedule-86.png" height="86" width="86"/>
+              Horarios</a>
+          </div>
+          <div class="col">
+            <a  class="nav-link" id="pills-reserva-tab1" data-toggle="pill" href="#reserva" role="tab" aria-controls="pills-reserva" aria-selected="false">
+              <img src="../../../../assets/icons/icons8-reservation-86.png" height="86" width="86"/>
+              Reserva
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

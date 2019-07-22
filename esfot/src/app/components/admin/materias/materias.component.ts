@@ -10,6 +10,7 @@ import {Carreras} from '../../../interfaces/carreras.interface';
 })
 export class MateriasComponent implements OnInit {
   materias: Materias[] = [];
+  checked: boolean = false;
 
   val: string = 'Option 1';
   carreras: Carreras [] = [];

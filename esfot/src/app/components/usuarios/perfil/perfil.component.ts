@@ -16,10 +16,14 @@ export class PerfilComponent implements OnInit {
   usuarios: Docentes[] = [];
   usuario: Docentes = {
     nombreDocent: "",
-    cargo: "",
+    apellidoDocent: "",
+    cargo: "Docente",
     correo: "",
     password: "",
     carreras: [],
+    materiaDocent: [],
+    fechaNacimiento: "",
+    edadDocent: null,
   }
 
   constructor(private _router: Router, private _docentService: DocentService) {

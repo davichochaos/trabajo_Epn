@@ -1,0 +1,35 @@
+<div class="table-responsive-sm" *ngIf="datos">
+  <table class="table table-sm table-hover" #table>
+    <thead>
+    <tr>
+      <th scope="col">Docente</th>
+      <th scope="col">Materia</th>
+      <th scope="col">Aula/Laboratorio</th>
+      <th scope="col">Paralelo</th>
+      <th scope="col">Lunes</th>
+      <th scope="col">Martes</th>
+      <th scope="col">Miercoles</th>
+      <th scope="col">Jueves</th>
+      <th scope="col">Viernes</th>
+      <th scope="col">Sabado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of horarios; let i = index;">
+      <td>{{item.docenteNom}}</td>
+      <td>{{item.nombreMat}}</td>
+      <td>{{item.nombreAula}}</td>
+      <td>{{item.paralelo}}</td>
+      <td>{{item.horaInicios[0]}} - {{item.horaFins[0]}}</td>
+      <td>{{item.horaInicios[1]}} - {{item.horaFins[1]}}</td>
+      <td>{{item.horaInicios[2]}} - {{item.horaFins[2]}}</td>
+      <td>{{item.horaInicios[3]}} - {{item.horaFins[3]}}</td>
+      <td>{{item.horaInicios[4]}} - {{item.horaFins[4]}}</td>
+      <td>{{item.horaInicios[5]}} - {{item.horaFins[5]}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-info" (click)="fireEvent()">Exportar</button>
+</div>
+<div *ngIf="datos1"><h1>No existen registros</h1></div>
+

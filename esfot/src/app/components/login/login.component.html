@@ -1,9 +1,9 @@
-<header>
-  <img id="cabezera" class="img-fluid" src="../../../assets/cabecera.png"/>
+<header style="background-color: cornflowerblue">
+  <h3 style="color: azure; text-align: center">Escuela de Politécnica Nacional</h3>
+  <h4 style="color: azure; text-align: center">Escuela de Formación de Tecnólogos</h4>
 </header>
 <br>
 <div class="container-fluid">
-  <br>
   <div class="row">
     <div class="col-xl-3">
       <h4>Informacion</h4>
@@ -13,17 +13,16 @@
     </div>
     <div class="col-xl-6">
       <h1 style="text-align: center">Login</h1><br>
-      <form class="was-validated" (ngSubmit)="login(usuario.value, contra.value)" #forma="ngForm">
+      <form class="was-validated" #forma="ngForm">
         <div class="form-group row justify-content-center">
-          <label class="col-xl-2 col-form-label">Usuario</label>
+          <label class="col-xl-2 col-form-label">Correo:</label>
           <div class="col-xl-auto">
-            <input
-              class="form-control"
-              placeholder="Usuario"
-              #usuario = "ngModel"
-              name="usuario" type="text" [(ngModel)]="usuarios.correo"
-              required
-              pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$">
+            <input #usuario = "ngModel"
+                   name="usuario" type="text"
+                   [(ngModel)]="correo1"
+                   class="form-control"
+                   required
+                   pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$">
             <div class="valid-feedback">
               <b>Correo con formato correcto</b>
             </div>
@@ -35,12 +34,10 @@
         <div class="form-group row justify-content-center">
           <label class="col-xl-2 col-form-label">Password</label>
           <div class="col-xl-auto">
-            <input type="password"
+            <input #contra = "ngModel" type="password"
+                   name="contra"
+                   [(ngModel)]="password1"
                    class="form-control"
-                   placeholder="Contraseña"
-                   #contra = "ngModel"
-                   name="oontra"
-                   [(ngModel)]="usuarios.password"
                    required
                    minlength="6">
             <div class="valid-feedback">
@@ -55,8 +52,7 @@
         <div class="row justify-content-center">
           <div class="col-4 offset-xl-2">
             <button class="btn btn-primary"
-                    type="submit"
-                    [disabled]="!forma.valid">Ingresar</button>
+                    [disabled]="!forma.valid" (click)="entrar()">Ingresar</button>
           </div>
         </div>
       </form>
@@ -64,7 +60,15 @@
     </div>
   </div>
 </div>
-<br>
-<footer class="site-footer">
-  <img src="../../../assets/pie.png" id="pie1" class="img-fluid"/>
+
+<!--<label>correo</label><input #usuario = "ngModel"
+                            name="usuario" type="text" [(ngModel)]="correo1">
+<label>contra</label><input #contra = "ngModel"
+                            name="contra"
+                            [(ngModel)]="password1"
+                            >
+<button (click)="entrar()">entrar</button>-->
+
+<footer class="site-footer" style="background-color: cornflowerblue">
+
 </footer>

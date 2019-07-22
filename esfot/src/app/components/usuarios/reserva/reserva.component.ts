@@ -160,14 +160,15 @@ export class ReservaComponent implements OnInit {
 
     let total;
     total = (+fin - +ini).toString().split("")[0];
-    console.log('total',total);
+    console.log('total', total);
     for (let i = 0; i < this.materias.length; i++) {
       if (this.materias[i].nombreMat == this.reserva.nombreMat) {
         if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
           this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Rango de horas correctas'});
         } else {
           this.msgs = [];
-          this.msgs.push({severity: 'error', summary: 'Error', detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'});
+          this.msgs.push({severity: 'error', summary: 'Error',
+            detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'});
         }
 
       }
@@ -257,7 +258,7 @@ export class ReservaComponent implements OnInit {
         this.reserva.fecha  = "Diciembre " + da[2] + " " + da[3];
         break;
     }
-    console.log('mes',this.reserva.fecha);
+    console.log('mes', this.reserva.fecha);
   }
 
   cruz() {

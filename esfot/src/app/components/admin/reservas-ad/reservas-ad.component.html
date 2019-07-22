@@ -1,40 +1,59 @@
-<div class="card-group">
-  <div class="card" *ngFor="let item of reservas; let i = index;">
-    <div class="card-header"><h3 style="text-align: center">Reserva #{{i+1}}</h3></div>
-    <div class="card-body">
-      <label><b>Docente:</b></label>&nbsp;<label>{{item.nombreDocent}}</label><br>
-      <label><b>Aula/Laboratorio:</b></label>&nbsp;<label>{{item.aula}}</label><br>
-      <label><b>Materia:</b></label>&nbsp;<label>{{item.nombreMat}}</label><br>
-      <label><b>Fecha:</b></label>&nbsp;<label>{{item.fecha}}</label><br>
-      <label><b>Hora de inicio:</b></label>&nbsp;<label>{{item.horaInicio}}</label><br>
-      <label><b>Hora de finalizacion:</b></label>&nbsp;<label>{{item.horaFin}}</label>
-    </div>
-    <div class="card-footer">
-      <button type="button" class="btn btn-danger"
-              data-toggle="modal" [attr.data-target]="'#confirmacion9'+i">Eliminar</button>
-      <div class="modal fade" [id]="'confirmacion9'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Seguro que desea eleminar este registro ??
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
+<div class="container-fluid">
+  <div style="text-align: center">
+    <button [routerLink]="['/reserva', 'nuevo']" type="button" class="btn btn-link">
+      <img src="../../../../assets/icons/icons8-add-48.png" height="48" width="48"/>
+      Nueva Reserva
+    </button>
+  </div>
+  <br>
+  <table class="table table-responsive table-hover" style="">
+    <thead>
+    <tr>
+      <th>Nombres y Apellidos</th>
+      <th>Aula</th>
+      <th>Materia</th>
+      <th>Fecha</th>
+      <th>Hora de Inicio</th>
+      <th>Hora Fin</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of reservas; let i = index;">
+      <td>{{item.nombreDocent}}</td>
+      <td>{{item.aula}}</td>
+      <td>{{item.nombreMat}}</td>
+      <td>{{item.fecha}}</td>
+      <td>{{item.horaInicio}}</td>
+      <td>{{item.horaFin}}</td>
+      <td>
+        <button type="button" class="btn btn-link" [routerLink]="['/reserva', item.id]">
+          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>
+        </button> &nbsp;
+        <button type="button" class="btn btn-link"
+                data-toggle="modal" [attr.data-target]="'#confirmacion'+i">
+          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
+        </button>
+        <div class="modal fade" [id]="'confirmacion'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Seguro que desea eleminar este registro ??
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<br>
-<div>
-  <button [routerLink]="['/reserva', 'nuevo']" type="button" class="btn btn-info">Nueva Reserva</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>

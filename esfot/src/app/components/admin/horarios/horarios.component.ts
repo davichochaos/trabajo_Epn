@@ -17,6 +17,7 @@ export class HorariosComponent implements OnInit {
 
   @ViewChild('table') table: ElementRef;
 
+  checked: boolean = false;
   val2: string = 'Option 1';
   horarios: Horarios[] = [];
   docentes: Docentes[] = [];
@@ -28,6 +29,7 @@ export class HorariosComponent implements OnInit {
   carre: any;
 
   constructor(private _adminService: AdminService) {
+
     this._adminService.consultarHorarios()
       .subscribe(
         resultados => {
@@ -82,8 +84,14 @@ export class HorariosComponent implements OnInit {
 
   fireEvent() {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+    for (let i = 0; i <= this.horarios.length; i++) {
+      const range = {s: {c: 0, r: 0}, e: {c: 9, r: i}};
+      ws['!ref'] = XLSX.utils.encode_range(range);
+    }
+    //const range = {s: {c: 0, r: 0}, e: {c: 9, r: 4}};
+    //ws['!ref'] = XLSX.utils.encode_range(range);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.utils.book_append_sheet(wb, ws, 'Esfot');
 
     /* save to file */
     XLSX.writeFile(wb, 'ReporteHorario.xlsx');

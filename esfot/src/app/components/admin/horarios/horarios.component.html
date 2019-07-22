@@ -1,8 +1,16 @@
+<div style="text-align: center">
+  <button type="button" class="btn btn-link" (click)="fireEvent()">
+    <img src="https://img.icons8.com/color/48/000000/export-csv.png">Exportar
+  </button>&nbsp;
+  <button [routerLink]="['/horarioadmin', 'nuevo']" type="button" class="btn btn-link">
+    <img src="../../../../assets/icons/icons8-add-48.png" height="48" width="48"/>Nuevo Horario
+  </button>
+</div>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
-      <h5>Busqueda por:</h5>
-      <div class="ui-g" style="width:1250px;margin-bottom:10px">
+      <h5>Busqueda por:</h5><p-checkbox [(ngModel)]="checked" binary="true" label="Mostrar opciones"></p-checkbox>
+      <div class="ui-g" style="width:1250px;margin-bottom:10px" *ngIf="checked">
         <div class="ui-g-3"><p-radioButton name="group2" value="Option 1" label="Horario por Nivel" [(ngModel)]="val2" inputId="preopt1"></p-radioButton></div>
         <div class="ui-g-3"><p-radioButton name="group2" value="Option 2" label="Horario por Docentes" [(ngModel)]="val2" inputId="preopt2"></p-radioButton></div>
         <div class="ui-g-3"><p-radioButton name="group2" value="Option 3" label="Horario por Aulas y/o Laboratorios" [(ngModel)]="val2" inputId="preopt3"></p-radioButton></div>
@@ -11,31 +19,34 @@
     </div>
   </div>
 </div>
-<div *ngIf="val2 == 'Option 1'" class="row">
-  <div class="col-xl-3">
-    <label>Seleccione el semestre que busca:</label>
-  </div>
-  <div class="col-xl-1">
-    <select class="form-control"
-            name="nive" id="filnivell" [(ngModel)]="nivel" (click)="filhorario()">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-    </select>
-  </div>
-  <div class="col-xl-2">
-    <label>Y carrera a la que pertenece:</label>
-  </div>
-  <div class="col-xl-2">
-    <select class="form-control"
-            name="carr" id="filcarrl" [(ngModel)]="carre" (click)="filhorario()">
-      <option *ngFor="let i of carreras" value="{{i.siglas}}">{{i.siglas}}</option>
-    </select>
+<div *ngIf="checked">
+  <div *ngIf="val2 == 'Option 1' " class="row">
+    <div class="col-xl-3">
+      <label>Seleccione el semestre que busca:</label>
+    </div>
+    <div class="col-xl-1">
+      <select class="form-control"
+              name="nive" id="filnivell" [(ngModel)]="nivel" (click)="filhorario()">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+      </select>
+    </div>
+    <div class="col-xl-2">
+      <label>Y carrera a la que pertenece:</label>
+    </div>
+    <div class="col-xl-2">
+      <select class="form-control"
+              name="carr" id="filcarrl" [(ngModel)]="carre" (click)="filhorario()">
+        <option *ngFor="let i of carreras" value="{{i.siglas}}">{{i.siglas}}</option>
+      </select>
+    </div>
   </div>
 </div>
+
 <div *ngIf="val2 == 'Option 2'" class="row">
   <div class="col-xl-3">
     <label>Seleccione el docente que busca:</label>
@@ -71,6 +82,7 @@
 </div>-->
 <br>
 <div class="table-responsive-sm">
+  <br>
   <table class="table table-sm table-hover" #table>
     <thead>
     <tr>
@@ -99,9 +111,11 @@
       <td>{{item.horaInicios[4]}} - {{item.horaFins[4]}}</td>
       <td>{{item.horaInicios[5]}} - {{item.horaFins[5]}}</td>
       <td>
-        <button type="button" class="btn btn-info" [routerLink]="['/horarioadmin', item.id]">Editar</button>
-        <button type="button" class="btn btn-danger"
-                data-toggle="modal" [attr.data-target]="'#confirmacion8'+i">Eliminar</button>
+        <button type="button" class="btn btn-link" [routerLink]="['/horarioadmin', item.id]">
+          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/></button>&nbsp;
+        <button type="button" class="btn btn-link"
+                data-toggle="modal" [attr.data-target]="'#confirmacion8'+i">
+          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/></button>
         <div class="modal fade" [id]="'confirmacion8'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -125,7 +139,5 @@
     </tr>
     </tbody>
   </table>
-  <button type="button" class="btn btn-info" (click)="fireEvent()">Exportar</button>
-  <button [routerLink]="['/horarioadmin', 'nuevo']" type="button" class="btn btn-info">Nuevo Horario</button>
 </div>
 
