@@ -5,6 +5,7 @@ import { AdminService } from '../../services/admin.service';
 import { DocentService } from '../../services/docent.service';
 import { Message } from 'primeng/primeng';
 import {SuperadService} from '../../services/superad.service';
+import {getLocaleDateFormat} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   msgs: Message[] = [];
   password: any;
   correo: any;
+  fechaActual: any;
 
   password1: any;
   correo1: any;
@@ -43,6 +45,8 @@ export class LoginComponent implements OnInit {
         this._router.navigate(['/super']);
       }
     });
+
+    this.fechaActual = new Date();
   }
 
   entrar() {
