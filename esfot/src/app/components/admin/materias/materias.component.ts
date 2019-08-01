@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
@@ -9,6 +9,7 @@ import {Carreras} from '../../../interfaces/carreras.interface';
   styleUrls: ['./materias.component.css']
 })
 export class MateriasComponent implements OnInit {
+
   materias: Materias[] = [];
   checked: boolean = false;
 
@@ -16,6 +17,15 @@ export class MateriasComponent implements OnInit {
   carreras: Carreras [] = [];
   nivel: any;
   carre: any;
+
+  @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @ViewChild('externalPdfViewer') public externalPdfViewer;
+  public openPdf() {
+    console.log("opening pdf in new tab!");
+    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.refresh();
+  }
 
   constructor(private _adminService: AdminService) {
     this._adminService.consultarMaterias()

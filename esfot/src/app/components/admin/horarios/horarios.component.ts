@@ -15,8 +15,6 @@ import {Carreras} from '../../../interfaces/carreras.interface';
 })
 export class HorariosComponent implements OnInit {
 
-  @ViewChild('table') table: ElementRef;
-
   checked: boolean = false;
   val2: string = 'Option 1';
   horarios: Horarios[] = [];
@@ -27,6 +25,16 @@ export class HorariosComponent implements OnInit {
   nivel: any;
   labo: any;
   carre: any;
+
+  @ViewChild('table') table: ElementRef;
+  @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @ViewChild('externalPdfViewer') public externalPdfViewer;
+  public openPdf() {
+    console.log("opening pdf in new tab!");
+    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.refresh();
+  }
 
   constructor(private _adminService: AdminService) {
 

@@ -70,5 +70,12 @@
 <button (click)="entrar()">entrar</button>-->
 
 <footer class="footer">
-  <h5>{{fechaActual}}</h5>
+  <div class="row">
+    <div class="col text-left">
+      <h5>Quito,&nbsp;{{diaActual}}&nbsp;de&nbsp;{{mesActual}}&nbsp;del&nbsp;{{anioActual}}</h5>
+    </div>
+    <div class="col text-right">
+      <h5>Hora local: {{hora}}:{{minute}}</h5>
+    </div>
+  </div>
 </footer>

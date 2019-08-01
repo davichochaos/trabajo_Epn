@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {Carreras} from '../../../interfaces/carreras.interface';
 
@@ -10,6 +10,14 @@ import {Carreras} from '../../../interfaces/carreras.interface';
 export class CarrerasComponent implements OnInit {
 
   carreras: Carreras[] = [];
+  @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @ViewChild('externalPdfViewer') public externalPdfViewer;
+  public openPdf() {
+    console.log("opening pdf in new tab!");
+    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.refresh();
+  }
 
   constructor(private _adminService: AdminService) {
     this._adminService.consultarCarreras()

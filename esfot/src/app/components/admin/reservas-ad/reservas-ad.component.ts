@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Reservas} from '../../../interfaces/reservas.interface';
 import {AdminService} from '../../../services/admin.service';
 
@@ -11,6 +11,14 @@ export class ReservasAdComponent implements OnInit {
 
   reservas: Reservas[] = [];
   dat: boolean;
+  @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @ViewChild('externalPdfViewer') public externalPdfViewer;
+  public openPdf() {
+    console.log("opening pdf in new tab!");
+    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.refresh();
+  }
 
   constructor(private _adminService: AdminService) {
     this._adminService.consultarReserva()

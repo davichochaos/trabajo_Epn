@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { Docentes } from '../../../interfaces/docentes.interface';
 import { Carreras } from '../../../interfaces/carreras.interface';
@@ -9,8 +9,15 @@ import { Carreras } from '../../../interfaces/carreras.interface';
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-
   usuarios: Docentes[] = [];
+  @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @ViewChild('externalPdfViewer') public externalPdfViewer;
+  public openPdf() {
+    console.log("opening pdf in new tab!");
+    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.refresh();
+  }
 
   constructor(private _usuarioService: AdminService) {
     this._usuarioService.consultarUsuarios()

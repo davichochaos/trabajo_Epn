@@ -17,15 +17,18 @@ export class LoginComponent implements OnInit {
   msgs: Message[] = [];
   password: any;
   correo: any;
-  fechaActual: any;
-
+  anioActual: any;
+  mesActual: any;
+  diaActual: any;
   password1: any;
   correo1: any;
-
+  hora: any;
+  minute: any;
 
   constructor(private _router: Router, private _adminServices: AdminService,
               private _docenteServices: DocentService,
-              private _superServices: SuperadService ) { }
+              private _superServices: SuperadService) {
+  }
 
   ngOnInit() {
     this._adminServices.isLogged().then((result: boolean) => {
@@ -46,14 +49,39 @@ export class LoginComponent implements OnInit {
       }
     });
 
-    this.fechaActual = new Date();
+    this.anioActual = new Date().getFullYear();
+    const d = new Date();
+    const mes = new Array();
+    mes[0] = 'Enero';
+    mes[1] = 'Febrero';
+    mes[2] = 'Marzo';
+    mes[3] = 'Abril';
+    mes[4] = 'Mayo';
+    mes[5] = 'Junio';
+    mes[6] = 'Julio';
+    mes[7] = 'Agosto';
+    mes[8] = 'Septiembre';
+    mes[9] = 'Octubre';
+    mes[10] = 'Noviembre';
+    mes[11] = 'Diciembre';
+    this.mesActual = mes[d.getMonth()];
+    this.diaActual = new Date().getDay();
+    this.hora = this.addZero(d.getHours());
+    this.minute = this.addZero(d.getMinutes());
+  }
+
+  addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
   }
 
   entrar() {
 
     this._superServices.consultarAdmins().subscribe(
       res => {
-        for (const key$ in res ) {
+        for (const key$ in res) {
           const adminNew = res[key$];
           adminNew.id = res[key$].id;
           if (adminNew.correo === this.correo1 &&
@@ -74,7 +102,7 @@ export class LoginComponent implements OnInit {
             this._router.navigate(['/admin']);
           } else {
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Error', detail:'Usuario o contraseña incorrecta'});
+            this.msgs.push({severity: 'error', summary: 'Error', detail: 'Usuario o contraseña incorrecta'});
           }
         }
       }
@@ -101,7 +129,8 @@ export class LoginComponent implements OnInit {
               localStorage.setItem('Admin', usuarioGuar);
             }
             this._router.navigate(['/admin']);
-          } else*/ if (usuarioNew.correo === this.correo1 &&
+          } else*/
+          if (usuarioNew.correo === this.correo1 &&
             usuarioNew.password === this.password1 &&
             usuarioNew.cargo === 'Docente') {
             if (typeof (Storage) !== 'undefined') {
@@ -111,7 +140,7 @@ export class LoginComponent implements OnInit {
             this._router.navigate(['/docent']);
           } else {
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Error', detail:'Usuario o contraseña incorrecta'});
+            this.msgs.push({severity: 'error', summary: 'Error', detail: 'Usuario o contraseña incorrecta'});
           }
         }
       }
@@ -125,21 +154,21 @@ export class LoginComponent implements OnInit {
           const usuarioNew = respuesta[key$];
           usuarioNew.id = respuesta[key$].id;
           if (usuarioNew.correo === this.correo && usuarioNew.password === this.password && usuarioNew.cargo === 'Administrador') {
-            if (typeof(Storage) !== 'undefined') {
+            if (typeof (Storage) !== 'undefined') {
               const usuarioGuar = JSON.stringify(usuarioNew);
               localStorage.setItem('Admin', usuarioGuar);
               //console.log(respuesta[key$].id);
             }
             this._router.navigate(['/admin']);
           } else if (usuarioNew.correo === this.correo && usuarioNew.password === this.password && usuarioNew.cargo === 'Docente') {
-            if (typeof(Storage) !== 'undefined') {
+            if (typeof (Storage) !== 'undefined') {
               const usuarioGuar = JSON.stringify(usuarioNew);
               localStorage.setItem('Docent', usuarioGuar);
               //console.log(usuarioNew.id);
             }
             this._router.navigate(['/docent']);
           } else if (usuarioNew.correo === this.correo && usuarioNew.password === this.password && usuarioNew.cargo === 'SuperAdmin') {
-            if (typeof(Storage) !== 'undefined') {
+            if (typeof (Storage) !== 'undefined') {
               const usuarioGuar = JSON.stringify(usuarioNew);
               localStorage.setItem('Super', usuarioGuar);
               //console.log(respuesta[key$].id);
@@ -147,13 +176,11 @@ export class LoginComponent implements OnInit {
             this._router.navigate(['/super']);
           } else {
             this.msgs = [];
-            this.msgs.push({severity:'error', summary:'Error', detail:'Usuario o contraseña incorrecta'});
+            this.msgs.push({severity: 'error', summary: 'Error', detail: 'Usuario o contraseña incorrecta'});
           }
 
         }
         //return this.listaUsuarios;
       });
-
   }
-
 }
