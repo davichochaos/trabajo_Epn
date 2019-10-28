@@ -105,12 +105,11 @@ export class HorarioComponent implements OnInit {
           for (const key$ in resultados) {
             const docentNew = resultados[key$];
             docentNew.id = key$;
-            if (docentNew.cargo !== 'SuperAdmin') {
+            if (docentNew.cargo !== 'SuperAdmin' && docentNew.nombreDocent !== 'docente') {
               for (let i = 0; i < docentNew.carreras.length; i ++) {
                 console.log(docentNew.carreras.length);
                 if (docentNew.carreras[i] == this.horario.carrer) {
-                  this.profes.push(docentNew);
-                }
+                  this.profes.push(docentNew);                }
               }
             }
             /*for (let i = 0; i < docentNew.carreras.length; i ++) {

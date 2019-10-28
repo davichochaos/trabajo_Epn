@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
     mes[10] = 'Noviembre';
     mes[11] = 'Diciembre';
     this.mesActual = mes[d.getMonth()];
-    this.diaActual = new Date().getDay();
+    this.diaActual = this.addZero(d.getUTCDay());
     this.hora = this.addZero(d.getHours());
     this.minute = this.addZero(d.getMinutes());
   }

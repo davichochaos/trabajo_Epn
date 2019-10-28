@@ -39,9 +39,7 @@
     <thead>
     <tr>
       <th>Nombres y Apellidos</th>
-      <th>Edad</th>
       <th>Correo</th>
-      <th>Materia</th>
       <th>Carrera</th>
       <th>Opciones</th>
     </tr>
@@ -51,7 +49,6 @@
       <td>{{item.nombreDocent}}&nbsp;{{item.apellidoDocent}}</td>
       <td>{{item.correo}}</td>
       <td>{{item.carreras}}</td>
-      <td>{{item.materiaDocent}}</td>
       <td>
         <button type="button" class="btn btn-link" [routerLink]="['/usuario', item.id]">
           <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>

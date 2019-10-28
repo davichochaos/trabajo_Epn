@@ -3,9 +3,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MessagesModule, GrowlModule, CheckboxModule, CalendarModule, RadioButtonModule} from 'primeng/primeng';
+import {TableModule} from 'primeng/table';
 
+//accordion and accordion tab
 import {PasswordModule} from 'primeng/password';
 
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // <-- Import PdfJsViewerModule module
@@ -84,6 +86,8 @@ import { Administrador1Component } from './components/super/administrador1/admin
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
+    TableModule,
     APP_ROUTING,
     HttpModule,
     HttpClientModule,
@@ -93,12 +97,13 @@ import { Administrador1Component } from './components/super/administrador1/admin
     PasswordModule,
     CalendarModule,
     RadioButtonModule,
-    PdfJsViewerModule
+    PdfJsViewerModule,
   ],
   providers: [
     AdminService,
     DocentService,
-    SuperadService
+    SuperadService,
+
   ],
   bootstrap: [AppComponent]
 })

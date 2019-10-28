@@ -9,6 +9,9 @@ import { Aulas } from '../../../interfaces/aulas.interface';
 })
 export class AulasComponent implements OnInit {
   aulas: Aulas[] = [];
+  cols: any[];
+  selectedCar2: Aulas;
+
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -33,6 +36,16 @@ export class AulasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cols = [
+      { field: 'nombreAula', header: 'Aula o Laboratorio' },
+      { field: 'descripcion', header: 'Descripción' },
+      { field: 'cupo', header: 'Cupo' },
+    ];
+  }
+
+  selectCarWithButton(car: Aulas) {
+    this.selectedCar2 = car;
+    console.log(car.nombreAula);
   }
 
   eliminar(id: string, posicion: number) {

@@ -36,20 +36,21 @@
 
   </div>
   <br>
+  <br>
   <table class="table table-responsive table-hover">
-    <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Descripcion</th>
-      <th>Capacidad</th>
-      <th>Opciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of aulas; let i = index;">
-      <td>{{item.nombreAula}}</td>
-      <td>{{item.descripcion}}</td>
-      <td>{{item.cupo}}</td>
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Capacidad</th>
+        <th>Opciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of aulas; let i = index;">
+        <td>{{item.nombreAula}}</td>
+        <td>{{item.descripcion}}</td>
+        <td>{{item.cupo}}</td>
 
       <td>
         <button type="button" class="btn btn-link" [routerLink]="['/aula', item.id]">
@@ -82,4 +83,40 @@
     </tr>
     </tbody>
   </table>
+
+
+
+
+  <p-table #dt [columns]="cols" [value]="aulas" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+          <input *ngSwitchCase="'nombreAula'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+          <input *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+          <input *ngSwitchCase="'cupo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+        <td>
+          <button pButton class="btn btn-link" (click)="selectCarWithButton(rowData)"><img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/aula', cols.id]"/></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
