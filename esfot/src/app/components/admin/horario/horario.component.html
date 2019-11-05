@@ -1,11 +1,16 @@
+<br>
+<div class="container-fluid" xmlns="">
+  <h1 style="text-align: center"><strong>Registro de Nuevo Horario</strong></h1>
+</div>
+<br>
 <div class="container-fluid" xmlns="">
   <div class="row">
-    <div class="col-6 text-left">
+    <div class="col-2 offset-4 text-center">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-2">
       <button [routerLink]="['/horarioadmin','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -13,9 +18,11 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-5">
+      <h4 class="text-center"><strong>Datos</strong></h4>
+      <br>
       <div class="form-group row">
-        <label class="col-2 col-form-label">Carrera:</label>
+        <label class="col-xl-2 col-form-label">Carrera:</label>
         <div class="col-xl-10">
           <select class="form-control"
                   name="carrer" id="filcarrera" [(ngModel)]="horario.carrer" (change)="flltro1(); flltro()">
@@ -24,7 +31,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-2 col-form-label">Nivel:</label>
+        <label class="col-xl-2 col-form-label">Nivel:</label>
         <div class="col-xl-10">
           <select class="form-control"
                   name="filnivel" id="filnivel" [(ngModel)]="horario.semest" (change)=" permission(); flltro()">
@@ -38,7 +45,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-2 col-form-label">Parelelo:</label>
+        <label class="col-xl-2 col-form-label">Parelelo:</label>
         <div class="col-xl-10">
           <select class="form-control"
                   name="filnivel" [(ngModel)]="horario.paralelo" >
@@ -49,7 +56,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-2 col-form-label">Materia:</label>
+        <label class="col-xl-2 col-form-label">Materia:</label>
         <div class="col-xl-10">
           <select class="form-control"
                   [(ngModel)]="horario.nombreMat" name="mat" id="mat">
@@ -58,7 +65,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-2 col-form-label">Docente:</label>
+        <label class="col-xl-2 col-form-label">Docente:</label>
         <div class="col-xl-10">
           <select class="form-control"
                   [(ngModel)]="horario.docenteNom" name="docen" id="docent">
@@ -68,7 +75,7 @@
       </div>
 
         <div class="form-group row">
-          <label class="col-2 col-form-label">Aula:</label>
+          <label class="col-xl-2 col-form-label">Aula:</label>
           <div class="col-xl-10">
             <select class="form-control"
                     [(ngModel)]="horario.nombreAula" name="aul" (change)="cruze(); cruze1(); cruze2(); cruze3(); cruze4(); cruze5(); permission()">
@@ -78,16 +85,18 @@
         </div>
 
         <div class="form-group row">
-          <label class="col-md-2 col-form-label">Dia</label>
-          <div class="col-10">
+          <label class="col-xl-2 col-form-label">Dia:</label>
+        </div>
+      <div class="form-group row">
+      <div class="col-xl-12">
             <div class="row">
               <div class="col-xl-4">
                 <p-checkbox name="dia" [(ngModel)]="horario.dias[0]" binary="false" label="Lunes" (onChange)="val(); cruze(); permission()" [(ngModel)]="cod"></p-checkbox>
               </div>
               <div class="col-xl-4">
                 <div class="row">
-                  <label class="col-4">Desde</label>
-                  <div class="col-6">
+                  <label class="col-4">Desde:</label>
+                  <div class="col-8">
                     <input class="form-control" id="inicio" type="time" value="07:00" min="07:00" max="19:00" step="3600"
                            name="hora1" [(ngModel)]="horario.horaInicios[0]" [disabled]="cod" (change)="cruze(); excess(); permission()" >
                   </div>
@@ -96,8 +105,8 @@
 
               <div class="col-xl-4">
                 <div class="row">
-                  <label class="col-4">Hasta</label>
-                  <div class="col-6">
+                  <label class="col-4">Hasta:</label>
+                  <div class="col-8">
                     <input class="form-control" id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
                            name="hora2" [(ngModel)]="horario.horaFins[0]" [disabled]="cod" (change)="cruze(); hora2(); excess(); permission() ">
                   </div>
@@ -113,7 +122,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Desde:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="inicio1" type="time" value="07:00" min="07:00" max="19:00" step="3600"
                          name="hora1" [(ngModel)]="horario.horaInicios[1]" [disabled]="cod1" (change)="cruze1(); excess1()">
                 </div>
@@ -123,7 +132,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Hasta:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="fin1" type="time" value="07:00" min="08:00" max="21:00" step="3600"
                          name="hora2" [(ngModel)]="horario.horaFins[1]" [disabled]="cod1" (change)="cruze1(); hora2(); excess1()">
                 </div>
@@ -139,7 +148,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Desde:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="inicio2" type="time" value="07:00" min="07:00" max="19:00" step="3600"
                                           name="hora1" [(ngModel)]="horario.horaInicios[2]" [disabled]="cod2" (change)="cruze2(); excess2()">
                 </div>
@@ -149,7 +158,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Hasta:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="fin2" type="time" value="07:00" min="08:00" max="21:00" step="3600"
                          name="hora2" [(ngModel)]="horario.horaFins[2]" [disabled]="cod2" (change)="cruze2(); hora2(); excess2()">
                 </div>
@@ -165,7 +174,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Desde:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="inicio3" type="time" value="07:00" min="07:00" max="19:00" step="3600"
                          name="hora1" [(ngModel)]="horario.horaInicios[3]" [disabled]="cod3" (change)="cruze3(); excess3()">
                 </div>
@@ -175,7 +184,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Hasta:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="fin3" type="time" value="07:00" min="08:00" max="21:00" step="3600"
                          name="hora2" [(ngModel)]="horario.horaFins[3]" [disabled]="cod3" (change)="cruze3(); hora2(); excess3()">
                 </div>
@@ -191,7 +200,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Desde:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="inicio4" type="time" value="07:00" min="07:00" max="19:00" step="3600"
                          name="hora1" [(ngModel)]="horario.horaInicios[4]" [disabled]="cod4" (change)="cruze4(); excess4()">
                 </div>
@@ -201,7 +210,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Hasta:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="fin4" type="time" value="07:00" min="08:00" max="21:00" step="3600"
                          name="hora2" [(ngModel)]="horario.horaFins[4]" [disabled]="cod4" (change)="cruze4(); hora2(); excess4()">
                 </div>
@@ -217,7 +226,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Desde:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="inicio5" type="time" [disabled]="cod5" value="07:00" min="07:00" max="19:00" step="3600"
                          name="hora1" [(ngModel)]="horario.horaInicios[5]" [disabled]="cod5" (change)="cruze5(); excess5()">
                 </div>
@@ -227,7 +236,7 @@
               <div class="col-xl-4">
               <div class="row">
                 <label class="col-4">Hasta:</label>
-                <div class="col-6">
+                <div class="col-8">
                   <input class="form-control" id="fin5" type="time" [disabled]="cod5" value="07:00" min="08:00" max="21:00" step="3600"
                          name="hora2" [(ngModel)]="horario.horaFins[5]" [disabled]="cod5" (change)="cruze5(); hora2(); excess5()">
                 </div>
@@ -243,6 +252,42 @@
           </button>
         </div>
       <p-growl [(value)]="msgs" [life]="2000"></p-growl>
+    </div>
+    <div class="col-sm-7">
+      <h4 class="text-center"><strong>Horarios existentes</strong></h4>
+      <br>
+      <div class="table-responsive-sm">
+        <table class="table table-sm table-hover" >
+          <thead>
+          <tr>
+            <th scope="col">Docente</th>
+            <th scope="col">Materia</th>
+            <th scope="col">Aula/Laboratorio</th>
+            <th scope="col">Paralelo</th>
+            <th scope="col">Lunes</th>
+            <th scope="col">Martes</th>
+            <th scope="col">Miércoles</th>
+            <th scope="col">Jueves</th>
+            <th scope="col">Viernes</th>
+            <th scope="col">Sábado</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of horarios; let i = index;">
+            <td>{{item.docenteNom}}</td>
+            <td>{{item.nombreMat}}</td>
+            <td>{{item.nombreAula}}</td>
+            <td>{{item.paralelo}}</td>
+            <td>{{item.horaInicios[0]}} - {{item.horaFins[0]}}</td>
+            <td>{{item.horaInicios[1]}} - {{item.horaFins[1]}}</td>
+            <td>{{item.horaInicios[2]}} - {{item.horaFins[2]}}</td>
+            <td>{{item.horaInicios[3]}} - {{item.horaFins[3]}}</td>
+            <td>{{item.horaInicios[4]}} - {{item.horaFins[4]}}</td>
+            <td>{{item.horaInicios[5]}} - {{item.horaFins[5]}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

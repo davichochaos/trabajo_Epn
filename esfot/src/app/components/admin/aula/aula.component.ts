@@ -13,7 +13,6 @@ import {Message} from 'primeng/api';
 export class AulaComponent implements OnInit {
 
   id: string;
-  acce: boolean;
   aulas: Aulas[] = [];
   msgs: Message[] = [];
   aula: Aulas = {

@@ -12,7 +12,6 @@ export class AulasComponent implements OnInit {
   cols: any[];
   selectedCar2: Aulas;
 
-
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @ViewChild('externalPdfViewer') public externalPdfViewer;
@@ -40,12 +39,8 @@ export class AulasComponent implements OnInit {
       { field: 'nombreAula', header: 'Aula o Laboratorio' },
       { field: 'descripcion', header: 'Descripción' },
       { field: 'cupo', header: 'Cupo' },
-    ];
-  }
 
-  selectCarWithButton(car: Aulas) {
-    this.selectedCar2 = car;
-    console.log(car.nombreAula);
+    ];
   }
 
   eliminar(id: string, posicion: number) {

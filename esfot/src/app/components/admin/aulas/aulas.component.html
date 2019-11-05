@@ -96,15 +96,21 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns">
+        <th *ngFor="let col of columns" class="text-center">
           {{col.header}}
+        </th>
+        <th class="text-center">
+          Opciones
         </th>
       </tr>
       <tr>
         <th *ngFor="let col of columns" [ngSwitch]="col.field">
-          <input *ngSwitchCase="'nombreAula'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-          <input *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-          <input *ngSwitchCase="'cupo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+          <input class="col-xl-3" *ngSwitchCase="'nombreAula'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+          <input class="col-xl-3" *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+          <input class="col-xl-3" *ngSwitchCase="'cupo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+        </th>
+        <th>
+          <p>Editar y Eliminar</p>
         </th>
       </tr>
     </ng-template>
@@ -114,7 +120,9 @@
           {{rowData[col.field]}}
         </td>
         <td>
-          <button pButton class="btn btn-link" (click)="selectCarWithButton(rowData)"><img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/aula', cols.id]"/></button>
+          <button type="button" class="btn btn-link">
+            <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/aula', rowData.id]"/>
+          </button>
         </td>
       </tr>
     </ng-template>
