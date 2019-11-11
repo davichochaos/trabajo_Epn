@@ -37,7 +37,7 @@
   </div>
   <br>
   <br>
-  <table class="table table-responsive table-hover">
+  <!--<table class="table table-responsive table-hover">
       <thead>
       <tr>
         <th>Nombre</th>
@@ -82,12 +82,12 @@
       </td>
     </tr>
     </tbody>
-  </table>
+  </table>-->
 
 
 
 
-  <p-table #dt [columns]="cols" [value]="aulas" [paginator]="true" [rows]="10">
+  <p-table #dt [columns]="cols" [value]="aulas" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true">
     <ng-template pTemplate="caption">
       <div style="text-align: right">
         <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -96,8 +96,9 @@
     </ng-template>
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th *ngFor="let col of columns" class="text-center">
+        <th *ngFor="let col of columns" class="text-center" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
           {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
         </th>
         <th class="text-center">
           Opciones
@@ -115,14 +116,38 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pSelectableRow]="rowData">
-        <td *ngFor="let col of columns">
+      <tr [pSelectableRow]="rowData"
+      >
+        <td *ngFor="let col of columns;">
           {{rowData[col.field]}}
         </td>
         <td>
           <button type="button" class="btn btn-link">
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/aula', rowData.id]"/>
           </button>
+          <button type="button" class="btn btn-link"
+                  data-toggle="modal" [attr.data-target]="'#confirmacion21'+i">
+            <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
+          </button>
+          <div class="modal fade" [id]="'confirmacion21'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Seguro que desea eleminar este registro ??
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(rowData.id, i)">Aceptar</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     </ng-template>
