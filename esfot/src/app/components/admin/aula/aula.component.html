@@ -1,11 +1,16 @@
+<br>
+<div class="container-fluid" xmlns="">
+  <h1 style="text-align: center"><strong>Registro de Nueva Aula o Laboratorio</strong></h1>
+</div>
+<br>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-6 text-left">
+    <div class="col-sm-2 offset-sm-4 text-center">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-sm-2">
       <button [routerLink]="['/aula','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -13,7 +18,7 @@
   </div>
   <br>
   <div class="row">
-    <div class="col-xl-12">
+    <div class="col-sm-6 offset-3">
       <form class="was-validated" (ngSubmit)="guardar()" #forma="ngForm">
         <div class="form-group row">
           <label class="col-2 col-form-label">Nombre:</label>
@@ -47,8 +52,9 @@
                    [(ngModel)]="aula.cupo">
           </div>
         </div>
+        <br>
         <div class="form-group row">
-          <div class="col-xl-auto">
+          <div class="col-sm-12" id="boton">
             <button type="submit" [disabled]="!forma.valid" class="btn btn-info">
               Guardar
             </button>

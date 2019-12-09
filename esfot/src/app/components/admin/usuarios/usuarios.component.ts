@@ -10,6 +10,8 @@ import { Carreras } from '../../../interfaces/carreras.interface';
 })
 export class UsuariosComponent implements OnInit {
   usuarios: Docentes[] = [];
+  cols: any[];
+
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @ViewChild('externalPdfViewer') public externalPdfViewer;
@@ -39,6 +41,13 @@ export class UsuariosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cols = [
+      { field: 'apellidoDocent', subfield: 'nombreDocent' , header: 'Docentes' },
+      { field: 'cargo', header: 'Cargo' },
+      { field: 'carreras', header: 'Carreras' },
+      { field: 'materias', header: 'Materias' },
+
+    ];
   }
 
   eliminar(id: string, posicion: number) {

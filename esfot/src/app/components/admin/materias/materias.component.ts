@@ -12,6 +12,7 @@ export class MateriasComponent implements OnInit {
 
   materias: Materias[] = [];
   checked: boolean = false;
+  cols: any[];
 
   val: string = 'Option 1';
   carreras: Carreras [] = [];
@@ -54,6 +55,16 @@ export class MateriasComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cols = [
+      { field: 'nombreMat', header: 'Materia' },
+      { field: 'codigo', header: 'Código' },
+      { field: 'semestre', header: 'Semestre o Nivel' },
+      { field: 'creditos', header: 'Créditos' },
+      { field: 'cd', header: 'Componente de Docencia' },
+      { field: 'cp', header: 'Componente Práctico' },
+      { field: 'carreras', header: 'Caarreras' },
+
+    ];
   }
 
   eliminar(id: string, posicion: number) {

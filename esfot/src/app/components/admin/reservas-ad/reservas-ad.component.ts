@@ -10,6 +10,8 @@ import {AdminService} from '../../../services/admin.service';
 export class ReservasAdComponent implements OnInit {
 
   reservas: Reservas[] = [];
+  cols: any[];
+
   dat: boolean;
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -35,7 +37,14 @@ export class ReservasAdComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.cols = [
+      { field: 'nombreDocent', header: 'Docente' },
+      { field: 'aula', header: 'Aula' },
+      { field: 'nombreMat', header: 'Materia' },
+      { field: 'fecha', header: 'Fecha de Reserva' },
+      { field: 'horaInicio', header: 'Hora de Inicio' },
+      { field: 'horaFin', header: 'Hora de Finalización' },
+    ];
   }
 
   eliminar(id: string, posicion: number) {

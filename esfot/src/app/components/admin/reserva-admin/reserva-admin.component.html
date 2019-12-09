@@ -1,11 +1,16 @@
+<br>
+<div class="container-fluid" xmlns="">
+  <h1 style="text-align: center"><strong>Registro de Nueva Reserva</strong></h1>
+</div>
+<br>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-6 text-left">
+    <div class="col-sm-2 offset-sm-4 text-center">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-sm-2">
       <button [routerLink]="['/reserva','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -14,10 +19,10 @@
   <br>
   <form class="was-validated" #forma="ngForm">
   <div class="row">
-    <div class="col-xl-12">
+    <div class="col-sm-6 offset-3">
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Docente:</label>
+        <label class="col-sm-3 col-form-label">Docente:</label>
         <div class="col-xl-5">
           <select class="form-control"
                   placeholder="nombre"
@@ -30,7 +35,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Aula:</label>
+        <label class="col-sm-3 col-form-label">Aula:</label>
         <div class="col-xl-5">
           <select class="form-control" name="aula"
                   placeholder="aula"
@@ -42,7 +47,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Materia:</label>
+        <label class="col-sm-3 col-form-label">Materia:</label>
         <div class="col-xl-5">
           <select class="form-control"
                   name="materia"
@@ -54,30 +59,30 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Fecha:</label>
-        <div class="col-xl-10">
+        <label class="col-sm-3 col-form-label">Fecha:</label>
+        <div class="col-xl-9">
           <p-calendar name="fecha" [(ngModel)]="date2" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val($event); val1($event)" (onSelect)="cruz(); reserv()"></p-calendar>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Hora de Inicio:</label>
-        <div class="col-xl-2">
+        <label class="col-sm-3 col-form-label">Hora de Inicio:</label>
+        <div class="col-xl-5">
           <input class="form-control" required id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
                  name="hora" (change)="hor()" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv(); excess();">
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-2 col-form-label">Hora de Finalizacion:</label>
-        <div class="col-xl-2">
+        <label class="col-sm-3 col-form-label">Hora de Finalizacion:</label>
+        <div class="col-xl-5">
           <input class="form-control" required id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
                  name="hora" (change)="hor(); excess();" [(ngModel)]="reserva.horaFin">
         </div>
       </div>
 
       <div class="form-group row" *ngIf="permisionn">
-        <div *ngIf="permisions">
+        <div *ngIf="permisions" class="col-sm-12" id="boton">
           <button type="submit" class="btn btn-info"
                   [disabled]="!forma.valid" (click)="guardarRe()" *ngIf="permision">
             Guardar
