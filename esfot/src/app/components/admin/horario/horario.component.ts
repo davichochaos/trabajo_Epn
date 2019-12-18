@@ -23,7 +23,6 @@ export class HorarioComponent implements OnInit {
   carrer: Carreras[] = [];
   msgs: Message[] = [];
   aulas: Aulas[] = [];
-  materias: Materias[] = [];
   profes: Docentes[] = [];
   horarios: Horarios[] = [];
   horario: Horarios = {
@@ -125,7 +124,7 @@ export class HorarioComponent implements OnInit {
       );
   }
 
-  flltro() {
+  /*flltro() {
     this.materias = [];
     this._adminService.consultarMaterias()
       .subscribe(
@@ -142,12 +141,12 @@ export class HorarioComponent implements OnInit {
           return this.materias;
         }
       );
-  }
+  }*/
 
   clean() {
     this.horario.dias = [];
     this.horario.nombreMat = '';
-    this.materias = [];
+    //this.materias = [];
     this.profes = [];
     this.horario.docenteNom = '';
     this.horario.nombreAula = '';
@@ -312,7 +311,7 @@ export class HorarioComponent implements OnInit {
       total6 = +fin5 - +ini5;
       total = (+total1 + +total2 + +total3 + +total4 + +total5 + +total6).toString().split("")[0];
       console.log('total: ', total);
-      for (let i = 0; i < this.materias.length; i++) {
+      /*for (let i = 0; i < this.materias.length; i++) {
         if (this.materias[i].nombreMat == this.horario.nombreMat) {
             if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
               this.msgs.push({severity: 'success', summary: 'Correcto',
@@ -326,7 +325,7 @@ export class HorarioComponent implements OnInit {
             }
 
         }
-      }
+      }*/
 
     }
   }

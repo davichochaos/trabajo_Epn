@@ -34,7 +34,7 @@
         <label class="col-xl-2 col-form-label">Nivel:</label>
         <div class="col-xl-10">
           <select class="form-control"
-                  name="filnivel" id="filnivel" [(ngModel)]="horario.semest" (change)=" permission(); flltro()">
+                  name="filnivel" id="filnivel" [(ngModel)]="horario.semest" (change)=" permission();">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -60,7 +60,7 @@
         <div class="col-xl-10">
           <select class="form-control"
                   [(ngModel)]="horario.nombreMat" name="mat" id="mat">
-            <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
+            <option *ngFor="let i of profes" value="{{i.materiaDocent}}">{{i.materiaDocent}}</option>
           </select>
         </div>
       </div>
@@ -69,7 +69,7 @@
         <div class="col-xl-10">
           <select class="form-control"
                   [(ngModel)]="horario.docenteNom" name="docen" id="docent">
-            <option *ngFor="let i of profes" value="{{i.nombreDocent}}">{{i.nombreDocent}}</option>
+            <option *ngFor="let i of profes" value="{{i.nombreDocent}}">{{i.apellidoDocent}} {{i.nombreDocent}}</option>
           </select>
         </div>
       </div>
