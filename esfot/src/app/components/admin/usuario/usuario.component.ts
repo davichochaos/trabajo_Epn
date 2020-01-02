@@ -29,7 +29,7 @@ export class UsuarioComponent implements OnInit {
     correo: "",
     password: "",
     carreras: [],
-    materiaDocent: [],
+    materias: [],
     fechaNacimiento: "",
     edadDocent: null,
   }

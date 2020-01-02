@@ -5,7 +5,7 @@ export interface Docentes {
   correo: string;
   password: string;
   carreras: string[];
-  materiaDocent: string[];
+  materias: string[];
   fechaNacimiento: string;
   edadDocent: number;
 }

@@ -224,7 +224,7 @@ export class ReservaAdminComponent implements OnInit {
 
   val(event) {
     let da = event.toString().split(" ");
-    console.log('fecha',da);
+    console.log('fecha', da);
     switch (da[0]) {
       case "Mon" :
         this.reserva.dia  = "Lunes";

@@ -20,6 +20,7 @@ export class HorarioComponent implements OnInit {
   permision: boolean;
   correct: boolean;
   id: string;
+  materias: any[];
   carrer: Carreras[] = [];
   msgs: Message[] = [];
   aulas: Aulas[] = [];
@@ -208,6 +209,29 @@ export class HorarioComponent implements OnInit {
     }
   }
 
+  docente() {
+    console.log('nombre', this.horario.docenteNom);
+    for (let i = 0; i < this.profes.length; i++) {
+        if ((this.profes[i].apellidoDocent + ' ' + this.profes[i].nombreDocent) === this.horario.docenteNom) {
+          console.log('todo bien', this.profes[i].materias);
+          this.materias = this.profes[i].materias;
+          console.log('materias 2', this.materias);
+
+            /*if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+              this.msgs.push({severity: 'success', summary: 'Correcto',
+                detail: 'Rango de horas coinciden con el número de créditos o número de horas'});
+              this.correct = true;
+            } else {
+              this.msgs = [];
+              this.msgs.push({severity: 'error', summary: 'Error',
+                detail: 'Rango de horas no coinciden con el número de créditos o número de horas'});
+              this.correct = false;
+            }*/
+
+        }
+      }
+  }
+
   excess3() {
     let ini3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
     let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0');
@@ -265,7 +289,7 @@ export class HorarioComponent implements OnInit {
     } else {
       console.log('campos llenos');
       this.access = false;
-
+      this.correct = true;
     }
   }
 
@@ -508,7 +532,6 @@ export class HorarioComponent implements OnInit {
 
   guardar() {
     if (this.id == 'nuevo') {
-      // guardar usuario nuevo
       this._adminService.nuevoHorario(this.horario)
         .subscribe(
           resultado => {

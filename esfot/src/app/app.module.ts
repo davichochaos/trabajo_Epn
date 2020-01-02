@@ -8,6 +8,8 @@ import {MessagesModule, GrowlModule, CheckboxModule, CalendarModule, RadioButton
 import {TableModule} from 'primeng/table';
 
 //accordion and accordion tab
+import {PanelModule} from 'primeng/panel';
+
 import {PasswordModule} from 'primeng/password';
 
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'; // <-- Import PdfJsViewerModule module
@@ -88,6 +90,7 @@ import { Administrador1Component } from './components/super/administrador1/admin
     FormsModule,
     ReactiveFormsModule,
     TableModule,
+    PanelModule,
     APP_ROUTING,
     HttpModule,
     HttpClientModule,
