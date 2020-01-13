@@ -19,6 +19,7 @@ export class HorarioComponent implements OnInit {
   access: boolean;
   permision: boolean;
   correct: boolean;
+  materias1: Materias[] = [];
   id: string;
   materias: any[];
   carrer: Carreras[] = [];
@@ -66,6 +67,18 @@ export class HorarioComponent implements OnInit {
             const aulaNew = resultados[key$];
             aulaNew.id = key$;
             this.aulas.push(aulaNew);
+          }
+          return this.aulas;
+        }
+      );
+
+    this._adminService.consultarMaterias()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const materiaNew = resultados[key$];
+            materiaNew.id = key$;
+            this.materias1.push(materiaNew);
           }
           return this.aulas;
         }
