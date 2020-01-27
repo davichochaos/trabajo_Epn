@@ -314,25 +314,28 @@ export class ReservaAdminComponent implements OnInit {
 
   cruz() {
     for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.reserva.aula) {
-        console.log('aula igual');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.reserva.dia) {
-            console.log('dia igual');
-            for (let k = 0; k < 7; k++) {
-              if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio || this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-                this.permisions = false;
-              } else {
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
-                this.permisions = true;
+      for (let m = 0; m < this.horarios[i].nombreAula.length; m++) {
+        if (this.horarios[i].nombreAula[m] == this.reserva.aula) {
+          console.log('aula igual');
+          for (let j = 0; j < 7; j++) {
+            if (this.horarios[i].dias[j] == this.reserva.dia) {
+              console.log('dia igual');
+              for (let k = 0; k < 7; k++) {
+                if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio || this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
+                  this.msgs = [];
+                  this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  this.permisions = false;
+                } else {
+                  this.msgs = [];
+                  this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+                  this.permisions = true;
+                }
               }
             }
           }
         }
       }
+
     }
   }
 

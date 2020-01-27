@@ -5,12 +5,12 @@
 <br>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-2 offset-sm-4 text-center">
+    <div class="col-md-2 offset-md-4 text-center">
       <button [routerLink]="['/admin']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-sm-2">
+    <div class="col-md-2">
       <button [routerLink]="['/usuario','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -19,10 +19,10 @@
   <br>
   <form class="was-validated" #forma="ngForm">
   <div class="row">
-    <div class="col-sm-6 offset-3">
+    <div class="col-md-8 offset-3">
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Nombres:</label>
-        <div class="col-sm-6">
+        <label class="col-md-3 col-form-label">Nombres:</label>
+        <div class="col-md-6">
           <input class="form-control" type="text"
                placeholder="nombre"
                name="nombre"
@@ -32,8 +32,8 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Apellidos:</label>
-        <div class="col-sm-6">
+        <label class="col-md-3 col-form-label">Apellidos:</label>
+        <div class="col-md-6">
           <input class="form-control" type="text"
                  placeholder="apellido"
                  name="apellido"
@@ -43,15 +43,15 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Fecha de Nacimiento:</label>
-        <div class="col-sm-6">
+        <label class="col-md-3 col-form-label">Fecha de Nacimiento:</label>
+        <div class="col-md-6">
           <p-calendar name="fecha" [(ngModel)]="date2" [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2030" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val1($event); val($event)" ></p-calendar>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Correo:</label>
-        <div class="col-sm-6">
+        <label class="col-md-3 col-form-label">Correo:</label>
+        <div class="col-md-6">
           <input class="form-control" type="email"
                  name="correo"
                  placeholder="correo"
@@ -61,8 +61,8 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Contraseña:</label>
-        <div class="col-sm-5">
+        <label class="col-md-3 col-form-label">Contraseña:</label>
+        <div class="col-md-5">
           <input class="form-control"
                  name="contra"
                  id="pass"
@@ -70,14 +70,14 @@
                  [(ngModel)]="pass"
                  required (change)="cifrar()">
         </div>
-        <div class="col-sm-1">
+        <div class="col-md-1">
           <button class="btn btn-info" (click)="password()">*</button>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Cargo</label>
-        <div class="col-sm-6">
+        <label class="col-md-3 col-form-label">Cargo</label>
+        <div class="col-md-6">
           <input class="form-control"
                  name="cargo" required
                  [(ngModel)]="usuario.cargo" disabled>
@@ -85,18 +85,20 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Materia:</label>
-        <div class="col-sm-6">
+        <label class="col-md-3 col-form-label">Materias:</label>
+        <div class="col-md-6">
           <select class="form-control"
-                  [(ngModel)]="usuario.materiaDocent" name="mat" id="mat">
+                  [(ngModel)]="usuario.materias" name="mat" id="mat">
             <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
           </select>
+          <p-multiSelect [options]="materias1" [(ngModel)]="usuario.materias" name="selectedCars1" [panelStyle]="{minWidth:'12em'}"></p-multiSelect>
         </div>
       </div>
 
+
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Carrera:</label>
-        <div class="col-sm-5">
+        <label class="col-md-3 col-form-label">Carrera:</label>
+        <div class="col-md-5">
           <p-checkbox name="carrerasx" *ngFor="let item of carrerasx"
                       value="{{item.siglas}}" label="{{item.siglas}}"
                       [(ngModel)]="usuario.carreras"></p-checkbox>
@@ -104,7 +106,7 @@
       </div>
 
       <div class="form-group row">
-        <div class="col-sm-12" id="boton">
+        <div class="col-md-12" id="boton">
           <button type="submit" class="btn btn-info" [disabled]="!forma.valid" (click)="guardar()">
             Guardar
           </button>

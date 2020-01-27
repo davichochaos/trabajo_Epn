@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Message} from 'primeng/api';
-import { Aulas } from '../../../interfaces/aulas.interface';
+import {Aulas} from '../../../interfaces/aulas.interface';
 import {AdminService} from '../../../services/admin.service';
-import {Horarios} from '../../../interfaces/horarios.interface'
+import {Horarios} from '../../../interfaces/horarios.interface';
 import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
@@ -21,7 +21,8 @@ export class HorarioComponent implements OnInit {
   correct: boolean;
   materias1: Materias[] = [];
   id: string;
-  materias: any[];
+  materiasDoc: any[];
+  aula2: boolean = false;
   carrer: Carreras[] = [];
   msgs: Message[] = [];
   aulas: Aulas[] = [];
@@ -31,19 +32,19 @@ export class HorarioComponent implements OnInit {
     dias: [],
     nombreMat: '',
     docenteNom: '',
-    nombreAula: '',
+    nombreAula: [],
     horaInicios: [],
     horaFins: [],
     semest: null,
     carrer: '',
     paralelo: ''
-  }
+  };
 
 
   constructor(private _adminService: AdminService, private _router: Router,
-              private _activatedRoute: ActivatedRoute ) {
+              private _activatedRoute: ActivatedRoute) {
 
-    this.permission()
+    this.permission();
 
     this._activatedRoute.params
       .subscribe(
@@ -72,7 +73,7 @@ export class HorarioComponent implements OnInit {
         }
       );
 
-    this._adminService.consultarMaterias()
+    /*this._adminService.consultarMaterias()
       .subscribe(
         resultados => {
           for (const key$ in resultados) {
@@ -82,7 +83,7 @@ export class HorarioComponent implements OnInit {
           }
           return this.aulas;
         }
-      );
+      );*/
 
     this._adminService.consultarHorarios()
       .subscribe(
@@ -111,7 +112,7 @@ export class HorarioComponent implements OnInit {
   }
 
   flltro1() {
-    this.profes = []
+    this.profes = [];
     this._adminService.consultarUsuarios()
       .subscribe(
         resultados => {
@@ -119,27 +120,47 @@ export class HorarioComponent implements OnInit {
             const docentNew = resultados[key$];
             docentNew.id = key$;
             if (docentNew.cargo !== 'SuperAdmin' && docentNew.nombreDocent !== 'docente') {
-              for (let i = 0; i < docentNew.carreras.length; i ++) {
-                console.log(docentNew.carreras.length);
+              for (let i = 0; i < docentNew.carreras.length; i++) {
+                //console.log(docentNew.carreras.length);
                 if (docentNew.carreras[i] == this.horario.carrer) {
-                  this.profes.push(docentNew);                }
+                  this.profes.push(docentNew);
+                  // console.log(this.profes);
+                }
               }
             }
-            /*for (let i = 0; i < docentNew.carreras.length; i ++) {
-
-              console.log(docentNew.carreras.length);
-              /*if (docentNew.carreras[i] == this.horario.carrer) {
-                this.profes.push(docentNew);
-              }
-            }*/
           }
           return this.profes;
         }
       );
   }
 
-  /*flltro() {
-    this.materias = [];
+  flltro() {
+    this.materias1 = [];
+    this.docenteMaterias();
+    console.log('mirar', this.materiasDoc);
+    this._adminService.consultarMaterias()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const materiaNew = resultados[key$];
+            materiaNew.id = key$;
+            for (let i = 0; i < materiaNew.carreras.length; i++) {
+              for (let j = 0; j < this.materiasDoc.length; j++) {
+                if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest
+                  && materiaNew.nombreMat == this.materiasDoc[j]) {
+                  this.materias1.push(materiaNew);
+                  console.log('materias vrr', this.materias1);
+                }
+              }
+            }
+          }
+          return this.materias1;
+        }
+      );
+  }
+
+  flltroMat() {
+    this.materias1 = [];
     this._adminService.consultarMaterias()
       .subscribe(
         resultados => {
@@ -148,25 +169,63 @@ export class HorarioComponent implements OnInit {
             materiaNew.id = key$;
             for (let i = 0; i < materiaNew.carreras.length; i++) {
               if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest) {
-                this.materias.push(materiaNew);
+                this.materias1.push(materiaNew);
+                console.log('materias', this.materias1);
               }
             }
           }
-          return this.materias;
+          return this.materias1;
         }
       );
-  }*/
+    this.segAula();
+  }
+
+  segAula() {
+    if (this.horario.carrer !== 'ASA' && this.horario.carrer !== 'ASI' &&
+      this.horario.carrer !== 'ET' && this.horario.carrer !== 'EM') {
+      this.aula2 = true;
+    } else {
+      this.aula2 = false;
+    }
+  }
+
+  docenteMaterias() {
+    this.materiasDoc = [];
+    console.log('materias vacias', this.materiasDoc);
+    //console.log('nombre', this.horario.docenteNom);
+    for (let i = 0; i < this.profes.length; i++) {
+      if ((this.profes[i].apellidoDocent + ' ' + this.profes[i].nombreDocent) === this.horario.docenteNom) {
+        /*console.log('todo bien', this.profes[i].materias);*/
+        //const materiaD = this.profes[i].materias;
+        //this.materiasDoc.push(materiaD);
+        //console.log('materias', this.materiasDoc);
+        this.materiasDoc = this.profes[i].materias;
+        console.log('materias 2', this.materiasDoc);
+
+        /*if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+          this.msgs.push({severity: 'success', summary: 'Correcto',
+            detail: 'Rango de horas coinciden con el número de créditos o número de horas'});
+          this.correct = true;
+        } else {
+          this.msgs = [];
+          this.msgs.push({severity: 'error', summary: 'Error',
+            detail: 'Rango de horas no coinciden con el número de créditos o número de horas'});
+          this.correct = false;
+        }*/
+
+      }
+    }
+  }
 
   clean() {
     this.horario.dias = [];
     this.horario.nombreMat = '';
-    //this.materias = [];
     this.profes = [];
     this.horario.docenteNom = '';
-    this.horario.nombreAula = '';
+    this.horario.nombreAula = [];
     this.horario.horaInicios = [];
     this.horario.horaFins = [];
-    this.horario.semest =  null;
+    this.horario.semest = null;
     this.horario.carrer = '';
     this.horario.paralelo = '';
   }
@@ -178,13 +237,15 @@ export class HorarioComponent implements OnInit {
   //horas incorrectas
 
   excess() {
-    let ini = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
-    let fin = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0');
+    const ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
+    const fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
 
-    if ( +ini < 7000 || +fin > 21000 ) {
+    if (+ini < 7000 || +fin > 21000) {
       this.msgs = [];
-      this.msgs.push({severity: 'error', summary: 'Error',
-        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
       this.permision = false;
       console.log('horas no labaorables');
     } else {
@@ -193,13 +254,15 @@ export class HorarioComponent implements OnInit {
   }
 
   excess1() {
-    let ini1 = (document.getElementById("inicio1") as HTMLInputElement).value.replace(':','0');
-    let fin1 = (document.getElementById("fin1")as HTMLInputElement).value.replace(':','0');
+    const ini1 = (document.getElementById('inicio1') as HTMLInputElement).value.replace(':', '0');
+    const fin1 = (document.getElementById('fin1') as HTMLInputElement).value.replace(':', '0');
 
-    if ( +ini1 < 7000 || +fin1 > 21000 ) {
+    if (+ini1 < 7000 || +fin1 > 21000) {
       this.msgs = [];
-      this.msgs.push({severity: 'error', summary: 'Error',
-        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
       this.permision = false;
       console.log('horas no labaorables');
     } else {
@@ -208,13 +271,15 @@ export class HorarioComponent implements OnInit {
   }
 
   excess2() {
-    let ini2 = (document.getElementById("inicio2") as HTMLInputElement).value.replace(':','0');
-    let fin2 = (document.getElementById("fin2")as HTMLInputElement).value.replace(':','0');
+    const ini2 = (document.getElementById('inicio2') as HTMLInputElement).value.replace(':', '0');
+    const fin2 = (document.getElementById('fin2') as HTMLInputElement).value.replace(':', '0');
 
-    if ( +ini2 < 7000 || +fin2 > 21000 ) {
+    if (+ini2 < 7000 || +fin2 > 21000) {
       this.msgs = [];
-      this.msgs.push({severity: 'error', summary: 'Error',
-        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
       this.permision = false;
       console.log('horas no labaorables');
     } else {
@@ -222,36 +287,16 @@ export class HorarioComponent implements OnInit {
     }
   }
 
-  docente() {
-    console.log('nombre', this.horario.docenteNom);
-    for (let i = 0; i < this.profes.length; i++) {
-        if ((this.profes[i].apellidoDocent + ' ' + this.profes[i].nombreDocent) === this.horario.docenteNom) {
-          console.log('todo bien', this.profes[i].materias);
-          this.materias = this.profes[i].materias;
-          console.log('materias 2', this.materias);
-
-            /*if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
-              this.msgs.push({severity: 'success', summary: 'Correcto',
-                detail: 'Rango de horas coinciden con el número de créditos o número de horas'});
-              this.correct = true;
-            } else {
-              this.msgs = [];
-              this.msgs.push({severity: 'error', summary: 'Error',
-                detail: 'Rango de horas no coinciden con el número de créditos o número de horas'});
-              this.correct = false;
-            }*/
-
-        }
-      }
-  }
 
   excess3() {
-    let ini3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
-    let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0');
-    if ( +ini3 < 7000 || +fin3 > 21000 ) {
+    const ini3 = (document.getElementById('inicio3') as HTMLInputElement).value.replace(':', '0');
+    const fin3 = (document.getElementById('fin3') as HTMLInputElement).value.replace(':', '0');
+    if (+ini3 < 7000 || +fin3 > 21000) {
       this.msgs = [];
-      this.msgs.push({severity: 'error', summary: 'Error',
-        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
       this.permision = false;
       console.log('horas no labaorables');
     } else {
@@ -260,13 +305,15 @@ export class HorarioComponent implements OnInit {
   }
 
   excess4() {
-    let ini4 = (document.getElementById("inicio4") as HTMLInputElement).value.replace(':','0');
-    let fin4 = (document.getElementById("fin4")as HTMLInputElement).value.replace(':','0');
+    const ini4 = (document.getElementById('inicio4') as HTMLInputElement).value.replace(':', '0');
+    const fin4 = (document.getElementById('fin4') as HTMLInputElement).value.replace(':', '0');
 
-    if ( +ini4 < 7000 || +fin4 > 21000 ) {
+    if (+ini4 < 7000 || +fin4 > 21000) {
       this.msgs = [];
-      this.msgs.push({severity: 'error', summary: 'Error',
-        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
       this.permision = false;
       console.log('horas no labaorables');
     } else {
@@ -275,17 +322,19 @@ export class HorarioComponent implements OnInit {
   }
 
   excess5() {
-    let ini5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
-    let fin5 = (document.getElementById("fin5")as HTMLInputElement).value.replace(':','0');
+    const ini5 = (document.getElementById('inicio5') as HTMLInputElement).value.replace(':', '0');
+    const fin5 = (document.getElementById('fin5') as HTMLInputElement).value.replace(':', '0');
 
-    if ( +ini5 < 7000 || +fin5 > 21000 ) {
+    if (+ini5 < 7000 || +fin5 > 21000) {
       this.msgs = [];
-      this.msgs.push({severity: 'error', summary: 'Error',
-        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'});
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
       this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true ;
+      this.permision = true;
     }
   }
 
@@ -294,8 +343,8 @@ export class HorarioComponent implements OnInit {
 
   permission() {
     if (this.horario.carrer == '' || this.horario.dias == [] || this.horario.nombreMat == '' ||
-    this.horario.docenteNom == '' || this.horario.nombreAula == '' || this.horario.horaInicios == [] || this.horario.horaFins == [] ||
-    this.horario.semest ==  null || this.horario.paralelo ==  '' || this.horario.paralelo == '') {
+      this.horario.docenteNom == '' || this.horario.nombreAula == [] || this.horario.horaInicios == [] || this.horario.horaFins == [] ||
+      this.horario.semest == null || this.horario.paralelo == '' || this.horario.paralelo == '') {
       console.log('campos vacios');
       this.access = true;
 
@@ -311,24 +360,24 @@ export class HorarioComponent implements OnInit {
 
   hora2() {
     //let text= (<HTMLInputElement> document.getElementById("inicio")).value.replace(':','0');
-    let ini = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
-    let fin = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0');
-    let ini1 = (document.getElementById("inicio1") as HTMLInputElement).value.replace(':','0');
-    let fin1 = (document.getElementById("fin1")as HTMLInputElement).value.replace(':','0');
-    let ini2 = (document.getElementById("inicio2") as HTMLInputElement).value.replace(':','0');
-    let fin2 = (document.getElementById("fin2")as HTMLInputElement).value.replace(':','0');
-    let ini3 = (document.getElementById("inicio3") as HTMLInputElement).value.replace(':','0');
-    let fin3 = (document.getElementById("fin3")as HTMLInputElement).value.replace(':','0');
-    let ini4 = (document.getElementById("inicio4") as HTMLInputElement).value.replace(':','0');
-    let fin4 = (document.getElementById("fin4")as HTMLInputElement).value.replace(':','0');
-    let ini5 = (document.getElementById("inicio5") as HTMLInputElement).value.replace(':','0');
-    let fin5 = (document.getElementById("fin5")as HTMLInputElement).value.replace(':','0');
+    const ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
+    const fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
+    const ini1 = (document.getElementById('inicio1') as HTMLInputElement).value.replace(':', '0');
+    const fin1 = (document.getElementById('fin1') as HTMLInputElement).value.replace(':', '0');
+    const ini2 = (document.getElementById('inicio2') as HTMLInputElement).value.replace(':', '0');
+    const fin2 = (document.getElementById('fin2') as HTMLInputElement).value.replace(':', '0');
+    const ini3 = (document.getElementById('inicio3') as HTMLInputElement).value.replace(':', '0');
+    const fin3 = (document.getElementById('fin3') as HTMLInputElement).value.replace(':', '0');
+    const ini4 = (document.getElementById('inicio4') as HTMLInputElement).value.replace(':', '0');
+    const fin4 = (document.getElementById('fin4') as HTMLInputElement).value.replace(':', '0');
+    const ini5 = (document.getElementById('inicio5') as HTMLInputElement).value.replace(':', '0');
+    const fin5 = (document.getElementById('fin5') as HTMLInputElement).value.replace(':', '0');
 
     if (Date.parse(ini) >= Date.parse(fin) || Date.parse(ini1) >= Date.parse(fin1) ||
-        Date.parse(ini2) >= Date.parse(fin2) || Date.parse(ini3) >= Date.parse(fin3) ||
-        Date.parse(ini4) >= Date.parse(fin4) || Date.parse(ini5) >= Date.parse(fin5)) {
+      Date.parse(ini2) >= Date.parse(fin2) || Date.parse(ini3) >= Date.parse(fin3) ||
+      Date.parse(ini4) >= Date.parse(fin4) || Date.parse(ini5) >= Date.parse(fin5)) {
       this.msgs = [];
-      this.msgs.push({severity:'error', summary:'Error', detail:'Hora final es inferior a hora de inicio'});
+      this.msgs.push({severity: 'error', summary: 'Error', detail: 'Hora final es inferior a hora de inicio'});
     }
 
     let total1 = 0;
@@ -346,7 +395,7 @@ export class HorarioComponent implements OnInit {
       total4 = +fin3 - +ini3;
       total5 = +fin4 - +ini4;
       total6 = +fin5 - +ini5;
-      total = (+total1 + +total2 + +total3 + +total4 + +total5 + +total6).toString().split("")[0];
+      total = (+total1 + +total2 + +total3 + +total4 + +total5 + +total6).toString().split('')[0];
       console.log('total: ', total);
       /*for (let i = 0; i < this.materias.length; i++) {
         if (this.materias[i].nombreMat == this.horario.nombreMat) {
@@ -558,7 +607,7 @@ export class HorarioComponent implements OnInit {
       this._adminService.editarHorario(this.horario, this.id)
         .subscribe(
           resultado => {
-            this._router.navigate(['/admin' ]);
+            this._router.navigate(['/admin']);
             this.msgs = [];
             this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario editado con exito'});
           }
@@ -590,7 +639,7 @@ export class HorarioComponent implements OnInit {
 
         break;
       default:
-        console.log("hola");
+        console.log('hola');
     }
   }
 
@@ -609,7 +658,7 @@ export class HorarioComponent implements OnInit {
 
         break;
       default:
-        console.log("hola");
+        console.log('hola');
     }
   }
 
@@ -628,7 +677,7 @@ export class HorarioComponent implements OnInit {
 
         break;
       default:
-        console.log("hola");
+        console.log('hola');
     }
   }
 
@@ -647,7 +696,7 @@ export class HorarioComponent implements OnInit {
 
         break;
       default:
-        console.log("hola");
+        console.log('hola');
     }
   }
 
@@ -666,7 +715,7 @@ export class HorarioComponent implements OnInit {
 
         break;
       default:
-        console.log("hola");
+        console.log('hola');
     }
   }
 
@@ -685,7 +734,7 @@ export class HorarioComponent implements OnInit {
 
         break;
       default:
-        console.log("hola");
+        console.log('hola');
     }
   }
 

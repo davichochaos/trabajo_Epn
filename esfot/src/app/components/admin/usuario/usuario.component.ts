@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Docentes} from '../../../interfaces/docentes.interface';
 import {AdminService} from '../../../services/admin.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Carreras} from '../../../interfaces/carreras.interface';
+
 declare function require(path: string): any;
+
 import SimpleCrypto from 'simple-crypto-js';
 import {Materias} from '../../../interfaces/materias.interface';
+import {SelectItem} from 'primeng/api';
 
 @Component({
   selector: 'app-usuario',
@@ -20,23 +23,25 @@ export class UsuarioComponent implements OnInit {
   date2: Date;
   es: any;
 
+  cars: SelectItem[];
+  selectedCars1: string[] = [];
   materias: Materias[] = [];
 
   usuario: Docentes = {
-    nombreDocent: "",
-    apellidoDocent: "",
-    cargo: "Docente",
-    correo: "",
-    password: "",
+    nombreDocent: '',
+    apellidoDocent: '',
+    cargo: 'Docente',
+    correo: '',
+    password: '',
     carreras: [],
     materias: [],
-    fechaNacimiento: "",
+    fechaNacimiento: '',
     edadDocent: null,
-  }
+  };
 
   constructor(private _usuarioServices: AdminService,
               private _router: Router,
-              private _activatedRoute: ActivatedRoute ) {
+              private _activatedRoute: ActivatedRoute) {
     this._activatedRoute.params
       .subscribe(
         parametros => {
@@ -51,6 +56,20 @@ export class UsuarioComponent implements OnInit {
           }
         }
       );
+
+
+    this.cars = [
+      {label: 'Audi', value: 'Audi'},
+      {label: 'BMW', value: 'BMW'},
+      {label: 'Fiat', value: 'Fiat'},
+      {label: 'Ford', value: 'Ford'},
+      {label: 'Honda', value: 'Honda'},
+      {label: 'Jaguar', value: 'Jaguar'},
+      {label: 'Mercedes', value: 'Mercedes'},
+      {label: 'Renault', value: 'Renault'},
+      {label: 'VW', value: 'VW'},
+      {label: 'Volvo', value: 'Volvo'}
+    ];
 
     this._usuarioServices.consultarCarreras()
       .subscribe(
@@ -80,11 +99,11 @@ export class UsuarioComponent implements OnInit {
   ngOnInit() {
     this.es = {
       firstDayOfWeek: 1,
-      dayNames: [ "domingo", "lunes","martes","miércoles","jueves","viernes","sábado" ],
-      dayNamesShort: [ "dom", 'lun',"mar","mié","jue","vie","sáb" ],
-      dayNamesMin: [ "D","L","M","M","J","V","S" ],
-      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
-      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+      dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+      dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+      monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+      monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
       today: 'Hoy',
       clear: 'Borrar',
       dateFormat: 'DD/MM/yy'
@@ -94,7 +113,7 @@ export class UsuarioComponent implements OnInit {
   val1(event) {
     let fechaActu = new Date();
     let anioActua = fechaActu.getFullYear();
-    let da = event.toString().split(" ");
+    let da = event.toString().split(' ');
     let anio = +da[3];
     let edad = 0;
     edad = anioActua - anio;
@@ -103,54 +122,54 @@ export class UsuarioComponent implements OnInit {
   }
 
   val(event) {
-    let da = event.toString().split(" ");
+    let da = event.toString().split(' ');
     switch (da[1]) {
-      case "Jan" :
-        this.usuario.fechaNacimiento  = "Enero " + da[2] + " " + da[3];
+      case 'Jan' :
+        this.usuario.fechaNacimiento = 'Enero ' + da[2] + ' ' + da[3];
         break;
 
-      case "Feb" :
-        this.usuario.fechaNacimiento = "Febrero " + da[2] + " " + da[3];
+      case 'Feb' :
+        this.usuario.fechaNacimiento = 'Febrero ' + da[2] + ' ' + da[3];
         break;
 
-      case "Mar" :
-        this.usuario.fechaNacimiento = "Marzo " + da[2] + " " + da[3];
+      case 'Mar' :
+        this.usuario.fechaNacimiento = 'Marzo ' + da[2] + ' ' + da[3];
         break;
 
-      case "Apr" :
-        this.usuario.fechaNacimiento  = "Abril " + da[2] + " " + da[3];
+      case 'Apr' :
+        this.usuario.fechaNacimiento = 'Abril ' + da[2] + ' ' + da[3];
         break;
 
-      case "May" :
-        this.usuario.fechaNacimiento  = "Mayo " + da[2] + " " + da[3];
+      case 'May' :
+        this.usuario.fechaNacimiento = 'Mayo ' + da[2] + ' ' + da[3];
         break;
 
-      case "Jun" :
-        this.usuario.fechaNacimiento  = "Junio " + da[2] + " " + da[3];
+      case 'Jun' :
+        this.usuario.fechaNacimiento = 'Junio ' + da[2] + ' ' + da[3];
         break;
 
-      case "Jul" :
-        this.usuario.fechaNacimiento  = "Julio " + da[2] + " " + da[3];
+      case 'Jul' :
+        this.usuario.fechaNacimiento = 'Julio ' + da[2] + ' ' + da[3];
         break;
 
-      case "Aug" :
-        this.usuario.fechaNacimiento  = "Agosto " + da[2] + " " + da[3];
+      case 'Aug' :
+        this.usuario.fechaNacimiento = 'Agosto ' + da[2] + ' ' + da[3];
         break;
 
-      case "Sep" :
-        this.usuario.fechaNacimiento  = "Septiembre " + da[2] + " " + da[3];
+      case 'Sep' :
+        this.usuario.fechaNacimiento = 'Septiembre ' + da[2] + ' ' + da[3];
         break;
 
-      case "Oct" :
-        this.usuario.fechaNacimiento  = "Octubre " + da[2] + " " + da[3];
+      case 'Oct' :
+        this.usuario.fechaNacimiento = 'Octubre ' + da[2] + ' ' + da[3];
         break;
 
-      case "Nov" :
-        this.usuario.fechaNacimiento  = "Noviembre " + da[2] + " " + da[3];
+      case 'Nov' :
+        this.usuario.fechaNacimiento = 'Noviembre ' + da[2] + ' ' + da[3];
         break;
 
-      case "Dec" :
-        this.usuario.fechaNacimiento  = "Diciembre " + da[2] + " " + da[3];
+      case 'Dec' :
+        this.usuario.fechaNacimiento = 'Diciembre ' + da[2] + ' ' + da[3];
         break;
     }
     console.log('mes', this.usuario.fechaNacimiento);
@@ -177,18 +196,18 @@ export class UsuarioComponent implements OnInit {
       // guardar usuario nuevo
       this._usuarioServices.nuevoUsuario(this.usuario)
         .subscribe(
-        resultado => {
-          console.log(resultado.name);
-          this._router.navigate(['/usuario', resultado.name]);
-        }
-      );
+          resultado => {
+            console.log(resultado.name);
+            this._router.navigate(['/usuario', resultado.name]);
+          }
+        );
     } else {
       this._usuarioServices.editarUsuario(this.usuario, this.id)
         .subscribe(
-        resultado => {
-          this._router.navigate(['/admin' ]);
-        }
-      );
+          resultado => {
+            this._router.navigate(['/admin']);
+          }
+        );
     }
   }
 
