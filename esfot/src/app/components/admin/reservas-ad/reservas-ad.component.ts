@@ -11,6 +11,7 @@ export class ReservasAdComponent implements OnInit {
 
   reservas: Reservas[] = [];
   cols: any[];
+  selectedRese: Reservas;
 
   dat: boolean;
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
@@ -47,11 +48,14 @@ export class ReservasAdComponent implements OnInit {
     ];
   }
 
-  eliminar(id: string, posicion: number) {
+  eliminar(id: string) {
+    const index = this.reservas.indexOf(this.selectedRese);
+    console.log('index', index);
+    console.log('id', id);
     this._adminService.eliminarReserva(id)
       .subscribe(
         resultados => {
-          this.reservas.splice(posicion, 1);
+          this.reservas.splice(index, 1);
         }
       );
   }

@@ -23,8 +23,7 @@ export class UsuarioComponent implements OnInit {
   date2: Date;
   es: any;
 
-  cars: SelectItem[];
-  selectedCars1: string[] = [];
+  mater: SelectItem[];
   materias: Materias[] = [];
 
   usuario: Docentes = {
@@ -58,7 +57,7 @@ export class UsuarioComponent implements OnInit {
       );
 
 
-    this.cars = [
+    /*this.cars = [
       {label: 'Audi', value: 'Audi'},
       {label: 'BMW', value: 'BMW'},
       {label: 'Fiat', value: 'Fiat'},
@@ -69,7 +68,7 @@ export class UsuarioComponent implements OnInit {
       {label: 'Renault', value: 'Renault'},
       {label: 'VW', value: 'VW'},
       {label: 'Volvo', value: 'Volvo'}
-    ];
+    ];*/
 
     this._usuarioServices.consultarCarreras()
       .subscribe(
@@ -82,18 +81,37 @@ export class UsuarioComponent implements OnInit {
           return this.carrerasx;
         }
       );
+  }
 
+  materiasUsu() {
+    this.materias = [];
     this._usuarioServices.consultarMaterias()
       .subscribe(
         resultados => {
           for (const key$ in resultados) {
             const materiaNew = resultados[key$];
             materiaNew.id = key$;
-            this.materias.push(materiaNew);
+            for (let i = 0; i < materiaNew.carreras.length; i++) {
+              if (materiaNew.carreras[i] == this.usuario.carreras) {
+                this.materias.push(materiaNew);
+                console.log('materias', this.materias);
+              }
+            }
+            //this.materias.push(materiaNew);
           }
+          this.populateDropdown();
           return this.materias;
         }
       );
+  }
+
+  populateDropdown() {
+    this.mater = [];
+    const data = this.materias;
+    for (let i = 0; i < data.length; i++) {
+      this.mater.push({label: data[i].nombreMat, value: data[i].nombreMat});
+      console.log('datos', this.mater);
+    }
   }
 
   ngOnInit() {

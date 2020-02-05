@@ -34,55 +34,12 @@
 
   </div>
   <br>
-  <!--<table class="table table-responsive table-hover">
-    <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Siglas</th>
-      <th>Opciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of carreras; let i = index;">
-      <td>{{item.nombreCarr}}</td>
-      <td>{{item.siglas}}</td>
-      <td>
-        <button type="button" class="btn btn-link" [routerLink]="['/carrera', item.id]">
-          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>
-        </button>&nbsp;
-        <button type="button" class="btn btn-link"
-                data-toggle="modal" [attr.data-target]="'#confirmacion11'+i">
-          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
-        </button>
-        <div class="modal fade" [id]="'confirmacion11'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Seguro que desea eleminar este registro ??
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>-->
 
-  <p-table #dt [columns]="cols" [value]="carreras" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
+  <p-table #dt [columns]="cols" [(selection)]="selectedCarr" [value]="carreras" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
     <ng-template pTemplate="caption">
       <div style="text-align: right">
-        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-        <input type="text" pInputText class="col-sm-12" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        <img src="../../../../assets/icons/icons8-search-20.png" height="20" width="20"/>
+        <input type="text" pInputText class="col-sm-12" placeholder="Buscar" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -106,8 +63,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pSelectableRow]="rowData"
-      >
+      <tr [pSelectableRow]="rowData"><!--*ngFor="let item of items; index as i"-->
         <td *ngFor="let col of columns;">
           {{rowData[col.field]}}
         </td>
@@ -116,10 +72,10 @@
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/carrera', rowData.id]"/>
           </button>
           <button type="button" class="btn btn-link"
-                  data-toggle="modal" [attr.data-target]="'#confirmacion11'+i">
+                  data-toggle="modal" [attr.data-target]="'#confirmacion11' + rowData.id">
             <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
           </button>
-          <div class="modal fade" [id]="'confirmacion11'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+          <div class="modal fade" [id]="'confirmacion11' + rowData.id" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -133,7 +89,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(rowData.id, i)">Aceptar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(rowData.id)">Aceptar</button>
                 </div>
               </div>
             </div>

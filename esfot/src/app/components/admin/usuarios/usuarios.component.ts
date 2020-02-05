@@ -11,6 +11,7 @@ import { Carreras } from '../../../interfaces/carreras.interface';
 export class UsuariosComponent implements OnInit {
   usuarios: Docentes[] = [];
   cols: any[];
+  selectedUsu: Docentes;
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -50,11 +51,14 @@ export class UsuariosComponent implements OnInit {
     ];
   }
 
-  eliminar(id: string, posicion: number) {
+  eliminar(id: string) {
+    const index = this.usuarios.indexOf(this.selectedUsu);
+    console.log('index', index);
+    console.log('id', id);
     this._usuarioService.eliminarUsuario(id)
       .subscribe(
         resultados => {
-          this.usuarios.splice(posicion, 1);
+          this.usuarios.splice(index, 1);
         }
       );
   }

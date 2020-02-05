@@ -16,8 +16,7 @@ export class MateriasComponent implements OnInit {
 
   val: string = 'Option 1';
   carreras: Carreras [] = [];
-  nivel: any;
-  carre: any;
+  selectedMate: Materias;
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -67,83 +66,15 @@ export class MateriasComponent implements OnInit {
     ];
   }
 
-  eliminar(id: string, posicion: number) {
+  eliminar(id: string) {
+    const index = this.materias.indexOf(this.selectedMate);
+    console.log('index', index);
+    console.log('id', id);
     this._adminService.eliminarMateria(id)
       .subscribe(
         resultados => {
-          this.materias.splice(posicion, 1);
+          this.materias.splice(index, 1);
         }
       );
   }
-
-  filmaterias() {
-    this.materias = [];
-    this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            for (let i = 0; i < materiaNew.carreras.length; i ++) {
-              if (materiaNew.carreras == this.carre && materiaNew.semestre == this.nivel) {
-                this.materias.push(materiaNew);
-              }
-            }
-          }
-          return this.materias;
-        }
-      );
-  }
-
-  filmateria1() {
-    this.materias = [];
-    this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            for (let i = 0; i < materiaNew.carreras.length; i ++) {
-              if (materiaNew.carreras[i] == this.carre) {
-                this.materias.push(materiaNew);
-              }
-            }
-          }
-          return this.materias;
-        }
-      );
-  }
-
-  filmateria() {
-    this.materias = [];
-    this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            if (materiaNew.semestre == this.nivel) {
-              this.materias.push(materiaNew);
-            }
-          }
-          return this.materias;
-        }
-      );
-  }
-
-  todos() {
-    this.materias = [];
-    this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            this.materias.push(materiaNew);
-          }
-          return this.materias;
-        }
-      );
-  }
-
 }

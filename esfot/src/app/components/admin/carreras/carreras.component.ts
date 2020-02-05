@@ -11,13 +11,15 @@ export class CarrerasComponent implements OnInit {
 
   carreras: Carreras[] = [];
   cols: any[];
+  selectedCarr: Carreras;
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @ViewChild('externalPdfViewer') public externalPdfViewer;
+
   public openPdf() {
-    console.log("opening pdf in new tab!");
-    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    console.log('opening pdf in new tab!');
+    this.externalPdfViewer.pdfSrc = './../../../assets/sample.pdf';
     this.externalPdfViewer.refresh();
   }
 
@@ -37,17 +39,21 @@ export class CarrerasComponent implements OnInit {
 
   ngOnInit() {
     this.cols = [
-      { field: 'nombreCarr', header: 'Nombre de la carrera' },
-      { field: 'siglas', header: 'Nomenclatura' },
+      {field: 'nombreCarr', header: 'Nombre de la carrera'},
+      {field: 'siglas', header: 'Nomenclatura'},
 
     ];
   }
 
-  eliminar(id: string, posicion: number) {
+  eliminar(id: string) {
+    const index = this.carreras.indexOf(this.selectedCarr);
+    console.log('index', index);
+    console.log('id', id);
     this._adminService.eliminarCarrera(id)
       .subscribe(
         resultados => {
-          this.carreras.splice(posicion, 1);
+          console.log('datos', id, index);
+          this.carreras.splice(index, 1);
         }
       );
   }

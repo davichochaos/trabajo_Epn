@@ -33,134 +33,17 @@
   </div>
 
 </div>
-<!--<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <h5>Listo por:</h5>
-      <p-checkbox [(ngModel)]="checked" binary="true" label="Mostrar opciones"></p-checkbox>
-      <div class="ui-g" style="width:1250px;margin-bottom:10px" *ngIf="checked">
-        <div class="ui-g-3"><p-radioButton name="group1" value="Option 1" label="Carrera" [(ngModel)]="val" inputId="preopt1"></p-radioButton></div>
-        <div class="ui-g-3"><p-radioButton name="group1" value="Option 2" label="Semestre" [(ngModel)]="val" inputId="preopt2"></p-radioButton></div>
-        <div class="ui-g-3"><p-radioButton name="group1" value="Option 3" label="Carrera y semestre" [(ngModel)]="val" inputId="preopt3"></p-radioButton></div>
-        <div class="ui-g-3"><p-radioButton name="group1" value="Option 4" label="Todos" [(ngModel)]="val" inputId="preopt4" (onClick)="todos()"></p-radioButton></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div>
-  <div *ngIf="val == 'Option 3'" class="row">
-    <div class="col-xl-3">
-      <label>Seleccione el semestre que busca:</label>
-    </div>
-    <div class="col-xl-1">
-      <select class="form-control"
-              name="nive" id="filnivell" [(ngModel)]="nivel" (click)="filmaterias()">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-      </select>
-    </div>
-    <div class="col-xl-2">
-      <label>Y carrera a la que pertenece:</label>
-    </div>
-    <div class="col-xl-2">
-      <select class="form-control"
-              name="carr" id="filcarrl" [(ngModel)]="carre" (click)="filmaterias()">
-        <option *ngFor="let i of carreras" value="{{i.siglas}}">{{i.siglas}}</option>
-      </select>
-    </div>
-  </div>
-</div>
-
-<div *ngIf="val == 'Option 2'" class="row">
-  <div class="col-xl-3">
-    <label>Seleccione el semestre que busca:</label>
-  </div>
-  <div class="col-xl-1">
-    <select class="form-control"
-            name="nive" id="filtnivell" [(ngModel)]="nivel" (click)="filmateria()">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-    </select>
-  </div>
-</div>
-<div *ngIf="checked">
-  <div *ngIf="val == 'Option 1'" class="row">
-    <div class="col-xl-2">
-      <label>Selecciones la carrera:</label>
-    </div>
-    <div class="col-xl-2">
-      <select class="form-control"
-              name="carr" id="filtcarrl" [(ngModel)]="carre" (click)="filmateria1()">
-        <option *ngFor="let i of carreras" value="{{i.siglas}}">{{i.siglas}}</option>
-      </select>
-    </div>
-  </div>
-</div>-->
 
 <br>
 
 <br>
 <div class="container-fluid" xmlns="" xmlns="">
-  <!---<table class="table table-responsive table-hover">
-    <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Codigo</th>
-      <th>Creditos</th>
-      <th>Semestre</th>
-      <th>Carreras</th>
-      <th>Opciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of materias; let i = index;">
-      <td>{{item.nombreMat}}</td>
-      <td>{{item.codigo}}</td>
-      <td>{{item.creditos}}</td>
-      <td>{{item.semestre}}</td>
-      <td>{{item.carreras}}</td>
-      <td>
-        <button type="button" class="btn btn-link" [routerLink]="['/materia', item.id]">
-          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/></button>&nbsp;
-        <button type="button" class="btn btn-link"
-                data-toggle="modal" [attr.data-target]="'#confirmacion3'+i">
-          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/></button>
-        <div class="modal fade" [id]="'confirmacion3'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Seguro que desea eleminar este registro ??
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>-->
-  <p-table #dt [columns]="cols" [value]="materias" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
+
+  <p-table #dt [columns]="cols" [(selection)]="selectedMate" [value]="materias" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
     <ng-template pTemplate="caption">
       <div style="text-align: right">
-        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-        <input class="col-sm-12" type="text" pInputText placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        <img src="../../../../assets/icons/icons8-search-20.png" height="20" width="20"/>
+        <input class="col-sm-12" type="text" pInputText placeholder="Buscar" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
       </div>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
@@ -199,10 +82,10 @@
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/materia', rowData.id]"/>
           </button>
           <button type="button" class="btn btn-link"
-                  data-toggle="modal" [attr.data-target]="'#confirmacion3'+i">
+                  data-toggle="modal" [attr.data-target]="'#confirmacion3'+ rowData.id">
             <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
           </button>
-          <div class="modal fade" [id]="'confirmacion3'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+          <div class="modal fade" [id]="'confirmacion3'+ rowData.id" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -216,7 +99,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(rowData.id, i)">Aceptar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(rowData.id)">Aceptar</button>
                 </div>
               </div>
             </div>

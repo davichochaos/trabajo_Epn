@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {HttpClient} from '@angular/common/http';
@@ -13,6 +13,11 @@ export class AdministradorComponent implements OnInit {
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @ViewChild('externalPdfViewer') public externalPdfViewer;
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    localStorage.clear();
+  }
+
   public openPdf() {
     console.log("opening pdf in new tab!");
     this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
@@ -43,6 +48,12 @@ export class AdministradorComponent implements OnInit {
         this._router.navigate(['/inicio']);
       }
     });
+
+    window.location.hash = " ";
+    window.location.hash = " ";//esta linea es necesaria para chrome
+    window.onhashchange =  function() {
+      window.location.hash = " ";
+    };
   }
   salirAd() {
     localStorage.removeItem('Admin');

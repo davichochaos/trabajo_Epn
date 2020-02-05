@@ -132,6 +132,7 @@ export class HorarioComponent implements OnInit {
           return this.profes;
         }
       );
+    this.segAula();
   }
 
   flltro() {
@@ -177,7 +178,6 @@ export class HorarioComponent implements OnInit {
           return this.materias1;
         }
       );
-    this.segAula();
   }
 
   segAula() {

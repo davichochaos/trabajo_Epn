@@ -10,7 +10,7 @@ import { Aulas } from '../../../interfaces/aulas.interface';
 export class AulasComponent implements OnInit {
   aulas: Aulas[] = [];
   cols: any[];
-  selectedCar2: Aulas;
+  selectedAulas: Aulas;
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -43,11 +43,14 @@ export class AulasComponent implements OnInit {
     ];
   }
 
-  eliminar(id: string, posicion: number) {
+  eliminar(id: string) {
+    const index = this.aulas.indexOf(this.selectedAulas);
+    console.log('index', index);
+    console.log('id', id);
     this._adminService.eliminarAula(id)
       .subscribe(
         resultados => {
-          this.aulas.splice(posicion, 1);
+          this.aulas.splice(index, 1);
         }
       );
   }
