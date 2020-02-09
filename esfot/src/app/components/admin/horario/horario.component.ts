@@ -7,6 +7,7 @@ import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {angularCoreEnv} from '@angular/core/src/render3/jit/environment';
 
 
 @Component({
@@ -119,13 +120,11 @@ export class HorarioComponent implements OnInit {
           for (const key$ in resultados) {
             const docentNew = resultados[key$];
             docentNew.id = key$;
-            if (docentNew.cargo !== 'SuperAdmin' && docentNew.nombreDocent !== 'docente') {
-              for (let i = 0; i < docentNew.carreras.length; i++) {
-                //console.log(docentNew.carreras.length);
-                if (docentNew.carreras[i] == this.horario.carrer) {
-                  this.profes.push(docentNew);
-                  // console.log(this.profes);
-                }
+            for (let i = 0; i < docentNew.carreras.length; i++) {
+              //console.log(docentNew.carreras.length);
+              if (docentNew.carreras[i] == this.horario.carrer) {
+                this.profes.push(docentNew);
+                console.log(this.profes);
               }
             }
           }
@@ -133,6 +132,23 @@ export class HorarioComponent implements OnInit {
         }
       );
     this.segAula();
+  }
+
+  fildocente() {
+    this.horarios = [];
+    this._adminService.consultarHorarios()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const horarioNew = resultados[key$];
+            horarioNew.id = key$;
+            if (horarioNew.docenteNom == this.horario.docenteNom) {
+              this.horarios.push(horarioNew);
+            }
+          }
+          return this.horarios;
+        }
+      );
   }
 
   flltro() {
@@ -150,7 +166,7 @@ export class HorarioComponent implements OnInit {
                 if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest
                   && materiaNew.nombreMat == this.materiasDoc[j]) {
                   this.materias1.push(materiaNew);
-                  console.log('materias vrr', this.materias1);
+                  console.log('materias ver', this.materias1);
                 }
               }
             }
@@ -344,8 +360,10 @@ export class HorarioComponent implements OnInit {
   permission() {
     if (this.horario.carrer == '' || this.horario.dias == [] || this.horario.nombreMat == '' ||
       this.horario.docenteNom == '' || this.horario.nombreAula == [] || this.horario.horaInicios == [] || this.horario.horaFins == [] ||
-      this.horario.semest == null || this.horario.paralelo == '' || this.horario.paralelo == '') {
+      this.horario.semest == null || this.horario.paralelo == '' || this.horario.paralelo == '' || (this.cod === true && this.cod1 === true &&
+        this.cod2 === true && this.cod3 === true && this.cod4 === true && this.cod5 === true) ) {
       console.log('campos vacios');
+      //console.log(this.cod)
       this.access = true;
 
     } else {
@@ -378,6 +396,11 @@ export class HorarioComponent implements OnInit {
       Date.parse(ini4) >= Date.parse(fin4) || Date.parse(ini5) >= Date.parse(fin5)) {
       this.msgs = [];
       this.msgs.push({severity: 'error', summary: 'Error', detail: 'Hora final es inferior a hora de inicio'});
+      this.access = true;
+
+    } else {
+      console.log('else', this.access);
+
     }
 
     let total1 = 0;

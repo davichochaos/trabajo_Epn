@@ -20,7 +20,7 @@ export class AdministradorComponent implements OnInit {
 
   public openPdf() {
     console.log("opening pdf in new tab!");
-    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.pdfSrc = "./../../../assets/Manual de Usuario.pdf";
     this.externalPdfViewer.refresh();
   }
   constructor(private _router: Router, private _adminService: AdminService, private http: HttpClient) {

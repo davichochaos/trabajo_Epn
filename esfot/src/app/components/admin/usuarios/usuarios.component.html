@@ -106,7 +106,7 @@
           <input class="col-sm-12" *ngSwitchCase="'carreras'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
           <input class="col-sm-12" *ngSwitchCase="'materias'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
         </th>
-        <th class="text-xl-center">
+        <th class="text-md-center">
           <p>Editar y Eliminar</p>
         </th>
       </tr>
@@ -116,7 +116,7 @@
         <td *ngFor="let col of columns;">
           {{rowData[col.field]}} {{rowData[col.subfield]}}
         </td>
-        <td>
+        <td class="text-md-center">
           <button type="button" class="btn btn-link">
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/usuario', rowData.id]"/>
           </button>

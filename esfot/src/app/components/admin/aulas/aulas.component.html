@@ -101,13 +101,13 @@
         </th>
       </tr>
       <tr>
-        <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <th *ngFor="let col of columns" [ngSwitch]="col.field" class="text-center">
           <input class="col-sm-12" *ngSwitchCase="'nombreAula'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
           <input class="col-sm-12" *ngSwitchCase="'descripcion'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
           <input class="col-sm-12" *ngSwitchCase="'cupo'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
         </th>
-        <th class="text-xl-center">
-          <p>Editar y Eliminar</p>
+        <th >
+          <p class="text-md-center">Editar y Eliminar</p>
         </th>
       </tr>
     </ng-template>
@@ -116,7 +116,7 @@
         <td *ngFor="let col of columns;">
           {{rowData[col.field]}}
         </td>
-        <td>
+        <td class="text-md-center">
           <button type="button" class="btn btn-link">
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/aula', rowData.id]"/>
           </button>

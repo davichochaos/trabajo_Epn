@@ -23,7 +23,7 @@ export class MateriasComponent implements OnInit {
   @ViewChild('externalPdfViewer') public externalPdfViewer;
   public openPdf() {
     console.log("opening pdf in new tab!");
-    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.pdfSrc = "./../../../assets/Manual de Usuario.pdf";
     this.externalPdfViewer.refresh();
   }
 
@@ -61,7 +61,7 @@ export class MateriasComponent implements OnInit {
       { field: 'creditos', header: 'Créditos' },
       { field: 'cd', header: 'Componente de Docencia' },
       { field: 'cp', header: 'Componente Práctico' },
-      { field: 'carreras', header: 'Caarreras' },
+      { field: 'carreras', header: 'Carreras' },
 
     ];
   }

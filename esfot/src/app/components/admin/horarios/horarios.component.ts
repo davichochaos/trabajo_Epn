@@ -32,7 +32,7 @@ export class HorariosComponent implements OnInit {
   @ViewChild('externalPdfViewer') public externalPdfViewer;
   public openPdf() {
     console.log("opening pdf in new tab!");
-    this.externalPdfViewer.pdfSrc = "./../../../assets/sample.pdf";
+    this.externalPdfViewer.pdfSrc = "./../../../assets/Manual de Usuario.pdf";
     this.externalPdfViewer.refresh();
   }
 
