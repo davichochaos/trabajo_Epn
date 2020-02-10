@@ -134,6 +134,27 @@ export class HorarioComponent implements OnInit {
     this.segAula();
   }
 
+  flltroDocent() {
+    this.profes = [];
+    this._adminService.consultarUsuarios()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const docentNew = resultados[key$];
+            docentNew.id = key$;
+            for (let i = 0; i < docentNew.materias.length; i++) {
+              //console.log(docentNew.carreras.length);
+              if (docentNew.materias[i] == this.horario.nombreMat) {
+                this.profes.push(docentNew);
+                console.log('datos de docente', this.profes);
+              }
+            }
+          }
+          return this.profes;
+        }
+      );
+  }
+
   fildocente() {
     this.horarios = [];
     this._adminService.consultarHorarios()
@@ -151,7 +172,24 @@ export class HorarioComponent implements OnInit {
       );
   }
 
-  flltro() {
+  filmateria() {
+    this.horarios = [];
+    this._adminService.consultarHorarios()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const horarioNew = resultados[key$];
+            horarioNew.id = key$;
+            if (horarioNew.nombreMat == this.horario.docenteNom) {
+              this.horarios.push(horarioNew);
+            }
+          }
+          return this.horarios;
+        }
+      );
+  }
+
+  /*flltro() {
     this.materias1 = [];
     this.docenteMaterias();
     console.log('mirar', this.materiasDoc);
@@ -174,7 +212,7 @@ export class HorarioComponent implements OnInit {
           return this.materias1;
         }
       );
-  }
+  }*/
 
   flltroMat() {
     this.materias1 = [];
@@ -361,7 +399,7 @@ export class HorarioComponent implements OnInit {
     if (this.horario.carrer == '' || this.horario.dias == [] || this.horario.nombreMat == '' ||
       this.horario.docenteNom == '' || this.horario.nombreAula == [] || this.horario.horaInicios == [] || this.horario.horaFins == [] ||
       this.horario.semest == null || this.horario.paralelo == '' || this.horario.paralelo == '' || (this.cod === true && this.cod1 === true &&
-        this.cod2 === true && this.cod3 === true && this.cod4 === true && this.cod5 === true) ) {
+        this.cod2 === true && this.cod3 === true && this.cod4 === true && this.cod5 === true)) {
       console.log('campos vacios');
       //console.log(this.cod)
       this.access = true;
