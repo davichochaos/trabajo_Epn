@@ -60,16 +60,13 @@ export class ReservasAdComponent implements OnInit {
       );
   }
 
-  datt() {
-    if (this.reservas.length == 0) {
-      this.dat = true;
-    } else {
-      this.dat = false;
-    }
-    console.log('dato', this.reservas.length);
-    /*for (let i = 0; i < this.reservas.length; i ++) {
-
-
-    }*/
+  elminiarTodo() {
+    console.log('todo');
+    this._adminService.eliminarReservas()
+      .subscribe(
+        resultados => {
+          delete this.reservas;
+        }
+      );
   }
 }

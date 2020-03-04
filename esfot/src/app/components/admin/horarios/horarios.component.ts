@@ -115,6 +115,16 @@ export class HorariosComponent implements OnInit {
       );
   }
 
+  elminiarTodo() {
+    console.log('todo');
+    this._adminService.eliminarHorarios()
+      .subscribe(
+        resultados => {
+          delete this.horarios;
+        }
+      );
+  }
+
   filhorario() {
     this.horarios = [];
     this._adminService.consultarHorarios()

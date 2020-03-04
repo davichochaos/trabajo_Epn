@@ -17,13 +17,18 @@ import {angularCoreEnv} from '@angular/core/src/render3/jit/environment';
 })
 export class HorarioComponent implements OnInit {
 
-  access: boolean;
-  permision: boolean;
+  // Variables globales
+  permision: boolean = false;
   correct: boolean;
-  materias1: Materias[] = [];
   id: string;
-  materiasDoc: any[];
-  aula2: boolean = false;
+  credi: boolean = false;
+  cdCP: boolean = false;
+  creditosM: any;
+  cds: any;
+  cps: any;
+
+  // Datos de BDD
+  materias1: Materias[] = [];
   carrer: Carreras[] = [];
   msgs: Message[] = [];
   aulas: Aulas[] = [];
@@ -44,8 +49,6 @@ export class HorarioComponent implements OnInit {
 
   constructor(private _adminService: AdminService, private _router: Router,
               private _activatedRoute: ActivatedRoute) {
-
-    this.permission();
 
     this._activatedRoute.params
       .subscribe(
@@ -73,18 +76,6 @@ export class HorarioComponent implements OnInit {
           return this.aulas;
         }
       );
-
-    /*this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            this.materias1.push(materiaNew);
-          }
-          return this.aulas;
-        }
-      );*/
 
     this._adminService.consultarHorarios()
       .subscribe(
@@ -131,7 +122,6 @@ export class HorarioComponent implements OnInit {
           return this.profes;
         }
       );
-    this.segAula();
   }
 
   flltroDocent() {
@@ -153,6 +143,30 @@ export class HorarioComponent implements OnInit {
           return this.profes;
         }
       );
+    this.creditosCp();
+  }
+
+  creditosCp() {
+    for (let i = 0; i < this.materias1.length; i++) {
+      for (let j = 0; j < this.materias1[i].carreras.length; j++) {
+        if (this.horario.nombreMat == this.materias1[i].nombreMat && (this.materias1[i].carreras[j] != 'ASI' ||
+          this.materias1[i].carreras[j] != 'ASA' || this.materias1[i].carreras[j] != 'EM' || this.materias1[i].carreras[j] != 'ET')) {
+          this.cdCP = true;
+          this.credi = false;
+          this.cds = this.materias1[i].cd;
+          this.cps = this.materias1[i].cp;
+          console.log('cd', this.cds);
+          console.log('cp', this.cps);
+        }
+        if (this.horario.nombreMat == this.materias1[i].nombreMat && (this.materias1[i].carreras[j] == 'ASI' ||
+          this.materias1[i].carreras[j] == 'ASA' || this.materias1[i].carreras[j] == 'EM' || this.materias1[i].carreras[j] == 'ET')) {
+          this.cdCP = false;
+          this.credi = true;
+          this.creditosM = this.materias1[i].creditos;
+          console.log('creditos', this.creditosM);
+        }
+      }
+    }
   }
 
   fildocente() {
@@ -172,48 +186,6 @@ export class HorarioComponent implements OnInit {
       );
   }
 
-  filmateria() {
-    this.horarios = [];
-    this._adminService.consultarHorarios()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const horarioNew = resultados[key$];
-            horarioNew.id = key$;
-            if (horarioNew.nombreMat == this.horario.docenteNom) {
-              this.horarios.push(horarioNew);
-            }
-          }
-          return this.horarios;
-        }
-      );
-  }
-
-  /*flltro() {
-    this.materias1 = [];
-    this.docenteMaterias();
-    console.log('mirar', this.materiasDoc);
-    this._adminService.consultarMaterias()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            for (let i = 0; i < materiaNew.carreras.length; i++) {
-              for (let j = 0; j < this.materiasDoc.length; j++) {
-                if (materiaNew.carreras[i] == this.horario.carrer && materiaNew.semestre == this.horario.semest
-                  && materiaNew.nombreMat == this.materiasDoc[j]) {
-                  this.materias1.push(materiaNew);
-                  console.log('materias ver', this.materias1);
-                }
-              }
-            }
-          }
-          return this.materias1;
-        }
-      );
-  }*/
-
   flltroMat() {
     this.materias1 = [];
     this._adminService.consultarMaterias()
@@ -232,43 +204,6 @@ export class HorarioComponent implements OnInit {
           return this.materias1;
         }
       );
-  }
-
-  segAula() {
-    if (this.horario.carrer !== 'ASA' && this.horario.carrer !== 'ASI' &&
-      this.horario.carrer !== 'ET' && this.horario.carrer !== 'EM') {
-      this.aula2 = true;
-    } else {
-      this.aula2 = false;
-    }
-  }
-
-  docenteMaterias() {
-    this.materiasDoc = [];
-    console.log('materias vacias', this.materiasDoc);
-    //console.log('nombre', this.horario.docenteNom);
-    for (let i = 0; i < this.profes.length; i++) {
-      if ((this.profes[i].apellidoDocent + ' ' + this.profes[i].nombreDocent) === this.horario.docenteNom) {
-        /*console.log('todo bien', this.profes[i].materias);*/
-        //const materiaD = this.profes[i].materias;
-        //this.materiasDoc.push(materiaD);
-        //console.log('materias', this.materiasDoc);
-        this.materiasDoc = this.profes[i].materias;
-        console.log('materias 2', this.materiasDoc);
-
-        /*if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
-          this.msgs.push({severity: 'success', summary: 'Correcto',
-            detail: 'Rango de horas coinciden con el número de créditos o número de horas'});
-          this.correct = true;
-        } else {
-          this.msgs = [];
-          this.msgs.push({severity: 'error', summary: 'Error',
-            detail: 'Rango de horas no coinciden con el número de créditos o número de horas'});
-          this.correct = false;
-        }*/
-
-      }
-    }
   }
 
   clean() {
@@ -300,10 +235,10 @@ export class HorarioComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
-      this.permision = false;
+      //this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true;
+      //this.permision = true;
     }
   }
 
@@ -317,10 +252,10 @@ export class HorarioComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
-      this.permision = false;
+      //this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true;
+      //this.permision = true;
     }
   }
 
@@ -334,10 +269,10 @@ export class HorarioComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
-      this.permision = false;
+      //this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true;
+      //this.permision = true;
     }
   }
 
@@ -351,10 +286,10 @@ export class HorarioComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
-      this.permision = false;
+      //this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true;
+      //this.permision = true;
     }
   }
 
@@ -368,10 +303,10 @@ export class HorarioComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
-      this.permision = false;
+      //this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true;
+      //this.permision = true;
     }
   }
 
@@ -385,10 +320,10 @@ export class HorarioComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
-      this.permision = false;
+      //this.permision = false;
       console.log('horas no labaorables');
     } else {
-      this.permision = true;
+      //this.permision = true;
     }
   }
 
@@ -396,18 +331,17 @@ export class HorarioComponent implements OnInit {
 
 
   permission() {
-    if (this.horario.carrer == '' || this.horario.dias == [] || this.horario.nombreMat == '' ||
-      this.horario.docenteNom == '' || this.horario.nombreAula == [] || this.horario.horaInicios == [] || this.horario.horaFins == [] ||
-      this.horario.semest == null || this.horario.paralelo == '' || this.horario.paralelo == '' || (this.cod === true && this.cod1 === true &&
+    if (this.horario.carrer == '' || this.horario.dias.length == 0 || this.horario.nombreMat == '' ||
+      this.horario.docenteNom == '' || this.horario.nombreAula == [] || this.horario.horaInicios.length == 0 ||
+      this.horario.horaFins.length == 0 || this.horario.semest == null || this.horario.paralelo == '' ||
+      this.horario.paralelo == '' || (this.cod === true && this.cod1 === true &&
         this.cod2 === true && this.cod3 === true && this.cod4 === true && this.cod5 === true)) {
       console.log('campos vacios');
-      //console.log(this.cod)
-      this.access = true;
-
+      return false;
     } else {
       console.log('campos llenos');
-      this.access = false;
-      this.correct = true;
+      //this.access = false;
+      return true;
     }
   }
 
@@ -434,10 +368,7 @@ export class HorarioComponent implements OnInit {
       Date.parse(ini4) >= Date.parse(fin4) || Date.parse(ini5) >= Date.parse(fin5)) {
       this.msgs = [];
       this.msgs.push({severity: 'error', summary: 'Error', detail: 'Hora final es inferior a hora de inicio'});
-      this.access = true;
-
-    } else {
-      console.log('else', this.access);
+      //this.access = true;
 
     }
 
@@ -458,221 +389,382 @@ export class HorarioComponent implements OnInit {
       total6 = +fin5 - +ini5;
       total = (+total1 + +total2 + +total3 + +total4 + +total5 + +total6).toString().split('')[0];
       console.log('total: ', total);
-      /*for (let i = 0; i < this.materias.length; i++) {
-        if (this.materias[i].nombreMat == this.horario.nombreMat) {
-            if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
-              this.msgs.push({severity: 'success', summary: 'Correcto',
-                detail: 'Rango de horas coinciden con el número de créditos o número de horas'});
-              this.correct = true;
-            } else {
-              this.msgs = [];
-              this.msgs.push({severity: 'error', summary: 'Error',
-                detail: 'Rango de horas no coinciden con el número de créditos o número de horas'});
-              this.correct = false;
-            }
+      for (let i = 0; i < this.materias1.length; i++) {
+        if (this.materias1[i].nombreMat == this.horario.nombreMat) {
+          if (+total == this.materias1[i].creditos || +total == this.materias1[i].totalHoras) {
+            this.msgs.push({
+              severity: 'success', summary: 'Correcto',
+              detail: 'Rango de horas coinciden con el número de créditos o con cp y cd'
+            });
+            this.correct = false;
+          } else {
+            this.msgs = [];
+            this.msgs.push({
+              severity: 'error', summary: 'Error',
+              detail: 'Rango de horas no coinciden con el número de créditos o número de horas'
+            });
+            this.correct = true;
+          }
 
         }
-      }*/
+      }
 
     }
   }
 
   cruze() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
-        this.horarios[i].docenteNom == this.horario.docenteNom ||
-        this.horarios[i].semest == this.horario.semest ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom &&
-          this.horarios[i].semest == this.horario.semest) ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom) ||
-        (this.horarios[i].docenteNom == this.horario.docenteNom && this.horarios[i].semest == this.horario.semest) ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].semest == this.horario.semest)) {
-        console.log('aula igual');
-        console.log('docente ocupado');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.horario.dias[0]) {
-            console.log('dia igual');
-            for (let k = 0; k < 8; k++) {
-              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[0] ||
-                this.horario.horaInicios[0] < this.horarios[i].horaFins[k]) {
-                this.correct = false;
-                console.log('horas iguales');
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-              } else if (this.horario.horaInicios[0] >= this.horarios[i].horaFins[k]) {
-                this.correct = true;
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        console.log('total lon', this.horarios.length);
+        if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.horario.dias[0]) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[0] ||
+                  this.horario.horaInicios[0] < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[0] ||
+            this.horario.horaInicios[0] < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
   cruze1() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
-        this.horarios[i].docenteNom == this.horario.docenteNom ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
-        console.log('aula igual');
-        console.log('docente ocupado');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.horario.dias[1]) {
-            console.log('dia igual');
-            for (let k = 0; k < 8; k++) {
-              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[1] ||
-                this.horario.horaInicios[1] < this.horarios[i].horaFins[k]) {
-                console.log('horas iguales');
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-              } else if (this.horario.horaInicios[1] >= this.horarios[i].horaFins[k]) {
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.horario.dias[1]) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[1] ||
+                  this.horario.horaInicios[1] < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[1] ||
+            this.horario.horaInicios[1] < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
   cruze2() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
-        this.horarios[i].docenteNom == this.horario.docenteNom ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
-        console.log('aula igual');
-        console.log('docente ocupado');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.horario.dias[2]) {
-            console.log('dia igual');
-            for (let k = 0; k < 8; k++) {
-              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[2] ||
-                this.horario.horaInicios[2] < this.horarios[i].horaFins[k]) {
-                console.log('horas iguales');
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-              } else if (this.horario.horaInicios[2] >= this.horarios[i].horaFins[k]) {
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.horario.dias[2]) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[2] ||
+                  this.horario.horaInicios[2] < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[2] ||
+            this.horario.horaInicios[2] < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
   cruze3() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
-        this.horarios[i].docenteNom == this.horario.docenteNom ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
-        console.log('aula igual');
-        console.log('docente ocupado');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.horario.dias[3]) {
-            console.log('dia igual');
-            for (let k = 0; k < 8; k++) {
-              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[3] ||
-                this.horario.horaInicios[3] < this.horarios[i].horaFins[k]) {
-                console.log('horas iguales');
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-              } else if (this.horario.horaInicios[3] >= this.horarios[i].horaFins[k]) {
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.horario.dias[3]) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[3] ||
+                  this.horario.horaInicios[3] < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[3] ||
+            this.horario.horaInicios[3] < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
   cruze4() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
-        this.horarios[i].docenteNom == this.horario.docenteNom ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
-        console.log('aula igual');
-        console.log('docente ocupado');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.horario.dias[4]) {
-            console.log('dia igual');
-            for (let k = 0; k < 8; k++) {
-              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[4] ||
-                this.horario.horaInicios[4] < this.horarios[i].horaFins[k]) {
-                console.log('horas iguales');
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-              } else if (this.horario.horaInicios[4] >= this.horarios[i].horaFins[k]) {
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.horario.dias[4]) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[4] ||
+                  this.horario.horaInicios[4] < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[4] ||
+            this.horario.horaInicios[4] < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
   cruze5() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      if (this.horarios[i].nombreAula == this.horario.nombreAula ||
-        this.horarios[i].docenteNom == this.horario.docenteNom ||
-        (this.horarios[i].nombreAula == this.horario.nombreAula && this.horarios[i].docenteNom == this.horario.docenteNom)) {
-        console.log('aula igual');
-        console.log('docente ocupado');
-        for (let j = 0; j < 7; j++) {
-          if (this.horarios[i].dias[j] == this.horario.dias[5]) {
-            console.log('dia igual');
-            for (let k = 0; k < 8; k++) {
-              if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[5] ||
-                this.horario.horaInicios[5] < this.horarios[i].horaFins[k]) {
-                console.log('horas iguales');
-                console.log('hora incorrect');
-                this.msgs = [];
-                this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
-              } else if (this.horario.horaInicios[5] >= this.horarios[i].horaFins[k]) {
-                this.msgs = [];
-                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Libre'});
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        if (this.horarios[i].nombreAula == this.horario.nombreAula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.horario.dias[5]) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[5] ||
+                  this.horario.horaInicios[5] < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.horario.horaInicios[5] ||
+            this.horario.horaInicios[5] < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.horario.docenteNom) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
 
   guardar() {
-    if (this.id == 'nuevo') {
-      this._adminService.nuevoHorario(this.horario)
-        .subscribe(
-          resultado => {
-            console.log(resultado.name);
-            this._router.navigate(['/horarioadmin', resultado.name]);
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario guardado con exito'});
-          }
-        );
+
+    if (this.permission() == true) {
+      if (this.id == 'nuevo') {
+        this._adminService.nuevoHorario(this.horario)
+          .subscribe(
+            resultado => {
+              console.log(resultado.name);
+              this._router.navigate(['/horarioadmin', resultado.name]);
+              this.msgs = [];
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario guardado con exito'});
+            }
+          );
+      } else {
+        this._adminService.editarHorario(this.horario, this.id)
+          .subscribe(
+            resultado => {
+              this._router.navigate(['/admin']);
+              this.msgs = [];
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario editado con exito'});
+            }
+          );
+      }
     } else {
-      this._adminService.editarHorario(this.horario, this.id)
-        .subscribe(
-          resultado => {
-            this._router.navigate(['/admin']);
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Horario editado con exito'});
-          }
-        );
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error', detail: 'Campos vacios, por favor llenar todos los campos para continuar'});
+
     }
 
   }

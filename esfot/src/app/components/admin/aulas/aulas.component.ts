@@ -54,4 +54,14 @@ export class AulasComponent implements OnInit {
         }
       );
   }
+
+  elminiarTodo() {
+    console.log('todo');
+    this._adminService.eliminarAulas()
+      .subscribe(
+        resultados => {
+          delete this.aulas;
+        }
+      );
+  }
 }

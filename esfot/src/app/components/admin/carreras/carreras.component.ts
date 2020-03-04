@@ -58,4 +58,14 @@ export class CarrerasComponent implements OnInit {
       );
   }
 
+  elminiarTodo() {
+    console.log('todo');
+    this._adminService.eliminarCarreras()
+      .subscribe(
+        resultados => {
+          delete this.carreras;
+        }
+      );
+  }
+
 }

@@ -1,6 +1,7 @@
 <br>
 <div class="container-fluid" xmlns="">
-  <h1 style="text-align: center"><strong>Registro de Nuevo Docente</strong></h1>
+  <header style="background-color: #17a2b8; color: white"><h1 style="text-align: center"><strong>Registro de Nuevo
+    Docente</strong></h1></header>
 </div>
 <br>
 <div class="container-fluid">
@@ -18,97 +19,99 @@
   </div>
   <br>
   <form class="was-validated" #forma="ngForm">
-  <div class="row">
-    <div class="col-md-8 offset-3">
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Nombres:</label>
-        <div class="col-md-6">
-          <input class="form-control" type="text"
-               placeholder="nombre"
-               name="nombre"
-               required
-               [(ngModel)]="usuario.nombreDocent" maxlength="30">
+    <div class="row">
+      <div class="col-md-8 offset-3">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Nombres:</label>
+          <div class="col-md-6">
+            <input class="form-control" type="text"
+                   placeholder="nombre"
+                   name="nombre"
+                   required
+                   [(ngModel)]="usuario.nombreDocent" maxlength="30">
+          </div>
         </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Apellidos:</label>
-        <div class="col-md-6">
-          <input class="form-control" type="text"
-                 placeholder="apellido"
-                 name="apellido"
-                 required
-                 [(ngModel)]="usuario.apellidoDocent" maxlength="30">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Apellidos:</label>
+          <div class="col-md-6">
+            <input class="form-control" type="text"
+                   placeholder="apellido"
+                   name="apellido"
+                   required
+                   [(ngModel)]="usuario.apellidoDocent" maxlength="30">
+          </div>
         </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Fecha de Nacimiento:</label>
-        <div class="col-md-6">
-          <p-calendar name="fecha" [(ngModel)]="date2" [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2030" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val1($event); val($event)" ></p-calendar>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Fecha de Nacimiento:</label>
+          <div class="col-md-6">
+            <p-calendar name="fecha" [(ngModel)]="date2" [monthNavigator]="true" [yearNavigator]="true"
+                        yearRange="1940:2030" [locale]="es" [showIcon]="true" [disabledDays]="[0]"
+                        (onSelect)="val1($event); val($event)"></p-calendar>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Correo:</label>
-        <div class="col-md-6">
-          <input class="form-control" type="email"
-                 name="correo"
-                 placeholder="correo"
-                 required
-                 pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"
-                 [(ngModel)]="usuario.correo">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Correo:</label>
+          <div class="col-md-6">
+            <input class="form-control" type="email"
+                   name="correo"
+                   placeholder="correo"
+                   required
+                   pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"
+                   [(ngModel)]="usuario.correo">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Contraseña:</label>
-        <div class="col-md-5">
-          <input class="form-control"
-                 name="contra"
-                 id="pass"
-                 disabled
-                 [(ngModel)]="pass"
-                 required (change)="cifrar()">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Contraseña:</label>
+          <div class="col-md-5">
+            <input class="form-control"
+                   name="contra"
+                   id="pass"
+                   disabled
+                   [(ngModel)]="pass"
+                   required (change)="cifrar()">
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-info" (click)="password()">*</button>
+          </div>
         </div>
-        <div class="col-md-1">
-          <button class="btn btn-info" (click)="password()">*</button>
-        </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Cargo:</label>
-        <div class="col-md-6">
-          <input class="form-control"
-                 name="cargo" required
-                 [(ngModel)]="usuario.cargo" disabled>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Cargo:</label>
+          <div class="col-md-6">
+            <input class="form-control"
+                   name="cargo" required
+                   [(ngModel)]="usuario.cargo" disabled>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Materias:</label>
-        <div class="col-md-6">
-          <p-multiSelect [panelStyle]="{minWidth:'20em'}" [selectionLimit]="'4'" [maxSelectedLabels]="'4'" [options]="mater" [(ngModel)]="usuario.materias" name="mater"></p-multiSelect>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Carrera:</label>
+          <div class="col-md-5">
+            <p-checkbox name="carrerasx" *ngFor="let item of carrerasx"
+                        label="{{item.siglas}}" value="{{item.siglas}}"
+                        [(ngModel)]="usuario.carreras" (onChange)="materiasUsu()"></p-checkbox>
+          </div>
         </div>
-      </div>
 
-
-      <div class="form-group row">
-        <label class="col-md-3 col-form-label">Carrera:</label>
-        <div class="col-md-5">
-          <p-checkbox name="carrerasx" *ngFor="let item of carrerasx"
-                      label="{{item.siglas}}" value="{{item.siglas}}"
-                      [(ngModel)]="usuario.carreras" (onChange)="materiasUsu()"></p-checkbox>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Materias:</label>
+          <div class="col-md-6">
+            <p-multiSelect [panelStyle]="{minWidth:'20em'}" [selectionLimit]="'4'" [maxSelectedLabels]="'4'"
+                           [options]="mater" [(ngModel)]="usuario.materias" name="mater"></p-multiSelect>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group row">
-        <div class="col-md-12" id="boton">
-          <button type="submit" class="btn btn-info" [disabled]="!forma.valid" (click)="guardar()">
-            Guardar
-          </button>
+        <div class="form-group row">
+          <div class="col-md-12" id="boton">
+            <button type="submit" class="btn btn-info" [disabled]="!forma.valid" (click)="guardar()">
+              Guardar
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </form>
 </div>

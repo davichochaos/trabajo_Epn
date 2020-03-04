@@ -63,4 +63,14 @@ export class UsuariosComponent implements OnInit {
       );
   }
 
+  elminiarTodo() {
+    console.log('todo');
+    this._usuarioService.eliminarUsuarios()
+      .subscribe(
+        resultados => {
+          delete this.usuarios;
+        }
+      );
+  }
+
 }

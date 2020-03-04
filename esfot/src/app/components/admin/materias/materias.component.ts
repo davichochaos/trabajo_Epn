@@ -77,4 +77,14 @@ export class MateriasComponent implements OnInit {
         }
       );
   }
+
+  elminiarTodo() {
+    console.log('todo');
+    this._adminService.eliminarMaterias()
+      .subscribe(
+        resultados => {
+          delete this.materias;
+        }
+      );
+  }
 }

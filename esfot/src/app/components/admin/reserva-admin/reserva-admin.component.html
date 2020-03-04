@@ -1,6 +1,6 @@
 <br>
 <div class="container-fluid" xmlns="">
-  <h1 style="text-align: center"><strong>Registro de Nueva Reserva</strong></h1>
+  <header style="background-color: #17a2b8; color: white"><h1 style="text-align: center"><strong>Registro de Nueva Reserva</strong></h1></header>
 </div>
 <br>
 <div class="container-fluid">
@@ -29,7 +29,7 @@
                   name="nombre"
                   required
                   [(ngModel)]="reserva.nombreDocent" (change)="mater()">
-            <option *ngFor="let item of docentes" value="{{item.nombreDocent}}">{{item.nombreDocent}}</option>
+            <option *ngFor="let i of docentes" value="{{i.apellidoDocent + ' ' + i.nombreDocent}}">{{i.apellidoDocent}} {{i.nombreDocent}}</option>
           </select>
         </div>
       </div>
@@ -52,9 +52,28 @@
           <select class="form-control"
                   name="materia"
                   required
-                  placeholder="materia" [(ngModel)]="reserva.nombreMat">
-            <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}}</option>
+                  placeholder="materia" [(ngModel)]="reserva.nombreMat" (change)="creditosCp()">
+            <option *ngFor="let i of materias" value="{{i.nombreMat}}">{{i.nombreMat}} ({{i.codigo}})</option>
           </select>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="credi">
+        <label class="col-md-2 offset-2 col-form-label">Créditos:</label>
+        <div class="col-md-2">
+          <label class="col-md-2 col-form-label" >{{this.creditosM}}</label>
+        </div>
+      </div>
+
+      <div class="form-group row" *ngIf="cdCP">
+        <label class="col-md-2 offset-2 col-form-label">CD:</label>
+        <div class="col-md-2">
+          <label class="col-md-2 col-form-label" >{{this.cds}}</label>
+        </div>
+
+        <label class="col-md-2 col-form-label">CP:</label>
+        <div class="col-md-2">
+          <label class="col-md-2 col-form-label" >{{this.cps}}</label>
         </div>
       </div>
 
@@ -81,10 +100,10 @@
         </div>
       </div>
 
-      <div class="form-group row" *ngIf="permisionn">
-        <div *ngIf="permisions" class="col-sm-12" id="boton">
+      <div class="form-group row">
+        <div class="col-sm-12" id="boton">
           <button type="submit" class="btn btn-info"
-                  [disabled]="!forma.valid" (click)="guardarRe()" *ngIf="permision">
+                  [disabled]="!forma.valid" (click)="guardarRe()" *ngIf="permision" [disabled]="correct">
             Guardar
           </button>
         </div>

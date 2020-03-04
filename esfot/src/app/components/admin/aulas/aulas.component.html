@@ -27,6 +27,9 @@
       <button [routerLink]="['/aula', 'nuevo']" type="button" class="btn btn-link">
         <img src="../../../../assets/icons/icons8-add-48.png" height="40" width="40"/>Nueva Aula
       </button>
+      <button type="button" class="btn btn-link" (click)="elminiarTodo()">
+        <img src="../../../../assets/icons/icons8-delete-bin-48.png" height="48" width="48"/>Eliminar Todo
+      </button>
     </div>
     <div class="col-sm text-right">
       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">

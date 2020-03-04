@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
     this.diaActual = d.getDate();
     this.hora = this.addZero(d.getHours());
     this.minute = this.addZero(d.getMinutes());
-    console.log(this.diaActual);
+    //console.log(this.diaActual);
   }
 
   addZero(i) {

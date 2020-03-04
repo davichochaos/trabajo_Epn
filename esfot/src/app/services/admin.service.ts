@@ -114,6 +114,16 @@ export class AdminService {
       ));
   }
 
+  eliminarUsuarios() {
+    const url = `${this.docenteURL}.json`;
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
   //aulas
   consultarAulas() {
     return this._http.get(this.aulasURL)
@@ -166,6 +176,16 @@ export class AdminService {
 
   eliminarAula(key$: string) {
     const url = `${this.aulaURL}/${key$}.json`;
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  eliminarAulas() {
+    const url = `${this.aulaURL}.json`;
     return this._http.delete(url)
       .pipe(map(
         resultado => {
@@ -234,6 +254,16 @@ export class AdminService {
       ));
   }
 
+  eliminarCarreras() {
+    const url = `${this.carreraURL}.json`;
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
   //horarios
   consultarHorarios() {
     return this._http.get(this.horariosURL)
@@ -286,6 +316,17 @@ export class AdminService {
 
   eliminarHorario(key$: string) {
     const url = `${this.horarioURL}/${key$}.json`;
+    console.log('eliminar', url);
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  eliminarHorarios() {
+    const url = `${this.horarioURL}.json`;
     return this._http.delete(url)
       .pipe(map(
         resultado => {
@@ -354,6 +395,16 @@ export class AdminService {
       ));
   }
 
+  eliminarMaterias() {
+    const url = `${this.materiaURL}.json`;
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
 
   //reservas
   consultarReserva() {
@@ -407,6 +458,16 @@ export class AdminService {
 
   eliminarReserva(key$: string) {
     const url = `${this.reservaURL}/${key$}.json`;
+    return this._http.delete(url)
+      .pipe(map(
+        resultado => {
+          return resultado.json();
+        }
+      ));
+  }
+
+  eliminarReservas() {
+    const url = `${this.reservaURL}.json`;
     return this._http.delete(url)
       .pipe(map(
         resultado => {

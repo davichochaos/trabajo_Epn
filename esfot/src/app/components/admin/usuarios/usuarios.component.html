@@ -27,6 +27,9 @@
       <button [routerLink]="['/usuario', 'nuevo']" type="button" class="btn btn-link">
         <img src="../../../../assets/icons/icons8-add-48.png" height="48" width="48"/>Nuevo Docente
       </button>
+      <button type="button" class="btn btn-link" (click)="elminiarTodo()">
+        <img src="../../../../assets/icons/icons8-delete-bin-48.png" height="48" width="48"/>Eliminar Todo
+      </button>
     </div>
     <div class="col-sm text-right">
       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
@@ -35,51 +38,6 @@
     </div>
   </div>
   <br>
-  <!--<table class="table table-responsive table-hover" style="">
-    <thead>
-    <tr>
-      <th>Nombres y Apellidos</th>
-      <th>Correo</th>
-      <th>Carrera</th>
-      <th>Opciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of usuarios; let i = index;">
-      <td>{{item.nombreDocent}}&nbsp;{{item.apellidoDocent}}</td>
-      <td>{{item.correo}}</td>
-      <td>{{item.carreras}}</td>
-      <td>
-        <button type="button" class="btn btn-link" [routerLink]="['/usuario', item.id]">
-          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>
-        </button> &nbsp;
-        <button type="button" class="btn btn-link"
-                data-toggle="modal" [attr.data-target]="'#confirmacion'+i">
-          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
-        </button>
-        <div class="modal fade" [id]="'confirmacion'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Seguro que desea eleminar este registro ??
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>-->
 
   <p-table #dt [columns]="cols" [(selection)]="selectedUsu" [value]="usuarios" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
     <ng-template pTemplate="caption">
