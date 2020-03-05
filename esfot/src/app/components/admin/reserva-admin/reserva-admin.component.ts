@@ -33,7 +33,7 @@ export class ReservaAdminComponent implements OnInit {
   reserva: Reservas = {
     nombreDocent: '',
     nombreMat: '',
-    aula: '',
+    aula: [],
     dia: '',
     fecha: '',
     horaFin: '',
@@ -165,14 +165,14 @@ export class ReservaAdminComponent implements OnInit {
     this.reserva.fecha = '';
     this.reserva.horaInicio = '';
     this.reserva.horaFin = '';
-    this.reserva.aula = '';
+    this.reserva.aula = [];
     this.materias = [];
 
   }
 
   excess() {
-    let ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
-    let fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
+    const ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
+    const fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
 
     if (+ini < 7000 || +fin > 21000) {
       this.msgs = [];
@@ -180,32 +180,52 @@ export class ReservaAdminComponent implements OnInit {
         severity: 'error', summary: 'Error',
         detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
       });
+      return false;
       console.log('horas no labaorables');
     } else {
+      return true;
+    }
+  }
+
+  permission() {
+    if (this.reserva.nombreDocent == '' || this.reserva.fecha == '' || this.reserva.nombreMat == '' ||
+      this.reserva.aula == [] || this.reserva.horaInicio == '' || this.reserva.horaFin == '') {
+      console.log('campos vacios');
+      return false;
+    } else {
+      console.log('campos llenos');
+      //this.access = false;
+      return true;
     }
   }
 
   guardarRe() {
-    if (this.id == 'nuevo') {
-      // guardar usuario nuevo
-      this._adminServices.nuevaReserva(this.reserva)
-        .subscribe(
-          resultado => {
-            console.log(resultado.name);
-            this._router.navigate(['/reserva', resultado.name]);
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva guardada con exito'});
-          }
-        );
+    if (this.permission() == true) {
+      if (this.id == 'nuevo') {
+        // guardar usuario nuevo
+        this._adminServices.nuevaReserva(this.reserva)
+          .subscribe(
+            resultado => {
+              console.log(resultado.name);
+              this._router.navigate(['/reserva', resultado.name]);
+              this.msgs = [];
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva guardada con exito'});
+            }
+          );
+      } else {
+        this._adminServices.editaraReserva(this.reserva, this.id)
+          .subscribe(
+            resultado => {
+              this._router.navigate(['/admin']);
+              this.msgs = [];
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva editada con exito'});
+            }
+          );
+      }
     } else {
-      this._adminServices.editaraReserva(this.reserva, this.id)
-        .subscribe(
-          resultado => {
-            this._router.navigate(['/admin']);
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva editada con exito'});
-          }
-        );
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error', detail: 'Campos vacios, por favor llenar todos los campos para continuar'});
+
     }
   }
 
@@ -215,7 +235,8 @@ export class ReservaAdminComponent implements OnInit {
       dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
       dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
       dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
       monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
       today: 'Hoy',
       clear: 'Borrar',
@@ -224,8 +245,8 @@ export class ReservaAdminComponent implements OnInit {
   }
 
   hor() {
-    let fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
-    let ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
+    const fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
+    const ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
 
     if (Date.parse(ini) >= Date.parse(fin)) {
       this.msgs = [];
@@ -246,14 +267,13 @@ export class ReservaAdminComponent implements OnInit {
           //this.correct = true;
           this.permision = true;
         } else {
-          this.permision = false;
-
           this.msgs = [];
           this.msgs.push({
             severity: 'error', summary: 'Error',
             detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'
           });
           //this.correct = false;
+          this.permision = false;
         }
 
       }
@@ -261,7 +281,7 @@ export class ReservaAdminComponent implements OnInit {
   }
 
   val(event) {
-    let da = event.toString().split(' ');
+    const da = event.toString().split(' ');
     console.log('fecha', da);
     switch (da[0]) {
       case 'Mon' :
@@ -297,7 +317,7 @@ export class ReservaAdminComponent implements OnInit {
   }
 
   val1(event) {
-    let da = event.toString().split(' ');
+    const da = event.toString().split(' ');
     switch (da[1]) {
       case 'Jan' :
         this.reserva.fecha = 'Enero ' + da[2] + ' ' + da[3];
@@ -350,7 +370,7 @@ export class ReservaAdminComponent implements OnInit {
     console.log('mes', this.reserva.fecha);
   }
 
-  cruz() {
+  /*cruz() {
     for (let i = 0; i < this.horarios.length; i++) {
       for (let m = 0; m < this.horarios[i].nombreAula.length; m++) {
         if (this.horarios[i].nombreAula[m] == this.reserva.aula) {
@@ -377,6 +397,61 @@ export class ReservaAdminComponent implements OnInit {
         }
       }
 
+    }
+  }*/
+
+  cruz() {
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        console.log('total lon', this.horarios.length);
+        if (this.horarios[i].nombreAula == this.reserva.aula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
+            if (this.horarios[i].dias[j] == this.reserva.dia) {
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
+                  this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
+                  this.msgs = [];
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.reserva.nombreDocent) {
+                      console.log('docente ocupado');
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
+            this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.reserva.nombreDocent) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.correct = true;
+              } else {
+                this.correct = false;
+              }
+            }
+          } else {
+            this.correct = false;
+          }
+        }
+      }
+    } else {
+      this.permision = false;
     }
   }
 

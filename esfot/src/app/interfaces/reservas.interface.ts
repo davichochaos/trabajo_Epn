@@ -1,5 +1,5 @@
 export interface Reservas {
-  aula: string;
+  aula: string[];
   nombreDocent: string;
   nombreMat: string;
   fecha: string;

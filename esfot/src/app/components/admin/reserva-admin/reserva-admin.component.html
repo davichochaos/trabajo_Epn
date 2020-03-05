@@ -96,7 +96,7 @@
         <label class="col-sm-3 col-form-label">Hora de Finalizacion:</label>
         <div class="col-xl-5">
           <input class="form-control" required id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                 name="hora" (change)="hor(); excess();" [(ngModel)]="reserva.horaFin">
+                 name="hora" (change)="cruz(); excess();" [(ngModel)]="reserva.horaFin" (change)="hor()">
         </div>
       </div>
 

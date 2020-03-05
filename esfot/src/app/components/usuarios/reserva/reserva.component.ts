@@ -13,6 +13,8 @@ import {Materias} from '../../../interfaces/materias.interface';
   styleUrls: ['./reserva.component.css']
 })
 export class ReservaComponent implements OnInit {
+  permision: boolean = false;
+
   msgs: Message[] = [];
   horarios: Horarios[] = [];
   aulas: Aulas[] = [];
@@ -22,7 +24,7 @@ export class ReservaComponent implements OnInit {
   reserva: Reservas = {
     nombreDocent: '',
     nombreMat: '',
-    aula: '',
+    aula: [],
     dia: '',
     fecha: '',
     horaFin: '',
@@ -105,7 +107,7 @@ export class ReservaComponent implements OnInit {
     this.reserva.fecha = '';
     this.reserva.horaInicio = '';
     this.reserva.horaFin = '';
-    this.reserva.aula = '';
+    this.reserva.aula = [];
   }
 
   guardarRe() {
@@ -262,24 +264,57 @@ export class ReservaComponent implements OnInit {
   }
 //datos
   cruz() {
-    for (let i = 0; i < this.horarios.length; i++) {
-      for (let m = 0; m < this.horarios[i].nombreAula.length; m++) {
-        if (this.horarios[i].nombreAula[m] == this.reserva.aula) {
-          console.log('aula igual');
-          for (let j = 0; j < 7; j++) {
+    if (this.horarios.length != 0) {
+      for (let i = 0; i < this.horarios.length; i++) {
+        console.log('total lon', this.horarios.length);
+        if (this.horarios[i].nombreAula == this.reserva.aula) {
+          console.log('aula ocupada');
+          for (let j = 0; j < this.horarios[i].dias.length; j++) {
             if (this.horarios[i].dias[j] == this.reserva.dia) {
-              console.log('dia igual');
-              for (let k = 0; k < 7; k++) {
-                if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio || this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-                  console.log('hora incorrect');
+              console.log('dia ocupada');
+              for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+                if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
+                  this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
+                  console.log('hora inicial ocupada');
                   this.msgs = [];
-                  this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+                  this.msgs.push({
+                    severity: 'error', summary: 'Error',
+                    detail: 'Ya existe un horario con esta información, favor de cambiar'
+                  });
+                  for (let l = 0; l < this.horarios.length; l++) {
+                    if (this.horarios[l].docenteNom == this.reserva.nombreDocent) {
+                      console.log('docente ocupado');
+                    }
+                  }
                 }
               }
             }
           }
         }
+        for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
+          if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
+            this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
+            console.log('hora inicial ocupada');
+            for (let l = 0; l < this.horarios.length; l++) {
+              if (this.horarios[l].docenteNom == this.reserva.nombreDocent) {
+                console.log('docente ocupado');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error',
+                  detail: 'El docente no puede estar en dos lugares a la vez'
+                });
+                this.permision = false;
+              } else {
+                this.permision = true;
+              }
+            }
+          } else {
+            this.permision = true;
+          }
+        }
       }
+    } else {
+      this.permision = true;
     }
   }
 
