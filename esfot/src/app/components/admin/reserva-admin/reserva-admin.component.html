@@ -19,11 +19,10 @@
   <br>
   <form class="was-validated" #forma="ngForm">
   <div class="row">
-    <div class="col-sm-6 offset-3">
-
+    <div class="col-sm-5" >
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Docente:</label>
-        <div class="col-xl-5">
+        <label class="col-md-4 col-form-label">Docente:</label>
+        <div class="col-md-6">
           <select class="form-control"
                   placeholder="nombre"
                   name="nombre"
@@ -35,20 +34,20 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Aula:</label>
-        <div class="col-xl-5">
+        <label class="col-sm-4 col-form-label">Aula:</label>
+        <div class="col-sm-6">
           <select class="form-control" name="aula"
                   placeholder="aula"
                   required
-                  [(ngModel)]="reserva.aula" (change)="cruz(); reserv()">
+                  [(ngModel)]="reserva.aula" (change)="nuevoArray();cruz(); reserv();">
             <option *ngFor="let item of aulas" value="{{item.nombreAula}}">{{item.nombreAula}}</option>
           </select>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Materia:</label>
-        <div class="col-xl-5">
+        <label class="col-sm-4 col-form-label">Materia:</label>
+        <div class="col-sm-6">
           <select class="form-control"
                   name="materia"
                   required
@@ -78,25 +77,25 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Fecha:</label>
-        <div class="col-xl-9">
+        <label class="col-sm-4 col-form-label">Fecha:</label>
+        <div class="col-sm-8">
           <p-calendar name="fecha" [(ngModel)]="date2" [locale]="es" [showIcon]="true" [disabledDays]="[0]" (onSelect)="val($event); val1($event)" (onSelect)="cruz(); reserv()"></p-calendar>
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Hora de Inicio:</label>
-        <div class="col-xl-5">
+        <label class="col-sm-4 col-form-label">Hora de Inicio:</label>
+        <div class="col-sm-6">
           <input class="form-control" required id="inicio" type="time" value="07:00" min="07:00" max="21:00" step="3600"
-                 name="hora" (change)="hor()" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv(); excess();">
+                 name="hora" [(ngModel)]="reserva.horaInicio" (change)="cruz(); reserv(); excess();" (change)="hor()">
         </div>
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label">Hora de Finalizacion:</label>
-        <div class="col-xl-5">
+        <label class="col-sm-4 col-form-label">Hora de Finalizacion:</label>
+        <div class="col-sm-6">
           <input class="form-control" required id="fin" type="time" value="07:00" min="08:00" max="21:00" step="3600"
-                 name="hora" (change)="cruz(); excess();" [(ngModel)]="reserva.horaFin" (change)="hor()">
+                 name="hora" (change)="cruz(); excess(); reserv();" [(ngModel)]="reserva.horaFin" (change)="hor()">
         </div>
       </div>
 
@@ -107,8 +106,36 @@
             Guardar
           </button>
         </div>
+        <div class="col-sm-6 offset-md-4" *ngIf="permision">
+          <label id="Msj" [ngClass]="correct == true ? 'error' : 'ok'">{{mensajeCtrl}}</label>
+        </div>
       </div>
       <p-growl [(value)]="msgs" [life]="2000"></p-growl>
+    </div>
+    <div class="col-sm-7">
+      <p-table #dt [columns]="cols" [value]="reservas" [(selection)]="selectedRese" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <img src="../../../../assets/icons/icons8-search-20.png" height="20" width="20"/>
+            <input class="col-sm-12" type="text" pInputText placeholder="Buscar" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" class="text-center" [pSortableColumn]="col.field" pResizableColumn pReorderableColumn>
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns;">
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
   </form>

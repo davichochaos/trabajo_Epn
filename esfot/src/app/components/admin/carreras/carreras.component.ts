@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {MessageService} from 'primeng/api';
+import {Aulas} from '../../../interfaces/aulas.interface';
 
 @Component({
   selector: 'app-carreras',
@@ -12,6 +14,7 @@ export class CarrerasComponent implements OnInit {
   carreras: Carreras[] = [];
   cols: any[];
   selectedCarr: Carreras;
+  index: any;
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -23,7 +26,7 @@ export class CarrerasComponent implements OnInit {
     this.externalPdfViewer.refresh();
   }
 
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService, private messageService: MessageService) {
     this._adminService.consultarCarreras()
       .subscribe(
         resultados => {
@@ -37,6 +40,21 @@ export class CarrerasComponent implements OnInit {
       );
   }
 
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'c', sticky: true, severity: 'warn', summary: 'Esta seguro ?',
+      detail: 'Confirme para proceder con la eliminación de todas las carreras'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+    this.elminiarTodo();
+  }
+
+  onReject() {
+    this.messageService.clear('c');
+  }
+
   ngOnInit() {
     this.cols = [
       {field: 'nombreCarr', header: 'Nombre de la carrera'},
@@ -45,15 +63,20 @@ export class CarrerasComponent implements OnInit {
     ];
   }
 
+  traerIndex(carrera: Carreras) {
+    this.selectedCarr = carrera;
+    console.log(this.selectedCarr);
+    this.index = this.carreras.indexOf(this.selectedCarr);
+    console.log('p', this.index);
+  }
+
   eliminar(id: string) {
-    const index = this.carreras.indexOf(this.selectedCarr);
-    console.log('index', index);
     console.log('id', id);
     this._adminService.eliminarCarrera(id)
       .subscribe(
         resultados => {
-          console.log('datos', id, index);
-          this.carreras.splice(index, 1);
+          this.carreras = this.carreras.filter((val, i) => i != this.index);
+          //this.carreras.splice(index, 1);
         }
       );
   }

@@ -3,6 +3,7 @@ import {Horarios} from '../../../interfaces/horarios.interface';
 import {AdminService} from '../../../services/admin.service';
 import {Docentes} from '../../../interfaces/docentes.interface';
 import {Aulas} from '../../../interfaces/aulas.interface';
+import {MessageService} from 'primeng/api';
 
 import * as XLSX from 'xlsx';
 import {Carreras} from '../../../interfaces/carreras.interface';
@@ -36,7 +37,7 @@ export class HorariosComponent implements OnInit {
     this.externalPdfViewer.refresh();
   }
 
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService, private messageService: MessageService) {
 
     this._adminService.consultarHorarios()
       .subscribe(
@@ -85,6 +86,20 @@ export class HorariosComponent implements OnInit {
           return this.carreras;
         }
       );
+  }
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'h', sticky: true, severity: 'warn', summary: 'Esta seguro ?',
+      detail: 'Confirme para proceder con la eliminación de todos los horarios'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('h');
+    this.elminiarTodo();
+  }
+
+  onReject() {
+    this.messageService.clear('h');
   }
 
   ngOnInit() {

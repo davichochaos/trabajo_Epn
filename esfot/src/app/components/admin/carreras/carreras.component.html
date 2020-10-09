@@ -19,13 +19,29 @@
       </div>
     </div>
   </div>
-
+  <p-toast position="center" key="c" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+      <div style="text-align: center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+        <h3>{{message.summary}}</h3>
+        <p>{{message.detail}}</p>
+      </div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-6">
+          <button type="button" pButton (click)="onConfirm()" label="Yes" class="ui-button-success"></button>
+        </div>
+        <div class="ui-g-6">
+          <button type="button" pButton (click)="onReject()" label="No" class="ui-button-secondary"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-toast>
   <ng2-pdfjs-viewer #externalPdfViewer [externalWindow]="true"></ng2-pdfjs-viewer>
   <div class="row">
     <div class="col-sm-10 text-center">
       <button [routerLink]="['/carrera', 'nuevo']" type="button" class="btn btn-link">
         <img src="../../../../assets/icons/icons8-add-48.png" height="48" width="48"/>Nueva Carrera</button>
-      <button type="button" class="btn btn-link" (click)="elminiarTodo()">
+      <button type="button" class="btn btn-link" (click)="showConfirm()">
         <img src="../../../../assets/icons/icons8-delete-bin-48.png" height="48" width="48"/>Eliminar Todo
       </button>
     </div>
@@ -74,21 +90,21 @@
           <button type="button" class="btn btn-link">
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/carrera', rowData.id]"/>
           </button>
-          <button type="button" class="btn btn-link"
-                  data-toggle="modal" [attr.data-target]="'#confirmacion11' + rowData.id">
+          <button type="button" class="btn btn-link" (click)="traerIndex(rowData)"
+                  data-toggle="modal" [attr.data-target]="'#confirmacionCarre' + rowData.id">
             <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
           </button>
-          <div class="modal fade" [id]="'confirmacion11' + rowData.id" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+          <div class="modal fade" [id]="'confirmacionCarre' + rowData.id" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
+                  <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Eliminar registro</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-                  Seguro que desea eleminar este registro ??
+                <div class="modal-body" style="color: black">
+                  Seguro que desea eliminar este registro ??
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

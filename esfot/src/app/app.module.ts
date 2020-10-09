@@ -7,6 +7,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MessagesModule, GrowlModule, CheckboxModule, CalendarModule, RadioButtonModule} from 'primeng/primeng';
 import {TableModule} from 'primeng/table';
 import {MultiSelectModule} from 'primeng/multiselect';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
+
+
 
 //accordion and accordion tab
 import {PanelModule} from 'primeng/panel';
@@ -103,12 +107,13 @@ import {Administrador1Component} from './components/super/administrador1/adminis
     MultiSelectModule,
     RadioButtonModule,
     PdfJsViewerModule,
+    ToastModule,
   ],
   providers: [
     AdminService,
     DocentService,
     SuperadService,
-
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

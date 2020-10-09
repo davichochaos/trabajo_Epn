@@ -50,6 +50,7 @@ export class PerfilComponent implements OnInit {
     usuarioGuar =  localStorage.getItem('Docent');
     usuarioGuar = JSON.parse(usuarioGuar);
     (document.getElementById('namee') as HTMLInputElement).value = usuarioGuar.nombreDocent;
+    (document.getElementById('lastname') as HTMLInputElement).value = usuarioGuar.apellidoDocent;
     (document.getElementById('maill') as HTMLInputElement).value = usuarioGuar.correo;
     (document.getElementById('passwor') as HTMLInputElement).value = usuarioGuar.password;
     (document.getElementById('carg') as HTMLInputElement).value = usuarioGuar.cargo;

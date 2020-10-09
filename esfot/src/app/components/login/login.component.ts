@@ -6,6 +6,8 @@ import { DocentService } from '../../services/docent.service';
 import { Message } from 'primeng/primeng';
 import {SuperadService} from '../../services/superad.service';
 import {getLocaleDateFormat} from '@angular/common';
+declare function require(path: string): any;
+import SimpleCrypto from 'simple-crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
   correo1: any;
   hora: any;
   minute: any;
+  claveCif: any;
 
   constructor(private _router: Router, private _adminServices: AdminService,
               private _docenteServices: DocentService,
@@ -78,15 +81,27 @@ export class LoginComponent implements OnInit {
     return i;
   }
 
-  entrar() {
+  cifrar() {
+    const _secretKey = 'some-unique-key';
+    const simpleCrypto = new SimpleCrypto(_secretKey);
+    const plainText = 'superadmin';
+    const chiperText = simpleCrypto.encrypt(plainText);
+    this.claveCif = chiperText;
+    console.log('Cipher Text   : ' + chiperText);
+    console.log('Cipher Text   : ' + plainText);
+  }
 
+  entrar() {
+    const secretKey = 'some-unique-key';
+    const simpleCrypto = new SimpleCrypto(secretKey);
     this._superServices.consultarAdmins().subscribe(
       res => {
         for (const key$ in res) {
           const adminNew = res[key$];
           adminNew.id = res[key$].id;
+          const decipherText = simpleCrypto.decrypt(adminNew.password);
           if (adminNew.correo === this.correo1 &&
-            adminNew.password === this.password1 &&
+            decipherText === this.password1 &&
             adminNew.cargo === 'SuperAdmin') {
             if (typeof (Storage) !== 'undefined') {
               const usuarioGuar = JSON.stringify(adminNew);
@@ -94,7 +109,7 @@ export class LoginComponent implements OnInit {
             }
             this._router.navigate(['/super']);
           } else if (adminNew.correo === this.correo1 &&
-            adminNew.password === this.password1 &&
+            decipherText === this.password1 &&
             adminNew.cargo === 'Administrador') {
             if (typeof (Storage) !== 'undefined') {
               const usuarioGuar = JSON.stringify(adminNew);
@@ -114,6 +129,7 @@ export class LoginComponent implements OnInit {
         for (const key$ in res) {
           const usuarioNew = res[key$];
           usuarioNew.id = res[key$].id;
+          const decipherText = simpleCrypto.decrypt(usuarioNew.password);
           /*if (usuarioNew.correo === this.correo1 &&
             usuarioNew.password === this.password1 &&
             usuarioNew.cargo === 'SuperAdmin') {
@@ -132,7 +148,7 @@ export class LoginComponent implements OnInit {
             this._router.navigate(['/admin']);
           } else*/
           if (usuarioNew.correo === this.correo1 &&
-            usuarioNew.password === this.password1 &&
+            decipherText === this.password1 &&
             usuarioNew.cargo === 'Docente') {
             if (typeof (Storage) !== 'undefined') {
               const usuarioGuar = JSON.stringify(usuarioNew);

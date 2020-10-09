@@ -1,3 +1,10 @@
 #boton{
   text-align: center;
 }
+.error {
+  color: red;
+}
+
+.ok {
+  color: limegreen;
+}

@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { AdminService } from '../../../services/admin.service';
 import { Aulas } from '../../../interfaces/aulas.interface';
+import {MessageService} from 'primeng/api';
+import {consoleTestResultHandler} from 'tslint/lib/test';
 
 @Component({
   selector: 'app-aulas',
@@ -11,6 +13,7 @@ export class AulasComponent implements OnInit {
   aulas: Aulas[] = [];
   cols: any[];
   selectedAulas: Aulas;
+  index: any;
 
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -20,7 +23,7 @@ export class AulasComponent implements OnInit {
     this.externalPdfViewer.pdfSrc = "./../../../assets/Manual de Usuario.pdf";
     this.externalPdfViewer.refresh();
   }
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService, private messageService: MessageService) {
     this._adminService.consultarAulas()
       .subscribe(
         resultados => {
@@ -34,6 +37,27 @@ export class AulasComponent implements OnInit {
       );
   }
 
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'a', sticky: true, severity: 'warn', summary: 'Esta seguro ?',
+      detail: 'Confirme para proceder con la eliminación de toda s las aulas'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('a');
+    this.elminiarTodo();
+  }
+
+  traerIndex(aula: Aulas) {
+    this.selectedAulas = aula;
+    console.log(this.selectedAulas);
+    this.index = this.aulas.indexOf(this.selectedAulas);
+    console.log('p', this.index);
+  }
+
+  onReject() {
+    this.messageService.clear('a');
+  }
   ngOnInit() {
     this.cols = [
       { field: 'nombreAula', header: 'Aula o Laboratorio' },
@@ -44,13 +68,11 @@ export class AulasComponent implements OnInit {
   }
 
   eliminar(id: string) {
-    const index = this.aulas.indexOf(this.selectedAulas);
-    console.log('index', index);
-    console.log('id', id);
     this._adminService.eliminarAula(id)
       .subscribe(
         resultados => {
-          this.aulas.splice(index, 1);
+          this.aulas = this.aulas.filter((val, i) => i != this.index);
+          //this.aulas.splice(index, 1);
         }
       );
   }

@@ -37,8 +37,7 @@ const APP_ROUTES: Routes = [
   /*usuarios*/
   {path: 'docent', component: DocentesComponent},
   {path: 'perfil', component: PerfilComponent},
-  {path: 'reserva:id', component: ReservaComponent},
-  {path: '**', pathMatch: 'full', redirectTo: 'inicio'},
+  {path: 'reservaUs/:id', component: ReservaComponent},
 
 ];
 

@@ -7,8 +7,7 @@ import {Materias} from '../../../interfaces/materias.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Docentes} from '../../../interfaces/docentes.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
-import {angularCoreEnv} from '@angular/core/src/render3/jit/environment';
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-horario',
@@ -101,6 +100,9 @@ export class HorarioComponent implements OnInit {
         }
       );
 
+  }
+
+  ngOnInit() {
   }
 
   flltro1() {
@@ -217,9 +219,6 @@ export class HorarioComponent implements OnInit {
     this.horario.semest = null;
     this.horario.carrer = '';
     this.horario.paralelo = '';
-  }
-
-  ngOnInit() {
   }
 
   //rstrincciones

@@ -1,11 +1,17 @@
+<br>
+<div class="container-fluid" xmlns="">
+  <header style="background-color: #17a2b8; color: white"><h1 style="text-align: center"><strong>Registro de Nuevo
+    Administrador</strong></h1></header>
+</div>
+<br>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-6 text-left">
+    <div class="col-md-2 offset-md-4 text-center">
       <button [routerLink]="['/super']" type="button" class="btn btn-info">
         Atras
       </button>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-md-2">
       <button [routerLink]="['/admin','nuevo']" (click)="clean()" type="button" class="btn btn-info">
         Limpiar
       </button>
@@ -14,7 +20,7 @@
   <br>
   <form class="was-validated" #forma="ngForm">
     <div class="row">
-      <div class="col-xl-12">
+      <div class="col-md-8 offset-3">
         <div class="form-group row">
           <label class="col-2 col-form-label">Nombre:</label>
           <div class="col-xl-3">
@@ -53,7 +59,7 @@
 
         <div class="form-group row">
           <label class="col-2 col-form-label">Cargo</label>
-          <div class="col-xl-2">
+          <div class="col-xl-3">
             <input class="form-control"
                    name="cargo" required
                    [(ngModel)]="admini.cargo" disabled>

@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {Materias} from '../../../interfaces/materias.interface';
 import {Carreras} from '../../../interfaces/carreras.interface';
+import {MessageService} from 'primeng/api';
+import {Aulas} from '../../../interfaces/aulas.interface';
 
 @Component({
   selector: 'app-materias',
@@ -13,7 +15,7 @@ export class MateriasComponent implements OnInit {
   materias: Materias[] = [];
   checked: boolean = false;
   cols: any[];
-
+  index: any;
   val: string = 'Option 1';
   carreras: Carreras [] = [];
   selectedMate: Materias;
@@ -27,7 +29,7 @@ export class MateriasComponent implements OnInit {
     this.externalPdfViewer.refresh();
   }
 
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService, private messageService: MessageService) {
     this._adminService.consultarMaterias()
       .subscribe(
         resultados => {
@@ -53,6 +55,27 @@ export class MateriasComponent implements OnInit {
       );
   }
 
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'm', sticky: true, severity: 'warn', summary: 'Esta seguro ?',
+      detail: 'Confirme para proceder con la eliminación de todas las materias'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('m');
+    this.elminiarTodo();
+  }
+
+  traerIndex(materia: Materias) {
+    this.selectedMate = materia;
+    console.log(this.selectedMate);
+    this.index = this.materias.indexOf(this.selectedMate);
+    console.log('p', this.index);
+  }
+
+  onReject() {
+    this.messageService.clear('m');
+  }
   ngOnInit() {
     this.cols = [
       { field: 'nombreMat', header: 'Materia' },
@@ -67,13 +90,11 @@ export class MateriasComponent implements OnInit {
   }
 
   eliminar(id: string) {
-    const index = this.materias.indexOf(this.selectedMate);
-    console.log('index', index);
-    console.log('id', id);
     this._adminService.eliminarMateria(id)
       .subscribe(
         resultados => {
-          this.materias.splice(index, 1);
+          this.materias = this.materias.filter((val, i) => i != this.index);
+          //this.materias.splice(index, 1);
         }
       );
   }

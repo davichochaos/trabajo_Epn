@@ -21,13 +21,30 @@
   </div>
 
   <ng2-pdfjs-viewer #externalPdfViewer [externalWindow]="true"></ng2-pdfjs-viewer>
+  <p-toast position="center" key="a" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+      <div style="text-align: center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+        <h3>{{message.summary}}</h3>
+        <p>{{message.detail}}</p>
+      </div>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-6">
+          <button type="button" pButton (click)="onConfirm()" label="Yes" class="ui-button-success"></button>
+        </div>
+        <div class="ui-g-6">
+          <button type="button" pButton (click)="onReject()" label="No" class="ui-button-secondary"></button>
+        </div>
+      </div>
+    </ng-template>
+  </p-toast>
 
   <div class="row">
     <div class="col-sm-10 text-center">
       <button [routerLink]="['/aula', 'nuevo']" type="button" class="btn btn-link">
         <img src="../../../../assets/icons/icons8-add-48.png" height="40" width="40"/>Nueva Aula
       </button>
-      <button type="button" class="btn btn-link" (click)="elminiarTodo()">
+      <button type="button" class="btn btn-link" (click)="showConfirm()">
         <img src="../../../../assets/icons/icons8-delete-bin-48.png" height="48" width="48"/>Eliminar Todo
       </button>
     </div>
@@ -39,54 +56,8 @@
 
   </div>
   <br>
-  <!--<table class="table table-responsive table-hover">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Capacidad</th>
-        <th>Opciones</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let item of aulas; let i = index;">
-        <td>{{item.nombreAula}}</td>
-        <td>{{item.descripcion}}</td>
-        <td>{{item.cupo}}</td>
 
-      <td>
-        <button type="button" class="btn btn-link" [routerLink]="['/aula', item.id]">
-          <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40"/>
-        </button>&nbsp;
-        <button type="button" class="btn btn-link"
-                data-toggle="modal" [attr.data-target]="'#confirmacion21'+i">
-          <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
-        </button>
-        <div class="modal fade" [id]="'confirmacion21'+i" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Seguro que desea eleminar este registro ??
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="eliminar(item.id, i)">Aceptar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>-->
-
-  <p-table #dt [columns]="cols" [(selection)]="selectedAulas" [value]="aulas" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
+  <p-table #dt [columns]="cols" selectionMode="single" [(selection)]="selectedAulas" [value]="aulas" [paginator]="true" [rows]="10" [resizableColumns]="true" [reorderableColumns]="true" [rowsPerPageOptions]="[10,20,30]">
     <ng-template pTemplate="caption">
       <div style="text-align: right">
         <img src="../../../../assets/icons/icons8-search-20.png" height="20" width="20"/>
@@ -124,20 +95,20 @@
             <img src="../../../../assets/icons/icons8-edit-40.png" height="40" width="40" [routerLink]="['/aula', rowData.id]"/>
           </button>
           <button type="button" class="btn btn-link"
-                  data-toggle="modal" [attr.data-target]="'#confirmacion21'+ rowData.id">
+                  data-toggle="modal" [attr.data-target]="'#confirmacionAula'+ rowData.id" (click)="traerIndex(rowData)">
             <img src="../../../../assets/icons/icons8-cancel-40.png" height="40" width="40"/>
           </button>
-          <div class="modal fade" [id]="'confirmacion21'+ rowData.id" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
+          <div class="modal fade" [id]="'confirmacionAula'+ rowData.id" tabindex="-1" role="dialog" aria-labelledby="confirmacion" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Eleminar registro</h5>
+                  <h5 class="modal-title" id="exampleModalLabel" style="color: black">Eliminar registro</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-                  Seguro que desea eleminar este registro ??
+                <div class="modal-body" style="color: black">
+                  Seguro que desea eliminar este registro ??
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

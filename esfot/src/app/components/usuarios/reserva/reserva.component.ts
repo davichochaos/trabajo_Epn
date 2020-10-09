@@ -6,6 +6,7 @@ import {Reservas} from '../../../interfaces/reservas.interface';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Materias} from '../../../interfaces/materias.interface';
+import {Docentes} from '../../../interfaces/docentes.interface';
 
 @Component({
   selector: 'app-reserva',
@@ -14,12 +15,20 @@ import {Materias} from '../../../interfaces/materias.interface';
 })
 export class ReservaComponent implements OnInit {
   permision: boolean = false;
+  correct: boolean;
+  credi: boolean = false;
+  cdCP: boolean = false;
+  creditosM: any;
+  cds: any;
+  cps: any;
 
   msgs: Message[] = [];
   horarios: Horarios[] = [];
   aulas: Aulas[] = [];
   materias: Materias[] = [];
   reservas: Reservas[] = [];
+  reservas1: Reservas[] = [];
+  docentes: Docentes[] = [];
   id: string;
   reserva: Reservas = {
     nombreDocent: '',
@@ -29,11 +38,13 @@ export class ReservaComponent implements OnInit {
     fecha: '',
     horaFin: '',
     horaInicio: '',
-  }
-
+  };
 
   date2: Date;
   es: any;
+  cols: any[];
+  mensajeCtrl: any;
+  selectedRese: Reservas;
   constructor(private _adminServices: AdminService,
               private _router: Router,
               private _activatedRoute: ActivatedRoute) {
@@ -64,6 +75,19 @@ export class ReservaComponent implements OnInit {
         }
       );
 
+
+    this._adminServices.consultarAulas()
+      .subscribe(
+        resultados => {
+          for (const key$ in resultados) {
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.aulas.push(usuarioNew);
+          }
+          return this.aulas;
+        }
+      );
+
     this._adminServices.consultarReserva()
       .subscribe(
         res => {
@@ -76,81 +100,124 @@ export class ReservaComponent implements OnInit {
         }
       );
 
-    this._adminServices.consultarMaterias()
+    this._adminServices.consultarUsuarios()
       .subscribe(
         resultados => {
           for (const key$ in resultados) {
-            const materiaNew = resultados[key$];
-            materiaNew.id = key$;
-            this.materias.push(materiaNew);
+            const usuarioNew = resultados[key$];
+            usuarioNew.id = key$;
+            this.docentes.push(usuarioNew);
           }
-          return this.materias;
-        }
-      );
-
-    this._adminServices.consultarAulas()
-      .subscribe(
-        resultados => {
-          for (const key$ in resultados) {
-            const aulaNew = resultados[key$];
-            aulaNew.id = key$;
-            this.aulas.push(aulaNew);
-          }
-          return this.aulas;
+          return this.docentes;
         }
       );
   }
 
   clean() {
+    this.reserva.nombreDocent = '';
     this.reserva.nombreMat = '';
     this.reserva.dia = '';
     this.reserva.fecha = '';
     this.reserva.horaInicio = '';
     this.reserva.horaFin = '';
     this.reserva.aula = [];
+    this.materias = [];
+
+  }
+
+  excess() {
+    const ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
+    const fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
+
+    if (+ini < 7000 || +fin > 21000) {
+      this.msgs = [];
+      this.msgs.push({
+        severity: 'error', summary: 'Error',
+        detail: 'Horas no laborables, por favor escoja horas habiles entre las 07:00 hasta las 21:00'
+      });
+      return false;
+      console.log('horas no labaorables');
+    } else {
+      return true;
+    }
+  }
+
+  permission() {
+    if (this.reserva.nombreDocent == '' || this.date2 == null || this.reserva.nombreMat == '' ||
+      this.reserva.aula == [] || this.reserva.horaInicio == '' || this.reserva.horaFin == '') {
+      console.log('campos vacios');
+      console.log(this.reserva.nombreDocent);
+      console.log(this.reserva.fecha);
+      console.log(this.reserva.nombreMat);
+      console.log(this.reserva.aula);
+      console.log(this.reserva.horaInicio);
+      console.log(this.reserva.horaFin);
+
+      return false;
+    } else {
+      console.log('campos llenos');
+      //this.access = false;
+      return true;
+    }
   }
 
   guardarRe() {
-    if (this.id == 'nuevo') {
-      // guardar usuario nuevo
-      this._adminServices.nuevaReserva(this.reserva)
-        .subscribe(
-          resultado => {
-            console.log(resultado.name);
-            this._router.navigate(['/reserva', resultado.name]);
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva guardada con exito'});
-          }
-        );
+    if (this.permission() == true) {
+      if (this.id == 'nuevo') {
+        // guardar usuario nuevo
+        this._adminServices.nuevaReserva(this.reserva)
+          .subscribe(
+            resultado => {
+              console.log(resultado.name);
+              this._router.navigate(['/reserva', resultado.name]);
+              this.msgs = [];
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva guardada con exito'});
+            }
+          );
+      } else {
+        this._adminServices.editaraReserva(this.reserva, this.id)
+          .subscribe(
+            resultado => {
+              this._router.navigate(['/admin']);
+              this.msgs = [];
+              this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva editada con exito'});
+            }
+          );
+      }
     } else {
-      this._adminServices.editaraReserva(this.reserva, this.id)
-        .subscribe(
-          resultado => {
-            this._router.navigate(['/admin' ]);
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Reserva editada con exito'});
-          }
-        );
+      this.msgs = [];
+      this.msgs.push({severity: 'error', summary: 'Error', detail: 'Campos vacios, por favor llenar todos los campos para continuar'});
+
     }
   }
 
   ngOnInit() {
     this.es = {
       firstDayOfWeek: 1,
-      dayNames: [ "domingo", "lunes","martes","miércoles","jueves","viernes","sábado" ],
-      dayNamesShort: [ "dom", 'lun',"mar","mié","jue","vie","sáb" ],
-      dayNamesMin: [ "D","L","M","M","J","V","S" ],
-      monthNames: [ "enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre" ],
-      monthNamesShort: [ "ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic" ],
+      dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+      dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
       today: 'Hoy',
       clear: 'Borrar',
       dateFormat: 'DD/MM/yy'
     };
+
+    this.cols = [
+      { field: 'nombreDocent', header: 'Docente' },
+      { field: 'aula', header: 'Aula' },
+      { field: 'nombreMat', header: 'Materia' },
+      { field: 'fecha', header: 'Fecha de Reserva' },
+      { field: 'horaInicio', header: 'Hora de Inicio' },
+      { field: 'horaFin', header: 'Hora de Finalización' },
+    ];
   }
 
   hor() {
-    let fin = (document.getElementById("fin")as HTMLInputElement).value.replace(':','0')
-    let ini = (document.getElementById("inicio") as HTMLInputElement).value.replace(':','0');
+    const fin = (document.getElementById('fin') as HTMLInputElement).value.replace(':', '0');
+    const ini = (document.getElementById('inicio') as HTMLInputElement).value.replace(':', '0');
 
     if (Date.parse(ini) >= Date.parse(fin)) {
       this.msgs = [];
@@ -161,16 +228,23 @@ export class ReservaComponent implements OnInit {
     }
 
     let total;
-    total = (+fin - +ini).toString().split("")[0];
+    total = (+fin - +ini).toString().split('')[0];
     console.log('total', total);
     for (let i = 0; i < this.materias.length; i++) {
       if (this.materias[i].nombreMat == this.reserva.nombreMat) {
-        if ( +total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+        if (+total == this.materias[i].creditos || +total == this.materias[i].totalHoras) {
+          this.msgs = [];
           this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Rango de horas correctas'});
+          //this.correct = true;
+          this.permision = true;
         } else {
           this.msgs = [];
-          this.msgs.push({severity: 'error', summary: 'Error',
-            detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'});
+          this.msgs.push({
+            severity: 'error', summary: 'Error',
+            detail: 'El rango de horas no coinciden con el número de creditos u horas de la materia'
+          });
+          //this.correct = false;
+          this.permision = false;
         }
 
       }
@@ -178,104 +252,109 @@ export class ReservaComponent implements OnInit {
   }
 
   val(event) {
-    let da = event.toString().split(" ");
-    //console.log('2', da[0]);
+    const da = event.toString().split(' ');
+    console.log('fecha', da);
     switch (da[0]) {
-      case "Mon" :
-        this.reserva.dia  = "Lunes";
+      case 'Mon' :
+        this.reserva.dia = 'Lunes';
         break;
 
-      case "Tue" :
-        this.reserva.dia = "Martes";
+      case 'Tue' :
+        this.reserva.dia = 'Martes';
+
         break;
 
-      case "Wed" :
-        this.reserva.dia = "Miercoles";
+      case 'Wed' :
+        this.reserva.dia = 'Miercoles';
+
         break;
 
-      case "Thu" :
-        this.reserva.dia  = "Jueves";
+      case 'Thu' :
+        this.reserva.dia = 'Jueves';
+
         break;
 
-      case "Fri" :
-        this.reserva.dia  = "Viernes";
+      case 'Fri' :
+        this.reserva.dia = 'Viernes';
+
         break;
 
-      case "Sat" :
-        this.reserva.dia  = "Sabado";
+      case 'Sat' :
+        this.reserva.dia = 'Sabado';
+
         break;
     }
-
-    //console.log('3', this.reserva.dia );
+    console.log('dia', this.reserva.dia);
   }
 
   val1(event) {
-    let da = event.toString().split(" ");
+    const da = event.toString().split(' ');
     switch (da[1]) {
-      case "Jan" :
-        this.reserva.fecha  = "Enero " + da[2] + " " + da[3];
+      case 'Jan' :
+        this.reserva.fecha = 'Enero ' + da[2] + ' ' + da[3];
         break;
 
-      case "Feb" :
-        this.reserva.fecha = "Febrero " + da[2] + " " + da[3];
+      case 'Feb' :
+        this.reserva.fecha = 'Febrero ' + da[2] + ' ' + da[3];
         break;
 
-      case "Mar" :
-        this.reserva.fecha = "Marzo " + da[2] + " " + da[3];
+      case 'Mar' :
+        this.reserva.fecha = 'Marzo ' + da[2] + ' ' + da[3];
         break;
 
-      case "Apr" :
-        this.reserva.fecha  = "Abril " + da[2] + " " + da[3];
+      case 'Apr' :
+        this.reserva.fecha = 'Abril ' + da[2] + ' ' + da[3];
         break;
 
-      case "May" :
-        this.reserva.fecha  = "Mayo " + da[2] + " " + da[3];
+      case 'May' :
+        this.reserva.fecha = 'Mayo ' + da[2] + ' ' + da[3];
         break;
 
-      case "Jun" :
-        this.reserva.fecha  = "Junio " + da[2] + " " + da[3];
+      case 'Jun' :
+        this.reserva.fecha = 'Junio ' + da[2] + ' ' + da[3];
         break;
 
-      case "Jul" :
-        this.reserva.dia  = "Julio " + da[2] + " " + da[3];
+      case 'Jul' :
+        this.reserva.fecha = 'Julio ' + da[2] + ' ' + da[3];
         break;
 
-      case "Aug" :
-        this.reserva.fecha  = "Agosto " + da[2] + " " + da[3];
+      case 'Aug' :
+        this.reserva.fecha = 'Agosto ' + da[2] + ' ' + da[3];
         break;
 
-      case "Sep" :
-        this.reserva.fecha  = "Septiembre " + da[2] + " " + da[3];
+      case 'Sep' :
+        this.reserva.fecha = 'Septiembre ' + da[2] + ' ' + da[3];
         break;
 
-      case "Oct" :
-        this.reserva.fecha  = "Octubre " + da[2] + " " + da[3];
+      case 'Oct' :
+        this.reserva.fecha = 'Octubre ' + da[2] + ' ' + da[3];
         break;
 
-      case "Nov" :
-        this.reserva.fecha  = "Noviembre " + da[2] + " " + da[3];
+      case 'Nov' :
+        this.reserva.fecha = 'Noviembre ' + da[2] + ' ' + da[3];
         break;
 
-      case "Dec" :
-        this.reserva.fecha  = "Diciembre " + da[2] + " " + da[3];
+      case 'Dec' :
+        this.reserva.fecha = 'Diciembre ' + da[2] + ' ' + da[3];
         break;
     }
     console.log('mes', this.reserva.fecha);
   }
-//datos
+
+
   cruz() {
     if (this.horarios.length != 0) {
       for (let i = 0; i < this.horarios.length; i++) {
         console.log('total lon', this.horarios.length);
         if (this.horarios[i].nombreAula == this.reserva.aula) {
-          console.log('aula ocupada');
+          console.log('aula ocupada horario');
           for (let j = 0; j < this.horarios[i].dias.length; j++) {
             if (this.horarios[i].dias[j] == this.reserva.dia) {
-              console.log('dia ocupada');
+              console.log('dia ocupada horario');
               for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
                 if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
                   this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-                  console.log('hora inicial ocupada');
+                  console.log('hora inicial ocupada horario');
                   this.msgs = [];
                   this.msgs.push({
                     severity: 'error', summary: 'Error',
@@ -294,44 +373,100 @@ export class ReservaComponent implements OnInit {
         for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
           if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
             this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-            console.log('hora inicial ocupada');
+            console.log('hora inicial ocupada horario');
             for (let l = 0; l < this.horarios.length; l++) {
               if (this.horarios[l].docenteNom == this.reserva.nombreDocent) {
-                console.log('docente ocupado');
+                console.log('docente ocupado horario');
                 this.msgs = [];
                 this.msgs.push({
                   severity: 'error', summary: 'Error',
                   detail: 'El docente no puede estar en dos lugares a la vez'
                 });
-                this.permision = false;
+                this.correct = true;
               } else {
-                this.permision = true;
+                this.correct = false;
               }
             }
           } else {
-            this.permision = true;
+            this.correct = false;
           }
         }
       }
     } else {
-      this.permision = true;
+      this.permision = false;
     }
   }
 
   reserv() {
-    for (let i = 0; i < this.reservas.length; i++) {
-      if (this.reservas[i].aula == this.reserva.aula) {
-        console.log('aula igual');
-        if (this.reservas[i].dia == this.reserva.dia) {
-          console.log('dia igual');
-          if (this.reservas[i].horaInicio == this.reserva.horaInicio || this.reserva.horaInicio < this.reservas[i].horaFin) {
-            console.log('hora incorrect');
+    for (let i = 0; i < this.reservas1.length; i++) {
+      console.log('1', this.reservas1.length);
+      if (this.reserva.aula === this.reservas1[i].aula) {
+        console.log('aula igual reserva y hora');
+        if ((this.reserva.horaInicio == this.reservas1[i].horaInicio) /*|| this.reserva.horaInicio !== this.reservas[i].horaFin*/) {
+          console.log('hora incorrecta reserva');
+          console.log(this.reserva.horaInicio);
+          console.log(this.reservas1[i].horaInicio);
+          console.log(this.reservas1[i].horaFin);
+          if (this.reserva.dia === this.reservas1[i].dia /*|| this.reserva.horaInicio < this.reservas[i].horaFin*/) {
+            console.log('dia igual reserva');
             this.msgs = [];
-            this.msgs.push({severity: 'error', summary: 'Error', detail: 'Ocupado'});
+            this.msgs.push({
+              severity: 'error', summary: 'Error', detail: 'Aula o laboratorio ocupado, por favor ' +
+                'seleccione otro o cambie las horas o día'
+            });
+            this.correct = true;
+            console.log('1', this.correct);
+            this.mensajeCtrl = 'Aula o laboratorio ocupado, por favor seleccione otro o cambie las horas o día';
+          } else {
+            console.log('hora correcta reserva');
+            this.msgs = [];
+            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Aula o laboratorio libre, continue con el proceso'});
+            this.correct = false;
+            console.log('2', this.correct);
+            this.mensajeCtrl = 'Puede continuar con el proceso';
           }
+        } else if (this.reserva.horaInicio == this.reservas[i].horaFin) {
+          console.log('correcto');
+          this.correct = false;
+          console.log('2', this.correct);
+          console.log('3', this.permision);
+          this.mensajeCtrl = 'Puede continuar con el proceso';
         }
+      } else
+      if (this.reserva.horaInicio == this.reservas1[i].horaInicio) {
+        console.log('hora inicial ocupada horario');
+        if (this.reserva.nombreDocent == this.reservas1[i].nombreDocent) {
+          console.log('docente ocupado horario');
+          this.correct = true;
+        } else {
+          this.correct = false;
+        }
+      } else if (this.reserva.horaInicio == this.reservas[i].horaFin) {
+        console.log('3');
+        this.correct = false;
       }
     }
+  }
+
+  nuevoArray() {
+    this.reservas1 = [];
+    this._adminServices.consultarReserva()
+      .subscribe(
+        res => {
+          for (const key$ in res) {
+            const reservaNew = res[key$];
+            reservaNew.id = key$;
+            if (reservaNew.aula == this.reserva.aula) {
+              this.reservas1.push(reservaNew);
+              console.log('if', this.reservas1);
+            } else {
+              this.reservas1.push(reservaNew);
+              console.log('else', this.reservas1);
+            }
+          }
+          return this.reservas1;
+        }
+      );
   }
 }
 

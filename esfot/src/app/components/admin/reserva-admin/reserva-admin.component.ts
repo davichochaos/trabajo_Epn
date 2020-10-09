@@ -28,6 +28,7 @@ export class ReservaAdminComponent implements OnInit {
   aulas: Aulas[] = [];
   materias: Materias[] = [];
   reservas: Reservas[] = [];
+  reservas1: Reservas[] = [];
   docentes: Docentes[] = [];
   id: string;
   reserva: Reservas = {
@@ -42,7 +43,9 @@ export class ReservaAdminComponent implements OnInit {
 
   date2: Date;
   es: any;
-
+  cols: any[];
+  mensajeCtrl: any;
+  selectedRese: Reservas;
   constructor(private _adminServices: AdminService,
               private _router: Router,
               private _activatedRoute: ActivatedRoute) {
@@ -188,9 +191,16 @@ export class ReservaAdminComponent implements OnInit {
   }
 
   permission() {
-    if (this.reserva.nombreDocent == '' || this.reserva.fecha == '' || this.reserva.nombreMat == '' ||
+    if (this.reserva.nombreDocent == '' || this.date2 == null || this.reserva.nombreMat == '' ||
       this.reserva.aula == [] || this.reserva.horaInicio == '' || this.reserva.horaFin == '') {
       console.log('campos vacios');
+      console.log(this.reserva.nombreDocent);
+      console.log(this.reserva.fecha);
+      console.log(this.reserva.nombreMat);
+      console.log(this.reserva.aula);
+      console.log(this.reserva.horaInicio);
+      console.log(this.reserva.horaFin);
+
       return false;
     } else {
       console.log('campos llenos');
@@ -242,6 +252,15 @@ export class ReservaAdminComponent implements OnInit {
       clear: 'Borrar',
       dateFormat: 'DD/MM/yy'
     };
+
+    this.cols = [
+      { field: 'nombreDocent', header: 'Docente' },
+      { field: 'aula', header: 'Aula' },
+      { field: 'nombreMat', header: 'Materia' },
+      { field: 'fecha', header: 'Fecha de Reserva' },
+      { field: 'horaInicio', header: 'Hora de Inicio' },
+      { field: 'horaFin', header: 'Hora de Finalización' },
+    ];
   }
 
   hor() {
@@ -344,7 +363,7 @@ export class ReservaAdminComponent implements OnInit {
         break;
 
       case 'Jul' :
-        this.reserva.dia = 'Julio ' + da[2] + ' ' + da[3];
+        this.reserva.fecha = 'Julio ' + da[2] + ' ' + da[3];
         break;
 
       case 'Aug' :
@@ -405,14 +424,14 @@ export class ReservaAdminComponent implements OnInit {
       for (let i = 0; i < this.horarios.length; i++) {
         console.log('total lon', this.horarios.length);
         if (this.horarios[i].nombreAula == this.reserva.aula) {
-          console.log('aula ocupada');
+          console.log('aula ocupada horario');
           for (let j = 0; j < this.horarios[i].dias.length; j++) {
             if (this.horarios[i].dias[j] == this.reserva.dia) {
-              console.log('dia ocupada');
+              console.log('dia ocupada horario');
               for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
                 if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
                   this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-                  console.log('hora inicial ocupada');
+                  console.log('hora inicial ocupada horario');
                   this.msgs = [];
                   this.msgs.push({
                     severity: 'error', summary: 'Error',
@@ -431,10 +450,10 @@ export class ReservaAdminComponent implements OnInit {
         for (let k = 0; k < this.horarios[i].horaInicios.length; k++) {
           if (this.horarios[i].horaInicios[k] == this.reserva.horaInicio ||
             this.reserva.horaInicio < this.horarios[i].horaFins[k]) {
-            console.log('hora inicial ocupada');
+            console.log('hora inicial ocupada horario');
             for (let l = 0; l < this.horarios.length; l++) {
               if (this.horarios[l].docenteNom == this.reserva.nombreDocent) {
-                console.log('docente ocupado');
+                console.log('docente ocupado horario');
                 this.msgs = [];
                 this.msgs.push({
                   severity: 'error', summary: 'Error',
@@ -456,26 +475,74 @@ export class ReservaAdminComponent implements OnInit {
   }
 
   reserv() {
-    for (let i = 0; i < this.reservas.length; i++) {
-      if (this.reservas[i].aula == this.reserva.aula) {
-        console.log('aula igual');
-        if (this.reservas[i].dia == this.reserva.dia) {
-          console.log('dia igual');
-          if (this.reservas[i].horaInicio == this.reserva.horaInicio || this.reserva.horaInicio < this.reservas[i].horaFin) {
-            console.log('hora incorrecta');
-            this.msgs = [];
-            this.msgs.push({
-              severity: 'error', summary: 'Error', detail: 'Aula o laboratorio ocupado, por favor ' +
-                'seleccione otro o cambie las horas o día'
-            });
-            this.permision = false;
-          } else {
-            this.msgs = [];
-            this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Aula o laboratorio libre, continue con el proceso'});
-            this.permision = true;
+    for (let i = 0; i < this.reservas1.length; i++) {
+      console.log('1', this.reservas1.length);
+      if (this.reserva.aula === this.reservas1[i].aula) {
+        console.log('aula igual reserva y hora');
+          if ((this.reserva.horaInicio == this.reservas1[i].horaInicio) /*|| this.reserva.horaInicio !== this.reservas[i].horaFin*/) {
+            console.log('hora incorrecta reserva');
+            console.log(this.reserva.horaInicio);
+              console.log(this.reservas1[i].horaInicio);
+            console.log(this.reservas1[i].horaFin);
+            if (this.reserva.dia === this.reservas1[i].dia /*|| this.reserva.horaInicio < this.reservas[i].horaFin*/) {
+                console.log('dia igual reserva');
+                this.msgs = [];
+                this.msgs.push({
+                  severity: 'error', summary: 'Error', detail: 'Aula o laboratorio ocupado, por favor ' +
+                    'seleccione otro o cambie las horas o día'
+                });
+                this.correct = true;
+                console.log('1', this.correct);
+                this.mensajeCtrl = 'Aula o laboratorio ocupado, por favor seleccione otro o cambie las horas o día';
+              } else {
+                console.log('hora correcta reserva');
+                this.msgs = [];
+                this.msgs.push({severity: 'success', summary: 'Correcto', detail: 'Aula o laboratorio libre, continue con el proceso'});
+                this.correct = false;
+                console.log('2', this.correct);
+                this.mensajeCtrl = 'Puede continuar con el proceso';
+              }
+          } else if (this.reserva.horaInicio == this.reservas[i].horaFin) {
+            console.log('correcto');
+          this.correct = false;
+          console.log('2', this.correct);
+          console.log('3', this.permision);
+          this.mensajeCtrl = 'Puede continuar con el proceso';
           }
-        }
+      } else
+      if (this.reserva.horaInicio == this.reservas1[i].horaInicio) {
+        console.log('hora inicial ocupada horario');
+          if (this.reserva.nombreDocent == this.reservas1[i].nombreDocent) {
+            console.log('docente ocupado horario');
+            this.correct = true;
+          } else {
+            this.correct = false;
+          }
+      } else if (this.reserva.horaInicio == this.reservas[i].horaFin) {
+        console.log('3');
+        this.correct = false;
       }
     }
+  }
+
+  nuevoArray() {
+    this.reservas1 = [];
+    this._adminServices.consultarReserva()
+      .subscribe(
+        res => {
+          for (const key$ in res) {
+            const reservaNew = res[key$];
+            reservaNew.id = key$;
+            if (reservaNew.aula == this.reserva.aula) {
+            this.reservas1.push(reservaNew);
+            console.log('if', this.reservas1);
+            } else {
+              this.reservas1.push(reservaNew);
+              console.log('else', this.reservas1);
+            }
+          }
+          return this.reservas1;
+        }
+      );
   }
 }

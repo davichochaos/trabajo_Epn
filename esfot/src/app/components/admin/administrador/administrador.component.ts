@@ -60,4 +60,9 @@ export class AdministradorComponent implements OnInit {
     this._router.navigate(['/inicio']);
   }
 
+  pruebaTab() {
+    //const tab = (document.getElementById('pills-usuarios-tab1') as HTMLLinkElement).;
+    console.log('prubas');
+  }
+
 }

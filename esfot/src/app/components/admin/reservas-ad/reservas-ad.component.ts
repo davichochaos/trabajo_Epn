@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Reservas} from '../../../interfaces/reservas.interface';
 import {AdminService} from '../../../services/admin.service';
+import {MessageService} from 'primeng/api';
+import {Aulas} from '../../../interfaces/aulas.interface';
 
 @Component({
   selector: 'app-reservas-ad',
@@ -12,7 +14,7 @@ export class ReservasAdComponent implements OnInit {
   reservas: Reservas[] = [];
   cols: any[];
   selectedRese: Reservas;
-
+  index: any;
   dat: boolean;
   @ViewChild('pdfViewerOnDemand') pdfViewerOnDemand;
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -23,7 +25,7 @@ export class ReservasAdComponent implements OnInit {
     this.externalPdfViewer.refresh();
   }
 
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService, private messageService: MessageService) {
     this._adminService.consultarReserva()
       .subscribe(
         resultados => {
@@ -35,6 +37,27 @@ export class ReservasAdComponent implements OnInit {
           return this.reservas;
         }
       );
+  }
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'r', sticky: true, severity: 'warn', summary: 'Esta seguro ?',
+      detail: 'Confirme para proceder con la eliminación de todas las reservas'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('r');
+    this.elminiarTodo();
+  }
+
+  traerIndex(reserva: Reservas) {
+    this.selectedRese = reserva;
+    console.log(this.selectedRese);
+    this.index = this.reservas.indexOf(this.selectedRese);
+    console.log('p', this.index);
+  }
+
+  onReject() {
+    this.messageService.clear('r');
   }
 
   ngOnInit() {
@@ -49,13 +72,10 @@ export class ReservasAdComponent implements OnInit {
   }
 
   eliminar(id: string) {
-    const index = this.reservas.indexOf(this.selectedRese);
-    console.log('index', index);
-    console.log('id', id);
     this._adminService.eliminarReserva(id)
       .subscribe(
         resultados => {
-          this.reservas.splice(index, 1);
+          this.reservas = this.reservas.filter((val, i) => i != this.index);
         }
       );
   }
